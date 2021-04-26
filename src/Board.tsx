@@ -1,12 +1,12 @@
 import { BoardProps } from "boardgame.io/react";
 
-import { Card } from "./Card";
 import { G } from "./game";
+import { PlayerDisplay } from "./PlayerDisplay";
 
 export const LetterJoyBoard = (props: BoardProps) => {
   const g: G = props.G;
-  const cards = Object.values(g.players).map(({ letter }) => (
-    <Card letter={letter} />
+  const playerDisplays = Object.values(g.players).map((playerState) => (
+    <PlayerDisplay {...playerState} />
   ));
-  return <>{cards}</>;
+  return <>{playerDisplays}</>;
 };

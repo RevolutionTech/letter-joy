@@ -4,6 +4,7 @@ import { Ctx } from "boardgame.io";
 import { Letter } from "./letters";
 import { splitArray } from "./utils";
 
+const LETTERS_PER_PLAYER = 5;
 const MAX_NUM_PLAYERS = 6;
 const LETTER_DISTRIBUTION: Record<Letter, number> = {
   [Letter.A]: 4,
@@ -43,7 +44,8 @@ const createShuffledDeck = (ctx: Ctx) => {
 };
 
 interface PlayerState {
-  letter: Letter;
+  playerName: string;
+  letters: Letter[];
 }
 
 export interface G {
@@ -53,8 +55,12 @@ export interface G {
 export const LetterJoy = {
   setup: (ctx: Ctx): G => {
     const deck = createShuffledDeck(ctx);
-    const [playerLetters] = splitArray(deck, MAX_NUM_PLAYERS);
-    const playerStates = playerLetters.map((letter) => ({ letter }));
+    const [dealtCards] = splitArray(deck, MAX_NUM_PLAYERS * LETTERS_PER_PLAYER);
+    const playerLetters = _.chunk(dealtCards, LETTERS_PER_PLAYER);
+    const playerStates = playerLetters.map((letters, i) => ({
+      playerName: `Player ${i + 1}`,
+      letters,
+    }));
     return {
       players: _.assign({}, playerStates),
     };

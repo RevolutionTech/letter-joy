@@ -1,5 +1,6 @@
 import { styled } from "@material-ui/core";
 
+import cardBack from "./assets/cardBack.svg";
 import theme from "./theme";
 import { Letter, LETTER_SVG } from "./letters";
 
@@ -7,9 +8,9 @@ const Paper = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: "136px",
+  minWidth: "136px",
   height: "240px",
-  margin: "40px",
+  marginRight: "16px",
 
   backgroundColor: theme.white,
   borderStyle: "solid",
@@ -19,13 +20,18 @@ const Paper = styled("div")({
 
 interface Props {
   letter: Letter;
+  visible: boolean;
 }
 
 export const Card = (props: Props) => {
-  const { letter } = props;
+  const { letter, visible } = props;
   return (
     <Paper>
-      <img src={LETTER_SVG[letter]} alt={letter} />
+      {visible ? (
+        <img src={LETTER_SVG[letter]} alt={letter} />
+      ) : (
+        <img src={cardBack} alt="Letter Joy" style={{ marginTop: "32px" }} />
+      )}
     </Paper>
   );
 };
