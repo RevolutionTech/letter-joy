@@ -21,8 +21,8 @@ const SidebarPlaceholder = styled("div")({
 
 export const LetterJoyBoard = (props: BoardProps) => {
   const g: G = props.G;
-  const playerDisplays = Object.values(g.players).map((playerState) => (
-    <PlayerDisplay {...playerState} />
+  const playerDisplays = Object.values(g.players).map((playerState, i) => (
+    <PlayerDisplay key={playerState.playerID} {...playerState} />
   ));
   return (
     <>

@@ -43,7 +43,8 @@ const createShuffledDeck = (ctx: Ctx) => {
   return shuffledDeck;
 };
 
-interface PlayerState {
+export interface PlayerState {
+  playerID: string;
   playerName: string;
   letters: Letter[];
 }
@@ -58,6 +59,7 @@ export const LetterJoy = {
     const [dealtCards] = splitArray(deck, MAX_NUM_PLAYERS * LETTERS_PER_PLAYER);
     const playerLetters = _.chunk(dealtCards, LETTERS_PER_PLAYER);
     const playerStates = playerLetters.map((letters, i) => ({
+      playerID: i.toString(),
       playerName: `Player ${i + 1}`,
       letters,
     }));

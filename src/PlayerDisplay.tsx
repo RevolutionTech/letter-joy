@@ -2,7 +2,7 @@ import { styled } from "@material-ui/core";
 
 import UnusedHint from "./assets/hints/unused.svg";
 import { Card } from "./Card";
-import { Letter } from "./letters";
+import { PlayerState } from "./game";
 
 const PlayerInfo = styled("div")({
   display: "flex",
@@ -31,13 +31,8 @@ const PlayerHand = styled("div")({
   alignItems: "center",
 });
 
-interface Props {
-  playerName: string;
-  letters: Letter[];
-}
-
-export const PlayerDisplay = (props: Props) => {
-  const { playerName, letters } = props;
+export const PlayerDisplay = (props: PlayerState) => {
+  const { playerID, playerName, letters } = props;
   return (
     <PlayerInfo>
       <PlayerPublicInfo>
@@ -49,7 +44,7 @@ export const PlayerDisplay = (props: Props) => {
       </PlayerPublicInfo>
       <PlayerHand>
         {letters.map((letter, i) => (
-          <Card letter={letter} visible={i === 0} />
+          <Card key={`${playerID}-${i}`} letter={letter} visible={i === 0} />
         ))}
       </PlayerHand>
     </PlayerInfo>
