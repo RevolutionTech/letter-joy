@@ -19,6 +19,7 @@ import LetterT from "./assets/letters/T.svg";
 import LetterU from "./assets/letters/U.svg";
 import LetterW from "./assets/letters/W.svg";
 import LetterY from "./assets/letters/Y.svg";
+import LetterWild from "./assets/letters/Wild.svg";
 
 export enum Letter {
   A = "A",
@@ -42,6 +43,7 @@ export enum Letter {
   U = "U",
   W = "W",
   Y = "Y",
+  WILD = "*",
 }
 
 export const LETTER_SVG: Record<Letter, string> = {
@@ -66,4 +68,5 @@ export const LETTER_SVG: Record<Letter, string> = {
   [Letter.U]: LetterU,
   [Letter.W]: LetterW,
   [Letter.Y]: LetterY,
+  [Letter.WILD]: LetterWild,
 };

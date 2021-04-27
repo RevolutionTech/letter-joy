@@ -28,6 +28,7 @@ const LETTER_DISTRIBUTION: Record<Letter, number> = {
   [Letter.U]: 3,
   [Letter.W]: 2,
   [Letter.Y]: 2,
+  [Letter.WILD]: 0,
 };
 const NUM_HINTS_LOCKED = 1;
 const NUM_HINTS_STARTING_AVAILABLE = 4;
@@ -52,9 +53,14 @@ export interface PlayerState {
   hintsUsed: number;
 }
 
+export interface TeamHints {
+  available: number;
+  locked: number;
+}
+
 export interface G {
   players: Record<number, PlayerState>;
-  teamHints: { available: number; locked: number };
+  teamHints: TeamHints;
 }
 
 export const LetterJoy = {

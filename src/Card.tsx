@@ -12,7 +12,6 @@ const Paper = styled("div")({
   height: "240px",
   marginRight: "16px",
 
-  backgroundColor: theme.white,
   borderStyle: "solid",
   borderWidth: "4px",
   borderRadius: "10px",
@@ -21,12 +20,17 @@ const Paper = styled("div")({
 interface Props {
   letter: Letter;
   visible: boolean;
+  backgroundColor?: string;
 }
 
 export const Card = (props: Props) => {
-  const { letter, visible } = props;
+  const { letter, visible, backgroundColor } = props;
   return (
-    <Paper>
+    <Paper
+      style={{
+        backgroundColor: backgroundColor ?? theme.white,
+      }}
+    >
       {visible ? (
         <img src={LETTER_SVG[letter]} alt={letter} />
       ) : (

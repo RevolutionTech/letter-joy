@@ -4,6 +4,7 @@ import { styled } from "@material-ui/core";
 import { SIDEBAR_WIDTH, SIDEBAR_PADDING, ActionSidebar } from "./ActionSidebar";
 import { G } from "./game";
 import { PlayerDisplay } from "./PlayerDisplay";
+import { TeamDisplay } from "./TeamDisplay";
 import theme from "./theme";
 
 const GameTable = styled("div")({
@@ -11,7 +12,11 @@ const GameTable = styled("div")({
   backgroundColor: theme.silver,
 });
 
-const PlayerRows = styled("div")({ display: "flex", flexDirection: "column" });
+const PlayerRows = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  marginBottom: "48px",
+});
 
 // The SidebarPlaceholder allows the horizontal scrollbar to appear
 // when the sidebar is covering some of the main content
@@ -31,7 +36,10 @@ export const LetterJoyBoard = (props: BoardProps) => {
   return (
     <>
       <GameTable>
-        <PlayerRows>{playerDisplays}</PlayerRows>
+        <PlayerRows>
+          {playerDisplays}
+          <TeamDisplay teamHints={g.teamHints} />
+        </PlayerRows>
         <SidebarPlaceholder />
       </GameTable>
       <ActionSidebar />

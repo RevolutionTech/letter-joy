@@ -1,16 +1,11 @@
 import _ from "lodash";
-import { styled, Tooltip } from "@material-ui/core";
+import { Tooltip } from "@material-ui/core";
 
 import AvailableHint from "./assets/hints/available.svg";
 import UnusedHint from "./assets/hints/unused.svg";
 import UsedHint from "./assets/hints/used.svg";
 import { NUM_HINTS_STARTING_PER_PLAYER } from "./constants";
-
-const Hint = styled("img")({
-  width: "24px",
-  marginTop: "16px",
-  marginRight: "8px",
-});
+import { Hint } from "./hint";
 
 interface Props {
   playerID: string;

@@ -3,21 +3,7 @@ import { styled } from "@material-ui/core";
 import { Card } from "./Card";
 import { PlayerState } from "./game";
 import { PlayerHints } from "./PlayerHints";
-
-const PlayerInfo = styled("div")({
-  display: "flex",
-  alignItems: "center",
-  marginLeft: "32px",
-  marginTop: "48px",
-  fontSize: "28pt",
-});
-
-const PlayerPublicInfo = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  width: "248px",
-  marginRight: "32px",
-});
+import { PlayerInfo, PlayerStatus } from "./playerInfo";
 
 const PlayerHand = styled("div")({
   display: "flex",
@@ -39,7 +25,7 @@ export const PlayerDisplay = (props: Props) => {
   } = props;
   return (
     <PlayerInfo>
-      <PlayerPublicInfo>
+      <PlayerStatus>
         <div>{playerName}</div>
         <PlayerHints
           playerID={playerID}
@@ -47,7 +33,7 @@ export const PlayerDisplay = (props: Props) => {
           hintsUsed={hintsUsed}
           teamHintsAvailable={teamHintsAvailable}
         />
-      </PlayerPublicInfo>
+      </PlayerStatus>
       <PlayerHand>
         {letters.map((letter, i) => (
           <Card key={`${playerID}-${i}`} letter={letter} visible={i === 0} />
