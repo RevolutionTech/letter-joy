@@ -1,8 +1,8 @@
 import { styled } from "@material-ui/core";
 
-import UnusedHint from "./assets/hints/unused.svg";
 import { Card } from "./Card";
 import { PlayerState } from "./game";
+import { PlayerHints } from "./PlayerHints";
 
 const PlayerInfo = styled("div")({
   display: "flex",
@@ -19,28 +19,34 @@ const PlayerPublicInfo = styled("div")({
   marginRight: "32px",
 });
 
-const Hint = styled("img")({
-  width: "24px",
-  marginTop: "16px",
-  marginRight: "8px",
-});
-
 const PlayerHand = styled("div")({
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
 });
 
-export const PlayerDisplay = (props: PlayerState) => {
-  const { playerID, playerName, letters } = props;
+interface Props extends PlayerState {
+  teamHintsAvailable: number;
+}
+
+export const PlayerDisplay = (props: Props) => {
+  const {
+    playerID,
+    playerName,
+    letters,
+    hintsUsed,
+    teamHintsAvailable,
+  } = props;
   return (
     <PlayerInfo>
       <PlayerPublicInfo>
         <div>{playerName}</div>
-        <div>
-          <Hint src={UnusedHint} alt="Unused hint" />
-          <Hint src={UnusedHint} alt="Unused hint" />
-        </div>
+        <PlayerHints
+          playerID={playerID}
+          playerName={playerName}
+          hintsUsed={hintsUsed}
+          teamHintsAvailable={teamHintsAvailable}
+        />
       </PlayerPublicInfo>
       <PlayerHand>
         {letters.map((letter, i) => (

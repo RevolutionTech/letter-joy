@@ -29,6 +29,8 @@ const LETTER_DISTRIBUTION: Record<Letter, number> = {
   [Letter.W]: 2,
   [Letter.Y]: 2,
 };
+const NUM_HINTS_LOCKED = 1;
+const NUM_HINTS_STARTING_AVAILABLE = 4;
 
 const createShuffledDeck = (ctx: Ctx) => {
   const unshuffledDeck = _.reduce(
@@ -47,10 +49,12 @@ export interface PlayerState {
   playerID: string;
   playerName: string;
   letters: Letter[];
+  hintsUsed: number;
 }
 
 export interface G {
   players: Record<number, PlayerState>;
+  teamHints: { available: number; locked: number };
 }
 
 export const LetterJoy = {
@@ -58,13 +62,20 @@ export const LetterJoy = {
     const deck = createShuffledDeck(ctx);
     const [dealtCards] = splitArray(deck, MAX_NUM_PLAYERS * LETTERS_PER_PLAYER);
     const playerLetters = _.chunk(dealtCards, LETTERS_PER_PLAYER);
+
     const playerStates = playerLetters.map((letters, i) => ({
       playerID: i.toString(),
       playerName: `Player ${i + 1}`,
       letters,
+      hintsUsed: 0,
     }));
+
     return {
       players: _.assign({}, playerStates),
+      teamHints: {
+        available: NUM_HINTS_STARTING_AVAILABLE,
+        locked: NUM_HINTS_LOCKED,
+      },
     };
   },
 
