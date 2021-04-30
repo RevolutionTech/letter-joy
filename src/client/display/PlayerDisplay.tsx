@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
 
-import { Card } from "./Card";
-import { PlayerState } from "./game";
+import { PlayerState } from "../../game/types";
+import { Card } from "../cards/Card";
 import { PlayerHints } from "./PlayerHints";
 import { PlayerInfo, PlayerStatus } from "./playerInfo";
 

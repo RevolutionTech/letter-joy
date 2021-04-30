@@ -1,14 +1,13 @@
 import _ from "lodash";
 import { Tooltip } from "@material-ui/core";
 
-import AvailableHint from "./assets/hints/available.svg";
-import LockedHint from "./assets/hints/locked.svg";
-import { Card } from "./Card";
-import { TeamHints } from "./game";
+import { Letter, TeamHints } from "../../game/types";
+import AvailableHint from "../assets/hints/available.svg";
+import LockedHint from "../assets/hints/locked.svg";
+import { Card } from "../cards/Card";
+import theme from "../theme";
 import { Hint } from "./hint";
-import { Letter } from "./letters";
 import { PlayerInfo, PlayerStatus } from "./playerInfo";
-import theme from "./theme";
 
 interface Props {
   teamHints: TeamHints;

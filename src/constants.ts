@@ -1,1 +1,0 @@
-export const NUM_HINTS_STARTING_PER_PLAYER = 1;

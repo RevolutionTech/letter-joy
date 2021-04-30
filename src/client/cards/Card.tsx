@@ -1,8 +1,9 @@
 import { styled } from "@material-ui/core";
 
-import cardBack from "./assets/cardBack.svg";
-import theme from "./theme";
-import { Letter, LETTER_SVG } from "./letters";
+import { Letter } from "../../game/types";
+import cardBack from "../assets/cardBack.svg";
+import theme from "../theme";
+import { LETTER_SVG } from "./letters";
 
 const Paper = styled("div")({
   display: "flex",

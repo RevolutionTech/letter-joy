@@ -1,10 +1,10 @@
 import { BoardProps } from "boardgame.io/react";
 import { styled } from "@material-ui/core";
 
+import { G } from "../game/types";
 import { SIDEBAR_WIDTH, SIDEBAR_PADDING, ActionSidebar } from "./ActionSidebar";
-import { G } from "./game";
-import { PlayerDisplay } from "./PlayerDisplay";
-import { TeamDisplay } from "./TeamDisplay";
+import { PlayerDisplay } from "./display/PlayerDisplay";
+import { TeamDisplay } from "./display/TeamDisplay";
 import theme from "./theme";
 
 const GameTable = styled("div")({
