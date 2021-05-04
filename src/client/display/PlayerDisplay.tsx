@@ -20,6 +20,7 @@ export const PlayerDisplay = (props: Props) => {
     playerID,
     playerName,
     letters,
+    activeLetterIndex,
     hintsUsed,
     teamHintsAvailable,
   } = props;
@@ -36,7 +37,12 @@ export const PlayerDisplay = (props: Props) => {
       </PlayerStatus>
       <PlayerHand>
         {letters.map((letter, i) => (
-          <Card key={`${playerID}-${i}`} letter={letter} visible={i === 0} />
+          <Card
+            key={`${playerID}-${i}`}
+            letter={letter}
+            active={i === activeLetterIndex}
+            visible={i === activeLetterIndex}
+          />
         ))}
       </PlayerHand>
     </PlayerInfo>

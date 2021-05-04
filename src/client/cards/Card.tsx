@@ -35,18 +35,19 @@ const TokenWrapper = styled("div")({
 
 interface Props {
   letter: Letter;
+  active?: boolean;
   visible: boolean;
   backgroundColor?: string;
   containsTokens?: number[];
 }
 
 export const Card = (props: Props) => {
-  const { letter, visible, backgroundColor, containsTokens } = props;
+  const { letter, active, visible, backgroundColor, containsTokens } = props;
   const numTokensContained = containsTokens?.length ?? 0;
   const spaceForToken = TOKEN_SLOT_WIDTH / (numTokensContained + 1);
 
   return (
-    <CardSlot>
+    <CardSlot style={{ top: active ? "-16px" : "0" }}>
       <Paper
         style={{
           backgroundColor: backgroundColor ?? theme.white,

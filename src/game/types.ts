@@ -27,6 +27,7 @@ export interface PlayerState {
   playerID: string;
   playerName: string;
   letters: Letter[];
+  activeLetterIndex: number;
   hintsUsed: number;
 }
 

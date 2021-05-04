@@ -21,6 +21,7 @@ export const LetterJoy = {
       playerID: i.toString(),
       playerName: `Player ${i + 1}`,
       letters,
+      activeLetterIndex: 0,
       hintsUsed: 0,
     }));
 
