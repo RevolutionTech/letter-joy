@@ -31,6 +31,10 @@ export interface PlayerState {
   hintsUsed: number;
 }
 
+export interface PlayerViewPlayerState extends Omit<PlayerState, "letters"> {
+  letters: (Letter | null)[];
+}
+
 export interface TeamHints {
   available: number;
   locked: number;
@@ -39,4 +43,8 @@ export interface TeamHints {
 export interface G {
   players: Record<number, PlayerState>;
   teamHints: TeamHints;
+}
+
+export interface PlayerViewG extends Omit<G, "players"> {
+  players: Record<number, PlayerViewPlayerState>;
 }

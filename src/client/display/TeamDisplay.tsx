@@ -36,7 +36,7 @@ export const TeamDisplay = (props: Props) => {
           ))}
         </div>
       </PlayerStatus>
-      <Card letter={Letter.WILD} visible backgroundColor={theme.grey} />
+      <Card letter={Letter.WILD} backgroundColor={theme.grey} />
     </PlayerInfo>
   );
 };

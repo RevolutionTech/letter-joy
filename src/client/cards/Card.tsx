@@ -34,15 +34,14 @@ const TokenWrapper = styled("div")({
 });
 
 interface Props {
-  letter: Letter;
+  letter: Letter | null;
   active?: boolean;
-  visible: boolean;
   backgroundColor?: string;
   containsTokens?: number[];
 }
 
 export const Card = (props: Props) => {
-  const { letter, active, visible, backgroundColor, containsTokens } = props;
+  const { letter, active, backgroundColor, containsTokens } = props;
   const numTokensContained = containsTokens?.length ?? 0;
   const spaceForToken = TOKEN_SLOT_WIDTH / (numTokensContained + 1);
 
@@ -53,10 +52,10 @@ export const Card = (props: Props) => {
           backgroundColor: backgroundColor ?? theme.white,
         }}
       >
-        {visible ? (
-          <img src={LETTER_SVG[letter]} alt={letter} />
-        ) : (
+        {letter == null ? (
           <img src={cardBack} alt="Letter Joy" style={{ marginTop: "32px" }} />
+        ) : (
+          <img src={LETTER_SVG[letter]} alt={letter} />
         )}
       </Paper>
       {containsTokens?.map((tokenValue, i) => {

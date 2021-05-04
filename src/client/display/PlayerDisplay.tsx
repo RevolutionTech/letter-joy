@@ -1,6 +1,6 @@
 import { styled } from "@material-ui/core";
 
-import { PlayerState } from "../../game/types";
+import { PlayerViewPlayerState } from "../../game/types";
 import { Card } from "../cards/Card";
 import { PlayerHints } from "./PlayerHints";
 import { PlayerInfo, PlayerStatus } from "./playerInfo";
@@ -11,7 +11,7 @@ const PlayerHand = styled("div")({
   alignItems: "center",
 });
 
-interface Props extends PlayerState {
+interface Props extends PlayerViewPlayerState {
   teamHintsAvailable: number;
 }
 
@@ -41,7 +41,6 @@ export const PlayerDisplay = (props: Props) => {
             key={`${playerID}-${i}`}
             letter={letter}
             active={i === activeLetterIndex}
-            visible={i === activeLetterIndex}
           />
         ))}
       </PlayerHand>

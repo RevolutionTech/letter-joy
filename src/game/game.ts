@@ -8,6 +8,7 @@ import {
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
 import { createShuffledDeck } from "./deck";
+import { playerView } from "./playerView";
 import { G } from "./types";
 import { splitArray } from "./utils";
 
@@ -35,4 +36,6 @@ export const LetterJoy = {
   },
 
   moves: {},
+
+  playerView,
 };

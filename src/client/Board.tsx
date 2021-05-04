@@ -1,7 +1,7 @@
 import { BoardProps } from "boardgame.io/react";
 import { styled } from "@material-ui/core";
 
-import { G } from "../game/types";
+import { PlayerViewG } from "../game/types";
 import { SIDEBAR_WIDTH, SIDEBAR_PADDING, ActionSidebar } from "./ActionSidebar";
 import { PlayerDisplay } from "./display/PlayerDisplay";
 import { TeamDisplay } from "./display/TeamDisplay";
@@ -25,7 +25,7 @@ const SidebarPlaceholder = styled("div")({
 });
 
 export const LetterJoyBoard = (props: BoardProps) => {
-  const g: G = props.G;
+  const g: PlayerViewG = props.G;
   const playerDisplays = Object.values(g.players).map((playerState, i) => (
     <PlayerDisplay
       key={playerState.playerID}
