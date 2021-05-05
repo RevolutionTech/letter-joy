@@ -1,8 +1,14 @@
+import { useMemo, useState } from "react";
 import { BoardProps } from "boardgame.io/react";
 import { styled } from "@material-ui/core";
 
 import { PlayerViewG } from "../game/types";
-import { SIDEBAR_WIDTH, SIDEBAR_PADDING, ActionSidebar } from "./ActionSidebar";
+import {
+  SIDEBAR_WIDTH,
+  SIDEBAR_PADDING,
+  ActionSidebar,
+} from "./sidebar/ActionSidebar";
+import { useClueTokens, getClueDisplay } from "./cards/clue";
 import { PlayerDisplay } from "./display/PlayerDisplay";
 import { TeamDisplay } from "./display/TeamDisplay";
 import theme from "./theme";
@@ -26,23 +32,49 @@ const SidebarPlaceholder = styled("div")({
 
 export const LetterJoyBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
-  const playerDisplays = Object.values(g.players).map((playerState, i) => (
-    <PlayerDisplay
-      key={playerState.playerID}
-      {...playerState}
-      teamHintsAvailable={g.teamHints.available}
-    />
-  ));
+
+  const [isProposing, setIsProposing] = useState(false);
+  const [clueTokens, addClueToken, clearClueTokens] = useClueTokens();
+  const clueDisplay = useMemo(() => getClueDisplay(g, clueTokens), [
+    g,
+    clueTokens,
+  ]);
+
+  const playerDisplays = Object.values(g.players).map((playerState, i) => {
+    return (
+      <PlayerDisplay
+        key={playerState.playerID}
+        {...playerState}
+        teamHintsAvailable={g.teamHints.available}
+        containsTokens={clueTokens[playerState.playerID]}
+        onAddToClue={
+          isProposing ? () => addClueToken(playerState.playerID) : undefined
+        }
+      />
+    );
+  });
+
   return (
     <>
       <GameTable>
         <PlayerRows>
           {playerDisplays}
-          <TeamDisplay teamHints={g.teamHints} />
+          <TeamDisplay
+            teamHints={g.teamHints}
+            containsTokens={clueTokens["TEAM"]}
+            onAddToClue={isProposing ? () => addClueToken("TEAM") : undefined}
+          />
         </PlayerRows>
         <SidebarPlaceholder />
       </GameTable>
-      <ActionSidebar />
+      <ActionSidebar
+        clueProposing={isProposing ? clueDisplay : null}
+        onStartProposing={() => setIsProposing(true)}
+        onCancelProposing={() => {
+          setIsProposing(false);
+          clearClueTokens();
+        }}
+      />
     </>
   );
 };

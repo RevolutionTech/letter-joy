@@ -11,10 +11,12 @@ import { PlayerInfo, PlayerStatus } from "./playerInfo";
 
 interface Props {
   teamHints: TeamHints;
+  containsTokens?: number[];
+  onAddToClue?: () => void;
 }
 
 export const TeamDisplay = (props: Props) => {
-  const { teamHints } = props;
+  const { teamHints, containsTokens, onAddToClue } = props;
   return (
     <PlayerInfo>
       <PlayerStatus>
@@ -38,7 +40,12 @@ export const TeamDisplay = (props: Props) => {
           ))}
         </div>
       </PlayerStatus>
-      <Card letter={Letter.WILD} backgroundColor={theme.grey} />
+      <Card
+        letter={Letter.WILD}
+        backgroundColor={theme.grey}
+        containsTokens={containsTokens}
+        onClick={onAddToClue}
+      />
     </PlayerInfo>
   );
 };

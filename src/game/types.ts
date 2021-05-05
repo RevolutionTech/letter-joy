@@ -20,7 +20,7 @@ export enum Letter {
   U = "U",
   W = "W",
   Y = "Y",
-  WILD = "*",
+  WILD = "＊", // full-width asterisk (U+FF0A)
 }
 
 export interface PlayerState {

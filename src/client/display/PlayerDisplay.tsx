@@ -13,6 +13,8 @@ const PlayerHand = styled("div")({
 
 interface Props extends PlayerViewPlayerState {
   teamHintsAvailable: number;
+  containsTokens?: number[];
+  onAddToClue?: () => void;
 }
 
 export const PlayerDisplay = (props: Props) => {
@@ -23,6 +25,8 @@ export const PlayerDisplay = (props: Props) => {
     activeLetterIndex,
     hintsUsed,
     teamHintsAvailable,
+    containsTokens,
+    onAddToClue,
   } = props;
   return (
     <PlayerInfo>
@@ -36,13 +40,18 @@ export const PlayerDisplay = (props: Props) => {
         />
       </PlayerStatus>
       <PlayerHand>
-        {letters.map((letter, i) => (
-          <Card
-            key={`${playerID}-${i}`}
-            letter={letter}
-            active={i === activeLetterIndex}
-          />
-        ))}
+        {letters.map((letter, i) => {
+          const clueProps =
+            letter == null ? {} : { containsTokens, onClick: onAddToClue };
+          return (
+            <Card
+              key={`${playerID}-${i}`}
+              letter={letter}
+              active={i === activeLetterIndex}
+              {...clueProps}
+            />
+          );
+        })}
       </PlayerHand>
     </PlayerInfo>
   );
