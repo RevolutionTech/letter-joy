@@ -21,17 +21,19 @@ export const TeamDisplay = (props: Props) => {
         <div>Team</div>
         <div>
           {_.range(teamHints.available).map((_, i) => (
-            <Tooltip title="This hint is available to players that have used all of their own hints.">
-              <Hint
-                key={`available-${i}`}
-                src={AvailableHint}
-                alt="Available hint"
-              />
+            <Tooltip
+              key={`available-${i}`}
+              title="This hint is available to players that have used all of their own hints."
+            >
+              <Hint src={AvailableHint} alt="Available hint" />
             </Tooltip>
           ))}
           {_.range(teamHints.locked).map((_, i) => (
-            <Tooltip title="This hint becomes available once every player uses all of their own hints.">
-              <Hint key={`locked-${i}`} src={LockedHint} alt="Locked hint" />
+            <Tooltip
+              key={`locked-${i}`}
+              title="This hint becomes available once every player uses all of their own hints."
+            >
+              <Hint src={LockedHint} alt="Locked hint" />
             </Tooltip>
           ))}
         </div>

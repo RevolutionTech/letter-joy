@@ -22,17 +22,19 @@ export const PlayerHints = (props: Props) => {
   return (
     <div>
       {_.range(hintsUsed).map((_, i) => (
-        <Tooltip title={`This hint was used by ${playerName}.`}>
-          <Hint key={`${playerID}-used-${i}`} src={UsedHint} alt="Used hint" />
+        <Tooltip
+          key={`${playerID}-used-${i}`}
+          title={`This hint was used by ${playerName}.`}
+        >
+          <Hint src={UsedHint} alt="Used hint" />
         </Tooltip>
       ))}
       {_.range(hintsUnused).map((_, i) => (
-        <Tooltip title={`This hint is available only to ${playerName}.`}>
-          <Hint
-            key={`${playerID}-unused-${i}`}
-            src={UnusedHint}
-            alt="Unused hint"
-          />
+        <Tooltip
+          key={`${playerID}-unused-${i}`}
+          title={`This hint is available only to ${playerName}.`}
+        >
+          <Hint src={UnusedHint} alt="Unused hint" />
         </Tooltip>
       ))}
       {hintsUnused === 0 && teamHintsAvailable > 0 && (
