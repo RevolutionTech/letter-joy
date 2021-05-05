@@ -1,4 +1,4 @@
-import { styled } from "@material-ui/core";
+import { styled, makeStyles } from "@material-ui/core";
 
 import { Letter } from "../../game/types";
 import cardBack from "../assets/cardBack.svg";
@@ -33,21 +33,32 @@ const TokenWrapper = styled("div")({
   zIndex: 10,
 });
 
+const useStyles = makeStyles({
+  clickable: {
+    "&:hover": {
+      borderStyle: "double",
+    },
+  },
+});
+
 interface Props {
   letter: Letter | null;
   active?: boolean;
   backgroundColor?: string;
   containsTokens?: number[];
+  onClick?: () => void;
 }
 
 export const Card = (props: Props) => {
-  const { letter, active, backgroundColor, containsTokens } = props;
+  const classes = useStyles();
+  const { letter, active, backgroundColor, containsTokens, onClick } = props;
   const numTokensContained = containsTokens?.length ?? 0;
   const spaceForToken = TOKEN_SLOT_WIDTH / (numTokensContained + 1);
 
   return (
-    <CardSlot style={{ top: active ? "-16px" : "0" }}>
+    <CardSlot onClick={onClick} style={{ top: active ? "-16px" : "0" }}>
       <Paper
+        className={onClick == null ? undefined : classes.clickable}
         style={{
           backgroundColor: backgroundColor ?? theme.white,
         }}
