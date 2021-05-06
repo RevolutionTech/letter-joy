@@ -44,7 +44,7 @@ export type ClueTokenPlayerLocation = { ownerID: string; letterIndex: number };
 
 export type ClueTokenLocation = ClueTokenPlayerLocation | { ownerID: "TEAM" };
 
-export type Clue = ClueTokenLocation[];
+export type ClueTokenPlacement = ClueTokenLocation[];
 
 export interface G {
   players: Record<number, PlayerState>;

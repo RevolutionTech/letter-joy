@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { BoardProps } from "boardgame.io/react";
 import { styled } from "@material-ui/core";
 
@@ -11,8 +11,8 @@ import {
 import {
   getTokensAssignedToOwner,
   getClueDisplay,
-  useClue,
-} from "./cards/clue";
+  useClueTokenPlacement,
+} from "./cards/clueTokenPlacement";
 import { PlayerDisplay } from "./display/PlayerDisplay";
 import { TeamDisplay } from "./display/TeamDisplay";
 import theme from "./theme";
@@ -38,8 +38,19 @@ export const LetterJoyBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
 
   const [isProposing, setIsProposing] = useState(false);
-  const [clue, addClueToken, clearClue] = useClue(g);
-  const clueDisplay = useMemo(() => getClueDisplay(g, clue), [g, clue]);
+  const [
+    clueTokenPlacement,
+    addClueToken,
+    clearClueTokenPlacement,
+  ] = useClueTokenPlacement(g);
+  const clueDisplay = useMemo(() => getClueDisplay(g, clueTokenPlacement), [
+    g,
+    clueTokenPlacement,
+  ]);
+  const onClose = useCallback(() => {
+    setIsProposing(false);
+    clearClueTokenPlacement();
+  }, [clearClueTokenPlacement]);
 
   const playerDisplays = Object.values(g.players).map((playerState, i) => {
     return (
@@ -47,7 +58,10 @@ export const LetterJoyBoard = (props: BoardProps) => {
         key={playerState.playerID}
         {...playerState}
         teamHintsAvailable={g.teamHints.available}
-        containsTokens={getTokensAssignedToOwner(clue, playerState.playerID)}
+        containsTokens={getTokensAssignedToOwner(
+          clueTokenPlacement,
+          playerState.playerID
+        )}
         onAddToClue={
           isProposing ? () => addClueToken(playerState.playerID) : undefined
         }
@@ -62,7 +76,10 @@ export const LetterJoyBoard = (props: BoardProps) => {
           {playerDisplays}
           <TeamDisplay
             teamHints={g.teamHints}
-            containsTokens={getTokensAssignedToOwner(clue, "TEAM")}
+            containsTokens={getTokensAssignedToOwner(
+              clueTokenPlacement,
+              "TEAM"
+            )}
             onAddToClue={isProposing ? () => addClueToken("TEAM") : undefined}
           />
         </PlayerRows>
@@ -71,10 +88,8 @@ export const LetterJoyBoard = (props: BoardProps) => {
       <ActionSidebar
         clueProposing={isProposing ? clueDisplay : null}
         onStartProposing={() => setIsProposing(true)}
-        onCancelProposing={() => {
-          setIsProposing(false);
-          clearClue();
-        }}
+        onConfirmProposing={clueTokenPlacement.length > 0 ? onClose : undefined}
+        onCancelProposing={onClose}
       />
     </>
   );

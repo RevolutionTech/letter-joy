@@ -22,6 +22,7 @@ export const ProposingContent = (props: Props) => {
           variant="contained"
           color="primary"
           disabled={onConfirmProposing == null}
+          onClick={onConfirmProposing}
         >
           Confirm
         </Button>,

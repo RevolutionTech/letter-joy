@@ -5,17 +5,23 @@ import {
   Letter,
   ClueTokenPlayerLocation,
   ClueTokenLocation,
-  Clue,
+  ClueTokenPlacement,
   PlayerViewG,
 } from "../../game/types";
 
-export const getTokensAssignedToOwner = (clue: Clue, ownerID: string) =>
-  _.range(clue.length)
-    .filter((i) => clue[i].ownerID === ownerID)
+export const getTokensAssignedToOwner = (
+  tokenPlacement: ClueTokenPlacement,
+  ownerID: string
+) =>
+  _.range(tokenPlacement.length)
+    .filter((i) => tokenPlacement[i].ownerID === ownerID)
     .map((i) => i + 1);
 
-export const getClueDisplay = (g: PlayerViewG, clue: Clue) => {
-  const letters = clue.map((clueTokenLocation) => {
+export const getClueDisplay = (
+  g: PlayerViewG,
+  tokenPlacement: ClueTokenPlacement
+) => {
+  const letters = tokenPlacement.map((clueTokenLocation) => {
     const { ownerID } = clueTokenLocation;
     if (ownerID === "TEAM") {
       return Letter.WILD;
@@ -32,22 +38,28 @@ export const getClueDisplay = (g: PlayerViewG, clue: Clue) => {
   return letters.join(" ");
 };
 
-export const useClue = (g: PlayerViewG) => {
-  const [clue, setClue] = useState<Clue>([]);
+export const useClueTokenPlacement = (g: PlayerViewG) => {
+  const [
+    clueTokenPlacement,
+    setClueTokenPlacement,
+  ] = useState<ClueTokenPlacement>([]);
 
   const addClueToken = useCallback(
     (ownerID: string) =>
-      setClue((clue) => {
+      setClueTokenPlacement((tokenPlacement) => {
         const clueTokenLocation: ClueTokenLocation =
           ownerID === "TEAM"
             ? { ownerID }
             : { ownerID, letterIndex: g.players[+ownerID].activeLetterIndex };
-        return [...clue, clueTokenLocation];
+        return [...tokenPlacement, clueTokenLocation];
       }),
     [g.players]
   );
 
-  const clearClue = useCallback(() => setClue([]), []);
+  const clearClueTokenPlacement = useCallback(
+    () => setClueTokenPlacement([]),
+    []
+  );
 
-  return [clue, addClueToken, clearClue] as const;
+  return [clueTokenPlacement, addClueToken, clearClueTokenPlacement] as const;
 };
