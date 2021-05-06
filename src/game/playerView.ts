@@ -23,7 +23,7 @@ const playerStatePlayerView = (
 };
 
 export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
-  const { players, teamHints } = g;
+  const { players, teamHints, proposedClues } = g;
   return {
     players: _.reduce(
       players,
@@ -34,5 +34,20 @@ export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
       {}
     ),
     teamHints,
+    proposedClues: proposedClues.map((proposedClue) => {
+      const { authorID, placement, votes } = proposedClue;
+      const usesWild = _.some(
+        placement,
+        (clueTokenLocation) => clueTokenLocation.ownerID === "TEAM"
+      );
+      const summary = {
+        numLetters: placement.length,
+        usesWild,
+        numPlayers:
+          Object.keys(_.groupBy(placement, "ownerID")).length - +usesWild,
+      };
+      const maybePlacement = authorID === playerID ? { placement } : {};
+      return { authorID, ...maybePlacement, summary, votes };
+    }),
   };
 };

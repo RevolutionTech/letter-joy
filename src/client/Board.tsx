@@ -51,6 +51,10 @@ export const LetterJoyBoard = (props: BoardProps) => {
     setIsProposing(false);
     clearClueTokenPlacement();
   }, [clearClueTokenPlacement]);
+  const onConfirmProposing = useCallback(() => {
+    props.moves.proposeClue(clueTokenPlacement);
+    onClose();
+  }, [props.moves, onClose, clueTokenPlacement]);
 
   const playerDisplays = Object.values(g.players).map((playerState, i) => {
     return (
@@ -88,7 +92,9 @@ export const LetterJoyBoard = (props: BoardProps) => {
       <ActionSidebar
         clueProposing={isProposing ? clueDisplay : null}
         onStartProposing={() => setIsProposing(true)}
-        onConfirmProposing={clueTokenPlacement.length > 0 ? onClose : undefined}
+        onConfirmProposing={
+          clueTokenPlacement.length > 0 ? onConfirmProposing : undefined
+        }
         onCancelProposing={onClose}
       />
     </>

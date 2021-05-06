@@ -9,7 +9,7 @@ import {
 } from "./constants";
 import { createShuffledDeck } from "./deck";
 import { playerView } from "./playerView";
-import { G } from "./types";
+import { ClueTokenPlacement, G } from "./types";
 import { splitArray } from "./utils";
 
 export const LetterJoy = {
@@ -32,10 +32,19 @@ export const LetterJoy = {
         available: NUM_HINTS_STARTING_AVAILABLE,
         locked: NUM_HINTS_LOCKED,
       },
+      proposedClues: [],
     };
   },
 
-  moves: {},
+  moves: {
+    proposeClue: (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
+      g.proposedClues.push({
+        authorID: ctx.currentPlayer,
+        placement,
+        votes: [],
+      });
+    },
+  },
 
   playerView,
 };
