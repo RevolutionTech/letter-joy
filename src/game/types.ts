@@ -40,6 +40,12 @@ export interface TeamHints {
   locked: number;
 }
 
+export type ClueTokenPlayerLocation = { ownerID: string; letterIndex: number };
+
+export type ClueTokenLocation = ClueTokenPlayerLocation | { ownerID: "TEAM" };
+
+export type Clue = ClueTokenLocation[];
+
 export interface G {
   players: Record<number, PlayerState>;
   teamHints: TeamHints;

@@ -8,7 +8,11 @@ import {
   SIDEBAR_PADDING,
   ActionSidebar,
 } from "./sidebar/ActionSidebar";
-import { useClueTokens, getClueDisplay } from "./cards/clue";
+import {
+  getTokensAssignedToOwner,
+  getClueDisplay,
+  useClue,
+} from "./cards/clue";
 import { PlayerDisplay } from "./display/PlayerDisplay";
 import { TeamDisplay } from "./display/TeamDisplay";
 import theme from "./theme";
@@ -34,11 +38,8 @@ export const LetterJoyBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
 
   const [isProposing, setIsProposing] = useState(false);
-  const [clueTokens, addClueToken, clearClueTokens] = useClueTokens();
-  const clueDisplay = useMemo(() => getClueDisplay(g, clueTokens), [
-    g,
-    clueTokens,
-  ]);
+  const [clue, addClueToken, clearClue] = useClue(g);
+  const clueDisplay = useMemo(() => getClueDisplay(g, clue), [g, clue]);
 
   const playerDisplays = Object.values(g.players).map((playerState, i) => {
     return (
@@ -46,7 +47,7 @@ export const LetterJoyBoard = (props: BoardProps) => {
         key={playerState.playerID}
         {...playerState}
         teamHintsAvailable={g.teamHints.available}
-        containsTokens={clueTokens[playerState.playerID]}
+        containsTokens={getTokensAssignedToOwner(clue, playerState.playerID)}
         onAddToClue={
           isProposing ? () => addClueToken(playerState.playerID) : undefined
         }
@@ -61,7 +62,7 @@ export const LetterJoyBoard = (props: BoardProps) => {
           {playerDisplays}
           <TeamDisplay
             teamHints={g.teamHints}
-            containsTokens={clueTokens["TEAM"]}
+            containsTokens={getTokensAssignedToOwner(clue, "TEAM")}
             onAddToClue={isProposing ? () => addClueToken("TEAM") : undefined}
           />
         </PlayerRows>
@@ -72,7 +73,7 @@ export const LetterJoyBoard = (props: BoardProps) => {
         onStartProposing={() => setIsProposing(true)}
         onCancelProposing={() => {
           setIsProposing(false);
-          clearClueTokens();
+          clearClue();
         }}
       />
     </>
