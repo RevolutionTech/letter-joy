@@ -90,12 +90,14 @@ export const LetterJoyBoard = (props: BoardProps) => {
         <SidebarPlaceholder />
       </GameTable>
       <ActionSidebar
+        g={g}
         clueProposing={isProposing ? clueDisplay : null}
         onStartProposing={() => setIsProposing(true)}
         onConfirmProposing={
           clueTokenPlacement.length > 0 ? onConfirmProposing : undefined
         }
         onCancelProposing={onClose}
+        proposedClues={g.proposedClues}
       />
     </>
   );

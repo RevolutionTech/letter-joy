@@ -29,7 +29,6 @@ export const getClueDisplay = (
       // TODO: Surely there is a way to avoid this assertion
       const letterIndex = (clueTokenLocation as ClueTokenPlayerLocation)
         .letterIndex;
-      // TODO: Perhaps keys in g.players should be strings so that we don't have to cast here
       const player = g.players[+ownerID];
       const letter = player.letters[letterIndex];
       return letter;

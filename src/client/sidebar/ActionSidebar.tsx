@@ -1,5 +1,6 @@
 import { styled } from "@material-ui/core";
 
+import { PlayerViewG, PlayerViewProposedClue } from "../../game/types";
 import theme from "../theme";
 import { ProposingContent } from "./ProposingContent";
 import { VotingContent } from "./VotingContent";
@@ -19,23 +20,31 @@ const Sidebar = styled("div")({
 });
 
 interface Props {
+  g: PlayerViewG;
   clueProposing: string | null;
   onStartProposing: () => void;
   onConfirmProposing?: () => void;
   onCancelProposing: () => void;
+  proposedClues: PlayerViewProposedClue[];
 }
 
 export const ActionSidebar = (props: Props) => {
   const {
+    g,
     clueProposing,
     onStartProposing,
     onConfirmProposing,
     onCancelProposing,
+    proposedClues,
   } = props;
   return (
     <Sidebar>
       {clueProposing == null ? (
-        <VotingContent onStartProposing={onStartProposing} />
+        <VotingContent
+          g={g}
+          onStartProposing={onStartProposing}
+          proposedClues={proposedClues}
+        />
       ) : (
         <ProposingContent
           clueProposing={clueProposing}

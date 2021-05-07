@@ -58,12 +58,15 @@ interface ProposedClueSummary {
   numPlayers: number;
 }
 
-interface PlayerViewProposedClue extends Omit<ProposedClue, "placement"> {
+export interface PlayerViewProposedClue
+  extends Omit<ProposedClue, "placement"> {
   placement?: ClueTokenPlacement;
   summary: ProposedClueSummary;
 }
 
 export interface G {
+  // TODO: Perhaps keys in players should be strings
+  // so that we don't have to cast in all of the places that have playerIDs as strings
   players: Record<number, PlayerState>;
   teamHints: TeamHints;
   proposedClues: ProposedClue[];
