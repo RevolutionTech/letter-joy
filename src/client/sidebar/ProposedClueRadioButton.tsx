@@ -30,19 +30,19 @@ const SidebarProposedClueDisplay = styled(SidebarProposedClueSummaryDetail)({
 
 interface Props {
   g: PlayerViewG;
-  proposedClueId: number;
   proposedClue: PlayerViewProposedClue;
+  value: string;
 }
 
 export const ProposedClueRadioButton = (props: Props) => {
-  const { g, proposedClueId, proposedClue } = props;
+  const { g, proposedClue, value } = props;
   const { authorID, placement, summary } = proposedClue;
   const authorName = g.players[+authorID].playerName;
   const { numLetters, usesWild, numPlayers } = summary;
 
   return (
     <FormControlLabel
-      value={proposedClueId}
+      value={value}
       control={<Radio />}
       label={
         <SidebarProposedClueSummary>

@@ -21,29 +21,35 @@ const Sidebar = styled("div")({
 
 interface Props {
   g: PlayerViewG;
+  currentPlayer: string;
   clueProposing: string | null;
   onStartProposing: () => void;
   onConfirmProposing?: () => void;
   onCancelProposing: () => void;
   proposedClues: PlayerViewProposedClue[];
+  onChangeVote: (clueIndex: number | null) => void;
 }
 
 export const ActionSidebar = (props: Props) => {
   const {
     g,
+    currentPlayer,
     clueProposing,
     onStartProposing,
     onConfirmProposing,
     onCancelProposing,
     proposedClues,
+    onChangeVote,
   } = props;
   return (
     <Sidebar>
       {clueProposing == null ? (
         <VotingContent
           g={g}
+          currentPlayer={currentPlayer}
           onStartProposing={onStartProposing}
           proposedClues={proposedClues}
+          onChangeVote={onChangeVote}
         />
       ) : (
         <ProposingContent

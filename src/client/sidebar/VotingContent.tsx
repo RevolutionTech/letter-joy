@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {
   styled,
   FormControl,
@@ -21,12 +22,23 @@ const SidebarNonIdealText = styled("p")({
 
 interface Props {
   g: PlayerViewG;
+  currentPlayer: string;
   onStartProposing: () => void;
   proposedClues: PlayerViewProposedClue[];
+  onChangeVote: (clueIndex: number | null) => void;
 }
 
 export const VotingContent = (props: Props) => {
-  const { g, onStartProposing, proposedClues } = props;
+  const {
+    g,
+    currentPlayer,
+    onStartProposing,
+    proposedClues,
+    onChangeVote,
+  } = props;
+  const supportedClueIndex = _.findIndex(proposedClues, (proposedClue) =>
+    proposedClue.votes.includes(currentPlayer)
+  );
   return (
     <SidebarContent
       header="Proposed clues"
@@ -43,13 +55,18 @@ export const VotingContent = (props: Props) => {
       ]}
     >
       <FormControl component="fieldset">
-        <RadioGroup aria-label="Vote on proposed clues" name="proposed-clues">
+        <RadioGroup
+          aria-label="Vote on proposed clues"
+          name="proposed-clues"
+          value={supportedClueIndex === -1 ? "" : `${supportedClueIndex}`}
+          onChange={(_, value) => onChangeVote(value === "" ? null : +value)}
+        >
           {proposedClues.map((proposedClue, i) => (
             <ProposedClueRadioButton
               key={i}
               g={g}
-              proposedClueId={i}
               proposedClue={proposedClue}
+              value={`${i}`}
             />
           ))}
           {proposedClues.length === 0 ? (
@@ -57,7 +74,7 @@ export const VotingContent = (props: Props) => {
           ) : (
             <FormControlLabel
               control={<Radio />}
-              value={null}
+              value=""
               label={
                 <SidebarNonIdealText>
                   Let's keep thinking...
