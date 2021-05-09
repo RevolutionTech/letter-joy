@@ -1,4 +1,4 @@
-import { styled, Radio, FormControlLabel } from "@material-ui/core";
+import { styled, Radio, FormControlLabel, Chip } from "@material-ui/core";
 import FontDownloadIcon from "@material-ui/icons/FontDownload";
 import GroupIcon from "@material-ui/icons/Group";
 import PersonIcon from "@material-ui/icons/Person";
@@ -41,32 +41,42 @@ export const ProposedClueRadioButton = (props: Props) => {
   const { numLetters, usesWild, numPlayers } = summary;
 
   return (
-    <FormControlLabel
-      value={value}
-      control={<Radio />}
-      label={
-        <SidebarProposedClueSummary>
-          <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
-            <FontDownloadIcon style={{ marginRight: "4px" }} />
-            <div>{numLetters}</div>
-            {usesWild && <div>{Letter.WILD}</div>}
-          </SidebarProposedClueSummaryDetail>
-          <SidebarProposedClueSummaryDetail>
-            <GroupIcon style={{ marginRight: "4px" }} />
-            <div>{numPlayers}</div>
-          </SidebarProposedClueSummaryDetail>
-          <SidebarProposedClueSummaryDetail>
-            <PersonIcon style={{ marginRight: "4px" }} />
-            <div>{authorName}</div>
-          </SidebarProposedClueSummaryDetail>
-          {placement && (
-            <SidebarProposedClueDisplay>
-              ({getClueDisplay(g, placement)})
-            </SidebarProposedClueDisplay>
-          )}
-        </SidebarProposedClueSummary>
-      }
-      style={{ marginTop: "16px" }}
-    />
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <FormControlLabel
+        value={value}
+        control={<Radio />}
+        label={
+          <SidebarProposedClueSummary>
+            <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
+              <FontDownloadIcon style={{ marginRight: "4px" }} />
+              <div>{numLetters}</div>
+              {usesWild && <div>{Letter.WILD}</div>}
+            </SidebarProposedClueSummaryDetail>
+            <SidebarProposedClueSummaryDetail>
+              <GroupIcon style={{ marginRight: "4px" }} />
+              <div>{numPlayers}</div>
+            </SidebarProposedClueSummaryDetail>
+            <SidebarProposedClueSummaryDetail>
+              <PersonIcon style={{ marginRight: "4px" }} />
+              <div>{authorName}</div>
+            </SidebarProposedClueSummaryDetail>
+            {placement && (
+              <SidebarProposedClueDisplay>
+                ({getClueDisplay(g, placement)})
+              </SidebarProposedClueDisplay>
+            )}
+          </SidebarProposedClueSummary>
+        }
+        style={{ marginTop: "16px" }}
+      />
+      <div>
+        {proposedClue.votes.map((playerID) => (
+          <Chip
+            label={g.players[+playerID].playerName}
+            style={{ marginRight: "8px", marginTop: "8px" }}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
