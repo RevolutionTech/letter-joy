@@ -27,8 +27,6 @@ export const LetterJoy = {
       hintsUsed: 0,
     }));
 
-    ctx.events?.setPhase?.("givingClues");
-
     return {
       players: _.assign({}, playerStates),
       teamHints: {
@@ -41,6 +39,7 @@ export const LetterJoy = {
 
   phases: {
     givingClues: {
+      start: true,
       turn: {
         activePlayers: { all: "choosingClue" },
         stages: {
