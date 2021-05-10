@@ -38,17 +38,31 @@ export const LetterJoy = {
   },
 
   phases: {
-    givingClues: {
+    giveClue: {
       start: true,
       turn: {
-        activePlayers: { all: "choosingClue" },
+        activePlayers: { all: "chooseClue" },
         stages: {
-          choosingClue: {
+          chooseClue: {
             moves: {
               proposeClue,
               supportClue,
             },
           },
+        },
+      },
+      endIf: (g: G) =>
+        _.some(
+          g.proposedClues,
+          (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
+        ),
+      next: "activeClue",
+    },
+    activeClue: {
+      turn: {
+        activePlayers: { all: "keepOrAdvanceLetter" },
+        stages: {
+          keepOrAdvanceLetter: {},
         },
       },
     },
