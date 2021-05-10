@@ -2,11 +2,12 @@ import _ from "lodash";
 import { Ctx } from "boardgame.io";
 import { INVALID_MOVE } from "boardgame.io/core";
 
+import { playerHasHintAvailable } from "./hints";
 import { ClueTokenPlacement, G } from "./types";
 
 export const proposeClue = (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
-  // A player must be active to propose the clue
-  if (ctx.playerID == null) {
+  // A player must be active and must have a hint available to propose the clue
+  if (ctx.playerID == null || !playerHasHintAvailable(g, ctx.playerID)) {
     return INVALID_MOVE;
   }
 

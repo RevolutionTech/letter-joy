@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
+import { playerHasHintAvailable } from "../../game/hints";
 import { PlayerViewG, PlayerViewProposedClue } from "../../game/types";
 import theme from "../theme";
 import { Button } from "./Button";
@@ -54,6 +55,7 @@ export const VotingContent = (props: Props) => {
                 variant="contained"
                 color="primary"
                 startIcon={<AddIcon />}
+                disabled={!playerHasHintAvailable(g, currentPlayer)}
                 onClick={onStartProposing}
               >
                 Propose
