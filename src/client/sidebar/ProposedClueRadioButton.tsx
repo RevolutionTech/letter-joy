@@ -32,10 +32,11 @@ interface Props {
   g: PlayerViewG;
   proposedClue: PlayerViewProposedClue;
   value: string;
+  disabled?: boolean;
 }
 
 export const ProposedClueRadioButton = (props: Props) => {
-  const { g, proposedClue, value } = props;
+  const { g, proposedClue, value, disabled } = props;
   const { authorID, placement, summary } = proposedClue;
   const authorName = g.players[+authorID].playerName;
   const { numLetters, usesWild, numPlayers } = summary;
@@ -44,6 +45,7 @@ export const ProposedClueRadioButton = (props: Props) => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <FormControlLabel
         value={value}
+        disabled={disabled}
         control={<Radio />}
         label={
           <SidebarProposedClueSummary>

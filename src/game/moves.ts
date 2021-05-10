@@ -5,18 +5,26 @@ import { INVALID_MOVE } from "boardgame.io/core";
 import { ClueTokenPlacement, G } from "./types";
 
 export const proposeClue = (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
+  // A player must be active to propose the clue
+  if (ctx.playerID == null) {
+    return INVALID_MOVE;
+  }
+
   g.proposedClues.push({
-    authorID: ctx.currentPlayer,
+    authorID: ctx.playerID,
     placement,
     votes: [],
   });
 };
 
 export const supportClue = (g: G, ctx: Ctx, clueIndex: number | null) => {
-  // The clue being supported must be one of the ones displayed
+  // A player must be active to support a clue
+  // and the clue being supported must be one of the ones displayed
+  const activePlayer = ctx.playerID;
   if (
-    clueIndex != null &&
-    (clueIndex < 0 || clueIndex >= g.proposedClues.length)
+    activePlayer == null ||
+    (clueIndex != null &&
+      (clueIndex < 0 || clueIndex >= g.proposedClues.length))
   ) {
     return INVALID_MOVE;
   }
@@ -26,7 +34,7 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number | null) => {
     if (i !== clueIndex) {
       g.proposedClues[i] = {
         ...proposedClue,
-        votes: _.without(proposedClue.votes, ctx.currentPlayer),
+        votes: _.without(proposedClue.votes, activePlayer),
       };
     }
   });
@@ -36,7 +44,7 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number | null) => {
     const proposedClue = g.proposedClues[clueIndex];
     g.proposedClues[clueIndex] = {
       ...proposedClue,
-      votes: _.union(proposedClue.votes, [ctx.currentPlayer]),
+      votes: _.union(proposedClue.votes, [activePlayer]),
     };
   }
 };

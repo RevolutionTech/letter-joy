@@ -22,7 +22,7 @@ const SidebarNonIdealText = styled("p")({
 
 interface Props {
   g: PlayerViewG;
-  currentPlayer: string;
+  currentPlayer: string | null;
   onStartProposing: () => void;
   proposedClues: PlayerViewProposedClue[];
   onChangeVote: (clueIndex: number | null) => void;
@@ -36,23 +36,30 @@ export const VotingContent = (props: Props) => {
     proposedClues,
     onChangeVote,
   } = props;
-  const supportedClueIndex = _.findIndex(proposedClues, (proposedClue) =>
-    proposedClue.votes.includes(currentPlayer)
-  );
+  const supportedClueIndex =
+    currentPlayer == null
+      ? -1
+      : _.findIndex(proposedClues, (proposedClue) =>
+          proposedClue.votes.includes(currentPlayer)
+        );
   return (
     <SidebarContent
       header="Proposed clues"
-      buttons={[
-        <Button
-          key="propose"
-          variant="contained"
-          color="primary"
-          startIcon={<AddIcon />}
-          onClick={onStartProposing}
-        >
-          Propose
-        </Button>,
-      ]}
+      buttons={
+        currentPlayer == null
+          ? []
+          : [
+              <Button
+                key="propose"
+                variant="contained"
+                color="primary"
+                startIcon={<AddIcon />}
+                onClick={onStartProposing}
+              >
+                Propose
+              </Button>,
+            ]
+      }
     >
       <FormControl component="fieldset">
         <RadioGroup
@@ -67,21 +74,25 @@ export const VotingContent = (props: Props) => {
               g={g}
               proposedClue={proposedClue}
               value={`${i}`}
+              disabled={currentPlayer == null}
             />
           ))}
           {proposedClues.length === 0 ? (
             <SidebarNonIdealText>No clues proposed yet.</SidebarNonIdealText>
           ) : (
-            <FormControlLabel
-              control={<Radio />}
-              value=""
-              label={
-                <SidebarNonIdealText>
-                  Let's keep thinking...
-                </SidebarNonIdealText>
-              }
-              style={{ fontFamily: theme.fontFamily }}
-            />
+            currentPlayer != null && (
+              <FormControlLabel
+                control={<Radio />}
+                value=""
+                disabled={currentPlayer == null}
+                label={
+                  <SidebarNonIdealText>
+                    Let's keep thinking...
+                  </SidebarNonIdealText>
+                }
+                style={{ fontFamily: theme.fontFamily }}
+              />
+            )
           )}
         </RadioGroup>
       </FormControl>

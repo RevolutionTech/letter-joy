@@ -91,7 +91,7 @@ export const LetterJoyBoard = (props: BoardProps) => {
       </GameTable>
       <ActionSidebar
         g={g}
-        currentPlayer={props.ctx.currentPlayer}
+        currentPlayer={props.playerID}
         clueProposing={isProposing ? clueDisplay : null}
         onStartProposing={() => setIsProposing(true)}
         onConfirmProposing={

@@ -21,7 +21,7 @@ const Sidebar = styled("div")({
 
 interface Props {
   g: PlayerViewG;
-  currentPlayer: string;
+  currentPlayer: string | null;
   clueProposing: string | null;
   onStartProposing: () => void;
   onConfirmProposing?: () => void;
