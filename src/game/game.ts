@@ -38,12 +38,12 @@ export const LetterJoy = {
   },
 
   phases: {
-    giveClue: {
+    chooseClue: {
       start: true,
       turn: {
-        activePlayers: { all: "chooseClue" },
+        activePlayers: { all: "chooseClueMain" },
         stages: {
-          chooseClue: {
+          chooseClueMain: {
             moves: {
               proposeClue,
               supportClue,
@@ -60,9 +60,9 @@ export const LetterJoy = {
     },
     activeClue: {
       turn: {
-        activePlayers: { all: "keepOrAdvanceLetter" },
+        activePlayers: { all: "activeClueMain" },
         stages: {
-          keepOrAdvanceLetter: {},
+          activeClueMain: {},
         },
       },
     },
