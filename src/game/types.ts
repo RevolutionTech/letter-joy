@@ -28,6 +28,7 @@ export interface PlayerState {
   playerName: string;
   letters: Letter[];
   activeLetterIndex: number;
+  nextLetterIndex: number;
   hintsUsed: number;
 }
 
@@ -46,9 +47,12 @@ export type ClueTokenLocation = ClueTokenPlayerLocation | { ownerID: "TEAM" };
 
 export type ClueTokenPlacement = ClueTokenLocation[];
 
-interface ProposedClue {
+export interface Clue {
   authorID: string;
   placement: ClueTokenPlacement;
+}
+
+interface ProposedClue extends Clue {
   votes: string[];
 }
 
@@ -69,6 +73,8 @@ export interface G {
   // so that we don't have to cast in all of the places that have playerIDs as strings
   players: Record<number, PlayerState>;
   teamHints: TeamHints;
+  activeClue: Clue | null;
+  previousClues: Clue[];
   proposedClues: ProposedClue[];
 }
 

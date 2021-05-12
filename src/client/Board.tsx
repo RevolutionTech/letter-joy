@@ -1,4 +1,5 @@
 import { useMemo, useState, useCallback } from "react";
+import _ from "lodash";
 import { BoardProps } from "boardgame.io/react";
 import { styled } from "@material-ui/core";
 
@@ -39,35 +40,47 @@ export const LetterJoyBoard = (props: BoardProps) => {
 
   const [isProposing, setIsProposing] = useState(false);
   const [
-    clueTokenPlacement,
-    addClueToken,
-    clearClueTokenPlacement,
+    proposedClueTokenPlacement,
+    addProposedClueToken,
+    clearProposedClueTokenPlacement,
   ] = useClueTokenPlacement(g);
-  const clueDisplay = useMemo(() => getClueDisplay(g, clueTokenPlacement), [
-    g,
-    clueTokenPlacement,
-  ]);
-  const onClose = useCallback(() => {
+  const proposedClueDisplay = useMemo(
+    () => getClueDisplay(g, proposedClueTokenPlacement),
+    [g, proposedClueTokenPlacement]
+  );
+  const onCloseProposing = useCallback(() => {
     setIsProposing(false);
-    clearClueTokenPlacement();
-  }, [clearClueTokenPlacement]);
+    clearProposedClueTokenPlacement();
+  }, [clearProposedClueTokenPlacement]);
   const onConfirmProposing = useCallback(() => {
-    props.moves.proposeClue(clueTokenPlacement);
-    onClose();
-  }, [props.moves, onClose, clueTokenPlacement]);
+    props.moves.proposeClue(proposedClueTokenPlacement);
+    onCloseProposing();
+  }, [props.moves, onCloseProposing, proposedClueTokenPlacement]);
 
-  const playerDisplays = Object.values(g.players).map((playerState, i) => {
+  const playersDecidingToAdvance = useMemo(
+    () =>
+      Object.keys(
+        _.pickBy(props.ctx.activePlayers, (phase) => phase === "deciding")
+      ),
+    [props.ctx.activePlayers]
+  );
+
+  const playerDisplays = Object.values(g.players).map((playerState) => {
     return (
       <PlayerDisplay
         key={playerState.playerID}
         {...playerState}
         teamHintsAvailable={g.teamHints.available}
         containsTokens={getTokensAssignedToOwner(
-          clueTokenPlacement,
+          g.activeClue == null
+            ? proposedClueTokenPlacement
+            : g.activeClue.placement,
           playerState.playerID
         )}
         onAddToClue={
-          isProposing ? () => addClueToken(playerState.playerID) : undefined
+          isProposing
+            ? () => addProposedClueToken(playerState.playerID)
+            : undefined
         }
       />
     );
@@ -81,10 +94,14 @@ export const LetterJoyBoard = (props: BoardProps) => {
           <TeamDisplay
             teamHints={g.teamHints}
             containsTokens={getTokensAssignedToOwner(
-              clueTokenPlacement,
+              g.activeClue == null
+                ? proposedClueTokenPlacement
+                : g.activeClue.placement,
               "TEAM"
             )}
-            onAddToClue={isProposing ? () => addClueToken("TEAM") : undefined}
+            onAddToClue={
+              isProposing ? () => addProposedClueToken("TEAM") : undefined
+            }
           />
         </PlayerRows>
         <SidebarPlaceholder />
@@ -92,14 +109,16 @@ export const LetterJoyBoard = (props: BoardProps) => {
       <ActionSidebar
         g={g}
         currentPlayer={props.playerID}
-        clueProposing={isProposing ? clueDisplay : null}
+        clueProposing={isProposing ? proposedClueDisplay : null}
         onStartProposing={() => setIsProposing(true)}
         onConfirmProposing={
-          clueTokenPlacement.length > 0 ? onConfirmProposing : undefined
+          proposedClueTokenPlacement.length > 0 ? onConfirmProposing : undefined
         }
-        onCancelProposing={onClose}
-        proposedClues={g.proposedClues}
+        onCancelProposing={onCloseProposing}
         onChangeVote={props.moves.supportClue}
+        playersDecidingToAdvance={playersDecidingToAdvance}
+        onAdvanceLetter={props.moves.advanceLetter}
+        onConfirmActiveLetter={() => props.events.endStage?.()}
       />
     </>
   );

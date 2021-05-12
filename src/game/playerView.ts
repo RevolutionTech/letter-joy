@@ -23,8 +23,9 @@ const playerStatePlayerView = (
 };
 
 export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
-  const { players, teamHints, proposedClues } = g;
+  const { players, proposedClues } = g;
   return {
+    ...g,
     players: _.reduce(
       players,
       (result, value, key) => ({
@@ -33,7 +34,6 @@ export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
       }),
       {}
     ),
-    teamHints,
     proposedClues: proposedClues.map((proposedClue) => {
       const { authorID, placement, votes } = proposedClue;
       const usesWild = _.some(

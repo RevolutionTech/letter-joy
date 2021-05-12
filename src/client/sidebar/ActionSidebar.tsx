@@ -1,9 +1,9 @@
 import { styled } from "@material-ui/core";
 
-import { PlayerViewG, PlayerViewProposedClue } from "../../game/types";
+import { PlayerViewG } from "../../game/types";
 import theme from "../theme";
-import { ProposingContent } from "./ProposingContent";
-import { VotingContent } from "./VotingContent";
+import { ActiveClueContent } from "./ActiveClueContent";
+import { ChoosingClueContent } from "./ChoosingClueContent";
 
 export const SIDEBAR_WIDTH = "400px";
 export const SIDEBAR_PADDING = "24px";
@@ -26,8 +26,10 @@ interface Props {
   onStartProposing: () => void;
   onConfirmProposing?: () => void;
   onCancelProposing: () => void;
-  proposedClues: PlayerViewProposedClue[];
   onChangeVote: (clueIndex: number | null) => void;
+  playersDecidingToAdvance: string[];
+  onAdvanceLetter: () => void;
+  onConfirmActiveLetter: () => void;
 }
 
 export const ActionSidebar = (props: Props) => {
@@ -38,24 +40,33 @@ export const ActionSidebar = (props: Props) => {
     onStartProposing,
     onConfirmProposing,
     onCancelProposing,
-    proposedClues,
     onChangeVote,
+    playersDecidingToAdvance,
+    onAdvanceLetter,
+    onConfirmActiveLetter,
   } = props;
+  const { activeClue } = g;
+
   return (
     <Sidebar>
-      {clueProposing == null ? (
-        <VotingContent
+      {activeClue == null ? (
+        <ChoosingClueContent
           g={g}
           currentPlayer={currentPlayer}
+          clueProposing={clueProposing}
           onStartProposing={onStartProposing}
-          proposedClues={proposedClues}
+          onConfirmProposing={onConfirmProposing}
+          onCancelProposing={onCancelProposing}
           onChangeVote={onChangeVote}
         />
       ) : (
-        <ProposingContent
-          clueProposing={clueProposing}
-          onConfirmProposing={onConfirmProposing}
-          onCancelProposing={onCancelProposing}
+        <ActiveClueContent
+          g={g}
+          currentPlayer={currentPlayer}
+          activeClue={activeClue}
+          playersDecidingToAdvance={playersDecidingToAdvance}
+          onAdvanceLetter={onAdvanceLetter}
+          onConfirmActiveLetter={onConfirmActiveLetter}
         />
       )}
     </Sidebar>

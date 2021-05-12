@@ -41,14 +41,14 @@ export const PlayerDisplay = (props: Props) => {
       </PlayerStatus>
       <PlayerHand>
         {letters.map((letter, i) => {
-          const clueProps =
-            letter == null ? {} : { containsTokens, onClick: onAddToClue };
+          const active = i === activeLetterIndex;
           return (
             <Card
               key={`${playerID}-${i}`}
               letter={letter}
-              active={i === activeLetterIndex}
-              {...clueProps}
+              active={active}
+              containsTokens={active ? containsTokens : undefined}
+              onClick={letter == null ? undefined : onAddToClue}
             />
           );
         })}

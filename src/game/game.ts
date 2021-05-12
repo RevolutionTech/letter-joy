@@ -8,7 +8,7 @@ import {
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
 import { createShuffledDeck } from "./deck";
-import { proposeClue, supportClue } from "./moves";
+import { proposeClue, supportClue, advanceLetter } from "./moves";
 import { playerView } from "./playerView";
 import { G } from "./types";
 import { splitArray } from "./utils";
@@ -24,6 +24,7 @@ export const LetterJoy = {
       playerName: `Player ${i + 1}`,
       letters,
       activeLetterIndex: 0,
+      nextLetterIndex: 0,
       hintsUsed: 0,
     }));
 
@@ -33,6 +34,8 @@ export const LetterJoy = {
         available: NUM_HINTS_STARTING_AVAILABLE,
         locked: NUM_HINTS_LOCKED,
       },
+      activeClue: null,
+      previousClues: [],
       proposedClues: [],
     };
   },
@@ -51,6 +54,14 @@ export const LetterJoy = {
           },
         },
       },
+      onEnd: (g: G) => {
+        const acceptedClue = _.find(
+          g.proposedClues,
+          (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
+        );
+        g.activeClue = _.omit(acceptedClue, "votes");
+        g.proposedClues = [];
+      },
       endIf: (g: G) =>
         _.some(
           g.proposedClues,
@@ -60,11 +71,36 @@ export const LetterJoy = {
     },
     activeClue: {
       turn: {
-        activePlayers: { all: "activeClueMain" },
+        activePlayers: { all: "deciding" },
         stages: {
-          activeClueMain: {},
+          deciding: {
+            moves: { advanceLetter },
+            next: "waiting",
+          },
+          waiting: {},
         },
       },
+      onEnd: (g: G) => {
+        // Move the active clue to previous clues
+        if (g.activeClue != null) {
+          g.previousClues.push(g.activeClue);
+          g.activeClue = null;
+        }
+
+        // Update active letters based on which letter
+        // the player wants to advance to the next round
+        g.players = _.mapValues(g.players, (playerState) => ({
+          ...playerState,
+          activeLetterIndex: playerState.nextLetterIndex,
+        }));
+      },
+      endIf: (g: G, ctx: Ctx) =>
+        ctx.activePlayers != null &&
+        _.every(
+          Object.values(ctx.activePlayers),
+          (stage) => stage === "waiting"
+        ),
+      next: "chooseClue",
     },
   },
 

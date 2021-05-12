@@ -9,7 +9,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 
 import { playerHasHintAvailable } from "../../game/hints";
-import { PlayerViewG, PlayerViewProposedClue } from "../../game/types";
+import { PlayerViewG } from "../../game/types";
 import theme from "../theme";
 import { Button } from "./Button";
 import { ProposedClueRadioButton } from "./ProposedClueRadioButton";
@@ -25,18 +25,12 @@ interface Props {
   g: PlayerViewG;
   currentPlayer: string | null;
   onStartProposing: () => void;
-  proposedClues: PlayerViewProposedClue[];
   onChangeVote: (clueIndex: number | null) => void;
 }
 
 export const VotingContent = (props: Props) => {
-  const {
-    g,
-    currentPlayer,
-    onStartProposing,
-    proposedClues,
-    onChangeVote,
-  } = props;
+  const { g, currentPlayer, onStartProposing, onChangeVote } = props;
+  const { proposedClues } = g;
   const supportedClueIndex =
     currentPlayer == null
       ? -1

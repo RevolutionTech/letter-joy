@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Ctx } from "boardgame.io";
 import { INVALID_MOVE } from "boardgame.io/core";
 
+import { LETTERS_PER_PLAYER } from "./constants";
 import { playerHasHintAvailable } from "./hints";
 import { ClueTokenPlacement, G } from "./types";
 
@@ -48,4 +49,25 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number | null) => {
       votes: _.union(proposedClue.votes, [activePlayer]),
     };
   }
+};
+
+export const advanceLetter = (g: G, ctx: Ctx) => {
+  // A player must be active to advance
+  const activePlayer = ctx.playerID;
+  if (activePlayer == null) {
+    return INVALID_MOVE;
+  }
+
+  // A player cannot advance beyond their final letter
+  const playerState = g.players[+activePlayer];
+  const nextLetterIndex = playerState.activeLetterIndex + 1;
+  if (nextLetterIndex >= LETTERS_PER_PLAYER) {
+    return INVALID_MOVE;
+  }
+
+  // Update the letter that the player will have active next round
+  g.players[+activePlayer] = {
+    ...playerState,
+    nextLetterIndex,
+  };
 };

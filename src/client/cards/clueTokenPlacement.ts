@@ -30,7 +30,8 @@ export const getClueDisplay = (
       const letterIndex = (clueTokenLocation as ClueTokenPlayerLocation)
         .letterIndex;
       const player = g.players[+ownerID];
-      const letter = player.letters[letterIndex];
+      // TODO: Use subscript for unknown letters to mark the index
+      const letter = player.letters[letterIndex] ?? "?";
       return letter;
     }
   });
