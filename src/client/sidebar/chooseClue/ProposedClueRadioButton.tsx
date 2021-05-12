@@ -3,9 +3,13 @@ import FontDownloadIcon from "@material-ui/icons/FontDownload";
 import GroupIcon from "@material-ui/icons/Group";
 import PersonIcon from "@material-ui/icons/Person";
 
-import { Letter, PlayerViewG, PlayerViewProposedClue } from "../../game/types";
-import { getClueDisplay } from "../cards/clueTokenPlacement";
-import theme from "../theme";
+import {
+  Letter,
+  PlayerViewG,
+  PlayerViewProposedClue,
+} from "../../../game/types";
+import { getClueDisplay } from "../../cards/clueTokenPlacement";
+import theme from "../../theme";
 
 const SidebarProposedClueSummary = styled("div")({
   display: "flex",

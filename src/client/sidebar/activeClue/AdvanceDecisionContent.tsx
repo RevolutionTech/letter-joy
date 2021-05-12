@@ -1,6 +1,6 @@
 import { styled } from "@material-ui/core";
 
-import { Button } from "./Button";
+import { Button } from "../Button";
 
 const AdvanceDecisionButton = styled("div")({
   display: "flex",

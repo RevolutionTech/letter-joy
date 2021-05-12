@@ -8,12 +8,12 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 
-import { playerHasHintAvailable } from "../../game/hints";
-import { PlayerViewG } from "../../game/types";
-import theme from "../theme";
-import { Button } from "./Button";
+import { playerHasHintAvailable } from "../../../game/hints";
+import { PlayerViewG } from "../../../game/types";
+import theme from "../../theme";
+import { Button } from "../Button";
+import { SidebarContent } from "../SidebarContent";
 import { ProposedClueRadioButton } from "./ProposedClueRadioButton";
-import { SidebarContent } from "./SidebarContent";
 
 const SidebarNonIdealText = styled("p")({
   fontFamily: theme.fontFamily,

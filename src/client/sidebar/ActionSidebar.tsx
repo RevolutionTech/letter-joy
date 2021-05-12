@@ -2,8 +2,8 @@ import { styled } from "@material-ui/core";
 
 import { PlayerViewG } from "../../game/types";
 import theme from "../theme";
-import { ActiveClueContent } from "./ActiveClueContent";
-import { ChoosingClueContent } from "./ChoosingClueContent";
+import { ActiveClueContent } from "./activeClue/ActiveClueContent";
+import { ChoosingClueContent } from "./chooseClue/ChoosingClueContent";
 
 export const SIDEBAR_WIDTH = "400px";
 export const SIDEBAR_PADDING = "24px";

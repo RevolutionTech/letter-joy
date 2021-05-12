@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
 
-import { Button } from "./Button";
-import { SidebarContent } from "./SidebarContent";
+import { Button } from "../Button";
+import { SidebarContent } from "../SidebarContent";
 
 const SidebarClueText = styled("div")({ fontSize: "48pt" });
 

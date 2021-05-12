@@ -1,4 +1,4 @@
-import { PlayerViewG } from "../../game/types";
+import { PlayerViewG } from "../../../game/types";
 import { ProposingContent } from "./ProposingContent";
 import { VotingContent } from "./VotingContent";
 
