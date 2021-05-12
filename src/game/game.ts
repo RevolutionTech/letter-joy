@@ -8,6 +8,7 @@ import {
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
 import { createShuffledDeck } from "./deck";
+import { consumeHint } from "./hints";
 import { proposeClue, supportClue, advanceLetter } from "./moves";
 import { playerView } from "./playerView";
 import { G } from "./types";
@@ -59,8 +60,10 @@ export const LetterJoy = {
           g.proposedClues,
           (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
         );
-        g.activeClue = _.omit(acceptedClue, "votes");
+        const activeClue = _.omit(acceptedClue, "votes");
+        g.activeClue = activeClue;
         g.proposedClues = [];
+        consumeHint(g, activeClue.authorID);
       },
       endIf: (g: G) =>
         _.some(
