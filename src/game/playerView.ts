@@ -11,7 +11,7 @@ const playerStatePlayerView = (
 
   // Filter out all letters unless it is a different player's active card
   const lettersPlayerView = letters.map((letter, i) =>
-    playerViewPlayerID === playerID || activeLetterIndex !== i ? null : letter
+    playerViewPlayerID === playerID || activeLetterIndex < i ? null : letter
   );
 
   return {

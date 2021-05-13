@@ -45,7 +45,7 @@ export const PlayerDisplay = (props: Props) => {
           return (
             <Card
               key={`${playerID}-${i}`}
-              letter={letter}
+              letter={active ? letter : null}
               active={active}
               containsTokens={active ? containsTokens : undefined}
               onClick={letter == null ? undefined : onAddToClue}
