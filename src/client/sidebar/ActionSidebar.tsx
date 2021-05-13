@@ -1,9 +1,11 @@
 import { styled } from "@material-ui/core";
 
 import { PlayerViewG } from "../../game/types";
+import { getClueDisplay } from "../cards/clueTokenPlacement";
 import theme from "../theme";
 import { ActiveClueContent } from "./activeClue/ActiveClueContent";
 import { ChoosingClueContent } from "./chooseClue/ChoosingClueContent";
+import { SidebarList } from "./SidebarList";
 
 export const SIDEBAR_WIDTH = "400px";
 export const SIDEBAR_PADDING = "24px";
@@ -68,6 +70,16 @@ export const ActionSidebar = (props: Props) => {
           onAdvanceLetter={onAdvanceLetter}
           onConfirmActiveLetter={onConfirmActiveLetter}
         />
+      )}
+      {g.previousClues.length > 0 && (
+        <>
+          <div style={{ fontSize: "18pt" }}>Previous Clues</div>
+          <SidebarList>
+            {g.previousClues.map((previousClue) => (
+              <li>{getClueDisplay(g, previousClue.placement)}</li>
+            ))}
+          </SidebarList>
+        </>
       )}
     </Sidebar>
   );

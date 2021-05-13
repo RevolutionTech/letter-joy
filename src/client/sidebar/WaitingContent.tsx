@@ -1,12 +1,5 @@
-import { styled } from "@material-ui/core";
-
 import { PlayerViewG } from "../../game/types";
-
-const PlayerList = styled("ul")({
-  paddingLeft: "0",
-  listStyle: "none",
-  "& li": { fontSize: "36pt" },
-});
+import { SidebarList } from "./SidebarList";
 
 interface Props {
   g: PlayerViewG;
@@ -19,11 +12,11 @@ export const WaitingContent = (props: Props) => {
   return (
     <>
       <div style={{ fontSize: "16pt" }}>{description}</div>
-      <PlayerList>
+      <SidebarList>
         {playersActing.map((playerID) => (
           <li key={playerID}>{g.players[+playerID].playerName}</li>
         ))}
-      </PlayerList>
+      </SidebarList>
     </>
   );
 };
