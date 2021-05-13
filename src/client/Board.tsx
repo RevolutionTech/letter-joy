@@ -11,7 +11,6 @@ import {
 } from "./sidebar/ActionSidebar";
 import {
   getTokensAssignedToOwner,
-  getClueDisplay,
   useClueTokenPlacement,
 } from "./cards/clueTokenPlacement";
 import { PlayerDisplay } from "./display/PlayerDisplay";
@@ -44,10 +43,6 @@ export const LetterJoyBoard = (props: BoardProps) => {
     addProposedClueToken,
     clearProposedClueTokenPlacement,
   ] = useClueTokenPlacement(g);
-  const proposedClueDisplay = useMemo(
-    () => getClueDisplay(g, proposedClueTokenPlacement),
-    [g, proposedClueTokenPlacement]
-  );
   const onCloseProposing = useCallback(() => {
     setIsProposing(false);
     clearProposedClueTokenPlacement();
@@ -109,7 +104,7 @@ export const LetterJoyBoard = (props: BoardProps) => {
       <ActionSidebar
         g={g}
         currentPlayer={props.playerID}
-        clueProposing={isProposing ? proposedClueDisplay : null}
+        clueProposingPlacement={isProposing ? proposedClueTokenPlacement : null}
         onStartProposing={() => setIsProposing(true)}
         onConfirmProposing={
           proposedClueTokenPlacement.length > 0 ? onConfirmProposing : undefined

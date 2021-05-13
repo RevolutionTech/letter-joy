@@ -1,11 +1,11 @@
-import { PlayerViewG } from "../../../game/types";
+import { ClueTokenPlacement, PlayerViewG } from "../../../game/types";
 import { ProposingContent } from "./ProposingContent";
 import { VotingContent } from "./VotingContent";
 
 interface Props {
   g: PlayerViewG;
   currentPlayer: string | null;
-  clueProposing: string | null;
+  clueProposingPlacement: ClueTokenPlacement | null;
   onStartProposing: () => void;
   onConfirmProposing?: () => void;
   onCancelProposing: () => void;
@@ -16,13 +16,13 @@ export const ChoosingClueContent = (props: Props) => {
   const {
     g,
     currentPlayer,
-    clueProposing,
+    clueProposingPlacement,
     onStartProposing,
     onConfirmProposing,
     onCancelProposing,
     onChangeVote,
   } = props;
-  return clueProposing == null ? (
+  return clueProposingPlacement == null ? (
     <VotingContent
       g={g}
       currentPlayer={currentPlayer}
@@ -31,7 +31,8 @@ export const ChoosingClueContent = (props: Props) => {
     />
   ) : (
     <ProposingContent
-      clueProposing={clueProposing}
+      g={g}
+      clueProposingPlacement={clueProposingPlacement}
       onConfirmProposing={onConfirmProposing}
       onCancelProposing={onCancelProposing}
     />

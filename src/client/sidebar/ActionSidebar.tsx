@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
 
-import { PlayerViewG } from "../../game/types";
-import { getClueDisplay } from "../cards/clueTokenPlacement";
+import { ClueTokenPlacement, PlayerViewG } from "../../game/types";
+import { ClueDisplay } from "../cards/ClueDisplay";
 import theme from "../theme";
 import { ActiveClueContent } from "./activeClue/ActiveClueContent";
 import { ChoosingClueContent } from "./chooseClue/ChoosingClueContent";
@@ -24,7 +24,7 @@ const Sidebar = styled("div")({
 interface Props {
   g: PlayerViewG;
   currentPlayer: string | null;
-  clueProposing: string | null;
+  clueProposingPlacement: ClueTokenPlacement | null;
   onStartProposing: () => void;
   onConfirmProposing?: () => void;
   onCancelProposing: () => void;
@@ -38,7 +38,7 @@ export const ActionSidebar = (props: Props) => {
   const {
     g,
     currentPlayer,
-    clueProposing,
+    clueProposingPlacement,
     onStartProposing,
     onConfirmProposing,
     onCancelProposing,
@@ -55,7 +55,7 @@ export const ActionSidebar = (props: Props) => {
         <ChoosingClueContent
           g={g}
           currentPlayer={currentPlayer}
-          clueProposing={clueProposing}
+          clueProposingPlacement={clueProposingPlacement}
           onStartProposing={onStartProposing}
           onConfirmProposing={onConfirmProposing}
           onCancelProposing={onCancelProposing}
@@ -76,7 +76,9 @@ export const ActionSidebar = (props: Props) => {
           <div style={{ fontSize: "18pt" }}>Previous Clues</div>
           <SidebarList>
             {g.previousClues.map((previousClue, i) => (
-              <li key={i}>{getClueDisplay(g, previousClue.placement)}</li>
+              <li key={i}>
+                <ClueDisplay g={g} tokenPlacement={previousClue.placement} />
+              </li>
             ))}
           </SidebarList>
         </>

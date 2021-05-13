@@ -8,7 +8,7 @@ import {
   PlayerViewG,
   PlayerViewProposedClue,
 } from "../../../game/types";
-import { getClueDisplay } from "../../cards/clueTokenPlacement";
+import { ClueDisplay } from "../../cards/ClueDisplay";
 import theme from "../../theme";
 
 const SidebarProposedClueSummary = styled("div")({
@@ -68,7 +68,7 @@ export const ProposedClueRadioButton = (props: Props) => {
             </SidebarProposedClueSummaryDetail>
             {placement && (
               <SidebarProposedClueDisplay>
-                ({getClueDisplay(g, placement)})
+                (<ClueDisplay g={g} tokenPlacement={placement} />)
               </SidebarProposedClueDisplay>
             )}
           </SidebarProposedClueSummary>

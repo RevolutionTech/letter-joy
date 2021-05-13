@@ -1,5 +1,5 @@
 import { Clue, PlayerViewG } from "../../../game/types";
-import { getClueDisplay } from "../../cards/clueTokenPlacement";
+import { ClueDisplay } from "../../cards/ClueDisplay";
 import { SidebarContent } from "../SidebarContent";
 import { WaitingContent } from "../WaitingContent";
 import { AdvanceDecisionContent } from "./AdvanceDecisionContent";
@@ -25,7 +25,7 @@ export const ActiveClueContent = (props: Props) => {
   return (
     <SidebarContent header="Active clue" buttons={[]}>
       <div style={{ fontSize: "48pt" }}>
-        {getClueDisplay(g, activeClue.placement)}
+        <ClueDisplay g={g} tokenPlacement={activeClue.placement} />
       </div>
       {currentPlayer != null &&
       playersDecidingToAdvance.includes(currentPlayer) ? (
