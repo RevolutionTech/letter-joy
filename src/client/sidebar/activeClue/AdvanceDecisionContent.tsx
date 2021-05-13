@@ -2,6 +2,12 @@ import { styled } from "@material-ui/core";
 
 import { Button } from "../Button";
 
+const AdvanceDecisionButtons = styled("div")({
+  display: "flex",
+  justifyContent: "space-evenly",
+  marginBottom: "16px",
+});
+
 const AdvanceDecisionButton = styled("div")({
   display: "flex",
   flexDirection: "column",
@@ -20,7 +26,7 @@ interface Props {
 export const AdvanceDecisionContent = (props: Props) => {
   const { onAdvanceLetter, onConfirmActiveLetter } = props;
   return (
-    <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+    <AdvanceDecisionButtons>
       <AdvanceDecisionButton>
         {/* TODO: Write the letter position here (ie. my 1st letter) */}
         <AdvanceDecisionButtonHelpText>
@@ -44,6 +50,6 @@ export const AdvanceDecisionContent = (props: Props) => {
           Keep Letter
         </Button>
       </AdvanceDecisionButton>
-    </div>
+    </AdvanceDecisionButtons>
   );
 };
