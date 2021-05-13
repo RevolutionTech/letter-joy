@@ -75,8 +75,8 @@ export const ActionSidebar = (props: Props) => {
         <>
           <div style={{ fontSize: "18pt" }}>Previous Clues</div>
           <SidebarList>
-            {g.previousClues.map((previousClue) => (
-              <li>{getClueDisplay(g, previousClue.placement)}</li>
+            {g.previousClues.map((previousClue, i) => (
+              <li key={i}>{getClueDisplay(g, previousClue.placement)}</li>
             ))}
           </SidebarList>
         </>

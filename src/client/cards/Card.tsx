@@ -73,6 +73,7 @@ export const Card = (props: Props) => {
         const offset = spaceForToken * (i + 1);
         return (
           <TokenWrapper
+            key={i}
             style={{
               left: `calc(${TOKEN_SLOT_WIDTH / 2}px * -1 + 4px + ${offset}px)`,
             }}

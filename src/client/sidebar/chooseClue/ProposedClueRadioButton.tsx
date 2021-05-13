@@ -78,6 +78,7 @@ export const ProposedClueRadioButton = (props: Props) => {
       <div>
         {proposedClue.votes.map((playerID) => (
           <Chip
+            key={playerID}
             label={g.players[+playerID].playerName}
             style={{ marginRight: "8px", marginTop: "8px" }}
           />
