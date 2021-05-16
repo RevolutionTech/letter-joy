@@ -30,6 +30,7 @@ export const ActiveClueContent = (props: Props) => {
       {currentPlayer != null &&
       playersDecidingToAdvance.includes(currentPlayer) ? (
         <AdvanceDecisionContent
+          activeLetterIndex={g.players[+currentPlayer].activeLetterIndex}
           onAdvanceLetter={onAdvanceLetter}
           onConfirmActiveLetter={onConfirmActiveLetter}
         />

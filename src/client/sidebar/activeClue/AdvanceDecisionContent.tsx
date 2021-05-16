@@ -18,19 +18,35 @@ const AdvanceDecisionButtonHelpText = styled("div")({
   marginBottom: "8px",
 });
 
+// https://stackoverflow.com/a/13627586/3241924
+const getOrdinalSuffix = (i: number): string => {
+  const j = i % 10;
+  const k = i % 100;
+  if (j === 1 && k !== 11) {
+    return i + "st";
+  }
+  if (j === 2 && k !== 12) {
+    return i + "nd";
+  }
+  if (j === 3 && k !== 13) {
+    return i + "rd";
+  }
+  return i + "th";
+};
+
 interface Props {
+  activeLetterIndex: number;
   onAdvanceLetter: () => void;
   onConfirmActiveLetter: () => void;
 }
 
 export const AdvanceDecisionContent = (props: Props) => {
-  const { onAdvanceLetter, onConfirmActiveLetter } = props;
+  const { activeLetterIndex, onAdvanceLetter, onConfirmActiveLetter } = props;
   return (
     <AdvanceDecisionButtons>
       <AdvanceDecisionButton>
-        {/* TODO: Write the letter position here (ie. my 1st letter) */}
         <AdvanceDecisionButtonHelpText>
-          I know my current letter!
+          I know my {getOrdinalSuffix(activeLetterIndex + 1)} letter!
         </AdvanceDecisionButtonHelpText>
         <Button
           variant="outlined"
