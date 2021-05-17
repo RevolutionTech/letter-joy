@@ -7,9 +7,9 @@ import {
   Letter,
   PlayerViewG,
   PlayerViewProposedClue,
-} from "../../../game/types";
-import { ClueDisplay } from "../../cards/ClueDisplay";
-import theme from "../../theme";
+} from "../../../../game/types";
+import { ClueDisplay } from "../../../cards/ClueDisplay";
+import theme from "../../../theme";
 
 const SidebarProposedClueSummary = styled("div")({
   display: "flex",

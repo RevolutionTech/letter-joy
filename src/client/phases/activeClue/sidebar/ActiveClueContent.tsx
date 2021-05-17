@@ -1,7 +1,7 @@
-import { Clue, PlayerViewG } from "../../../game/types";
-import { ClueDisplay } from "../../cards/ClueDisplay";
-import { SidebarContent } from "../SidebarContent";
-import { WaitingContent } from "../WaitingContent";
+import { Clue, PlayerViewG } from "../../../../game/types";
+import { ClueDisplay } from "../../../cards/ClueDisplay";
+import { SidebarContent } from "../../../sidebar/SidebarContent";
+import { WaitingContent } from "../../../sidebar/WaitingContent";
 import { AdvanceDecisionContent } from "./AdvanceDecisionContent";
 
 interface Props {

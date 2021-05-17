@@ -1,4 +1,4 @@
-import { ClueTokenPlacement, PlayerViewG } from "../../../game/types";
+import { ClueTokenPlacement, PlayerViewG } from "../../../../game/types";
 import { ProposingContent } from "./ProposingContent";
 import { VotingContent } from "./VotingContent";
 

@@ -3,11 +3,11 @@ import _ from "lodash";
 import { BoardProps } from "boardgame.io/react";
 
 import { PlayerViewG } from "../game/types";
-import { ActiveClueContent } from "./sidebar/activeClue/ActiveClueContent";
-import { ChoosingClueContent } from "./sidebar/chooseClue/ChoosingClueContent";
-import { Sidebar } from "./sidebar/Sidebar";
 import { useClueTokenPlacement } from "./cards/clueTokenPlacement";
 import { ActiveTableDisplay } from "./display/ActiveTableDisplay";
+import { ActiveClueContent } from "./phases/activeClue/sidebar/ActiveClueContent";
+import { ChoosingClueContent } from "./phases/chooseClue/sidebar/ChoosingClueContent";
+import { Sidebar } from "./sidebar/Sidebar";
 
 export const LetterJoyBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;

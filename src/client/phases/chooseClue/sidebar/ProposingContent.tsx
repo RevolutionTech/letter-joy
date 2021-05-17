@@ -1,9 +1,9 @@
 import { styled } from "@material-ui/core";
 
-import { ClueTokenPlacement, PlayerViewG } from "../../../game/types";
-import { ClueDisplay } from "../../cards/ClueDisplay";
-import { Button } from "../Button";
-import { SidebarContent } from "../SidebarContent";
+import { ClueTokenPlacement, PlayerViewG } from "../../../../game/types";
+import { ClueDisplay } from "../../../cards/ClueDisplay";
+import { Button } from "../../../sidebar/Button";
+import { SidebarContent } from "../../../sidebar/SidebarContent";
 
 const SidebarClueText = styled("div")({ fontSize: "48pt" });
 
