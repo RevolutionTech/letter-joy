@@ -11,7 +11,7 @@ import { createShuffledDeck } from "./deck";
 import { consumeHint } from "./hints";
 import { proposeClue, supportClue, advanceLetter } from "./moves";
 import { playerView } from "./playerView";
-import { G } from "./types";
+import { Phase, G } from "./types";
 import { splitArray } from "./utils";
 
 export const LetterJoy = {
@@ -42,7 +42,7 @@ export const LetterJoy = {
   },
 
   phases: {
-    chooseClue: {
+    [Phase.CHOOSE_CLUE]: {
       start: true,
       turn: {
         activePlayers: { all: "chooseClueMain" },
@@ -70,9 +70,9 @@ export const LetterJoy = {
           g.proposedClues,
           (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
         ),
-      next: "activeClue",
+      next: Phase.ACTIVE_CLUE,
     },
-    activeClue: {
+    [Phase.ACTIVE_CLUE]: {
       turn: {
         activePlayers: { all: "deciding" },
         stages: {
@@ -103,7 +103,7 @@ export const LetterJoy = {
           Object.values(ctx.activePlayers),
           (stage) => stage === "waiting"
         ),
-      next: "chooseClue",
+      next: Phase.CHOOSE_CLUE,
     },
   },
 

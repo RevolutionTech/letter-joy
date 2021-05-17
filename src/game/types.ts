@@ -1,3 +1,8 @@
+export enum Phase {
+  CHOOSE_CLUE = "chooseClue",
+  ACTIVE_CLUE = "activeClue",
+}
+
 export enum Letter {
   A = "A",
   B = "B",
