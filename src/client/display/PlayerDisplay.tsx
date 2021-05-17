@@ -42,13 +42,14 @@ export const PlayerDisplay = (props: Props) => {
       <PlayerHand>
         {letters.map((letter, i) => {
           const active = i === activeLetterIndex;
+          const letterDisplayed = active ? letter : null;
           return (
             <Card
               key={`${playerID}-${i}`}
-              letter={active ? letter : null}
+              letter={letterDisplayed}
               active={active}
               containsTokens={active ? containsTokens : undefined}
-              onClick={letter == null ? undefined : onAddToClue}
+              onClick={letterDisplayed == null ? undefined : onAddToClue}
             />
           );
         })}
