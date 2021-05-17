@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Ctx } from "boardgame.io";
 import { INVALID_MOVE } from "boardgame.io/core";
 
+import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
 import { playerHasHintAvailable } from "./hints";
 import { ClueTokenPlacement, G } from "./types";
@@ -15,6 +16,7 @@ export const proposeClue = (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
   g.proposedClues.push({
     authorID: ctx.playerID,
     placement,
+    summary: clueSummary(placement),
     votes: [],
   });
 };

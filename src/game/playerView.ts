@@ -35,17 +35,7 @@ export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
       {}
     ),
     proposedClues: proposedClues.map((proposedClue) => {
-      const { authorID, placement, votes } = proposedClue;
-      const usesWild = _.some(
-        placement,
-        (clueTokenLocation) => clueTokenLocation.ownerID === "TEAM"
-      );
-      const summary = {
-        numLetters: placement.length,
-        usesWild,
-        numPlayers:
-          Object.keys(_.groupBy(placement, "ownerID")).length - +usesWild,
-      };
+      const { authorID, placement, summary, votes } = proposedClue;
       const maybePlacement = authorID === playerID ? { placement } : {};
       return { authorID, ...maybePlacement, summary, votes };
     }),

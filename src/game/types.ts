@@ -52,20 +52,20 @@ export interface Clue {
   placement: ClueTokenPlacement;
 }
 
-interface ProposedClue extends Clue {
-  votes: string[];
-}
-
-interface ProposedClueSummary {
+interface ClueSummary {
   numLetters: number;
   usesWild: boolean;
   numPlayers: number;
 }
 
+interface ProposedClue extends Clue {
+  summary: ClueSummary;
+  votes: string[];
+}
+
 export interface PlayerViewProposedClue
   extends Omit<ProposedClue, "placement"> {
   placement?: ClueTokenPlacement;
-  summary: ProposedClueSummary;
 }
 
 export interface G {
