@@ -3,7 +3,9 @@ import _ from "lodash";
 import { BoardProps } from "boardgame.io/react";
 
 import { PlayerViewG } from "../game/types";
-import { ActionSidebar } from "./sidebar/ActionSidebar";
+import { ActiveClueContent } from "./sidebar/activeClue/ActiveClueContent";
+import { ChoosingClueContent } from "./sidebar/chooseClue/ChoosingClueContent";
+import { Sidebar } from "./sidebar/Sidebar";
 import { useClueTokenPlacement } from "./cards/clueTokenPlacement";
 import { ActiveTableDisplay } from "./display/ActiveTableDisplay";
 
@@ -44,20 +46,34 @@ export const LetterJoyBoard = (props: BoardProps) => {
         }
         onAddToClue={isProposing ? addProposedClueToken : undefined}
       />
-      <ActionSidebar
-        g={g}
-        currentPlayer={props.playerID}
-        clueProposingPlacement={isProposing ? proposedClueTokenPlacement : null}
-        onStartProposing={() => setIsProposing(true)}
-        onConfirmProposing={
-          proposedClueTokenPlacement.length > 0 ? onConfirmProposing : undefined
-        }
-        onCancelProposing={onCloseProposing}
-        onChangeVote={props.moves.supportClue}
-        playersDecidingToAdvance={playersDecidingToAdvance}
-        onAdvanceLetter={props.moves.advanceLetter}
-        onConfirmActiveLetter={() => props.events.endStage?.()}
-      />
+      <Sidebar g={g}>
+        {g.activeClue == null ? (
+          <ChoosingClueContent
+            g={g}
+            currentPlayer={props.playerID}
+            clueProposingPlacement={
+              isProposing ? proposedClueTokenPlacement : null
+            }
+            onStartProposing={() => setIsProposing(true)}
+            onConfirmProposing={
+              proposedClueTokenPlacement.length > 0
+                ? onConfirmProposing
+                : undefined
+            }
+            onCancelProposing={onCloseProposing}
+            onChangeVote={props.moves.supportClue}
+          />
+        ) : (
+          <ActiveClueContent
+            g={g}
+            currentPlayer={props.playerID}
+            activeClue={g.activeClue}
+            playersDecidingToAdvance={playersDecidingToAdvance}
+            onAdvanceLetter={props.moves.advanceLetter}
+            onConfirmActiveLetter={() => props.events.endStage?.()}
+          />
+        )}
+      </Sidebar>
     </>
   );
 };
