@@ -1,6 +1,6 @@
 import { BoardProps } from "boardgame.io/react";
 
-import { Phase } from "../game/types";
+import { Phase } from "../game/phases";
 import { assertNever } from "../game/utils";
 import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
