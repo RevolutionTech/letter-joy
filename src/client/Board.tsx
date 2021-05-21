@@ -3,10 +3,13 @@ import { BoardProps } from "boardgame.io/react";
 import { Phase } from "../game/phases";
 import { assertNever } from "../game/utils";
 import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
+import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWordBoard";
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
 
 const getBoardForPhase = (phase: Phase) => {
   switch (phase) {
+    case Phase.CHOOSE_SECRET_WORD:
+      return ChooseSecretWordBoard;
     case Phase.CHOOSE_CLUE:
       return ChooseClueBoard;
     case Phase.ACTIVE_CLUE:

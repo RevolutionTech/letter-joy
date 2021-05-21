@@ -1,19 +1,42 @@
 import _ from "lodash";
-import { PhaseConfig } from "boardgame.io";
+import { Ctx, PhaseConfig } from "boardgame.io";
 
 import { MAX_NUM_PLAYERS } from "./constants";
 import { consumeHint } from "./hints";
-import { proposeClue, supportClue, advanceLetter } from "./moves";
+import {
+  chooseSecretWord,
+  proposeClue,
+  supportClue,
+  advanceLetter,
+} from "./moves";
 import { G } from "./types";
 
 export enum Phase {
+  CHOOSE_SECRET_WORD = "chooseSecretWord",
   CHOOSE_CLUE = "chooseClue",
   ACTIVE_CLUE = "activeClue",
 }
 
+export const getPlayersActing = (ctx: Ctx) =>
+  Object.keys(_.pickBy(ctx.activePlayers, (stage) => stage !== "waiting"));
+
+const isEveryPlayerWaiting = (_g: G, ctx: Ctx) =>
+  ctx.activePlayers != null && getPlayersActing(ctx).length === 0;
+
 export const PHASES: Record<Phase, PhaseConfig<G>> = {
-  [Phase.CHOOSE_CLUE]: {
+  [Phase.CHOOSE_SECRET_WORD]: {
     start: true,
+    turn: {
+      activePlayers: { all: "chooseSecretWordMain" },
+      stages: {
+        chooseSecretWordMain: { moves: { chooseSecretWord }, next: "waiting" },
+        waiting: {},
+      },
+    },
+    endIf: isEveryPlayerWaiting,
+    next: Phase.CHOOSE_CLUE,
+  },
+  [Phase.CHOOSE_CLUE]: {
     turn: {
       activePlayers: { all: "chooseClueMain" },
       stages: {
@@ -67,9 +90,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         activeLetterIndex: playerState.nextLetterIndex,
       }));
     },
-    endIf: (_g, ctx) =>
-      ctx.activePlayers != null &&
-      _.every(Object.values(ctx.activePlayers), (stage) => stage === "waiting"),
+    endIf: isEveryPlayerWaiting,
     next: Phase.CHOOSE_CLUE,
   },
 };

@@ -5,7 +5,26 @@ import { INVALID_MOVE } from "boardgame.io/core";
 import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
 import { playerHasHintAvailable } from "./hints";
-import { ClueTokenPlacement, G } from "./types";
+import { getLeftPlayerID } from "./players";
+import { Letter, ClueTokenPlacement, G } from "./types";
+
+export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
+  // A player must be active to choose a secret word
+  if (ctx.playerID == null) {
+    return INVALID_MOVE;
+  }
+
+  // Update the letters of the player to the left using the secret word
+  // that the active player generated
+  const leftPlayerID = getLeftPlayerID(+ctx.playerID);
+  g.players[leftPlayerID] = {
+    ...g.players[leftPlayerID],
+    letters: ctx.random!.Shuffle(secretWord),
+  };
+
+  // Move the active player into the waiting stage
+  ctx.events?.endStage?.();
+};
 
 export const proposeClue = (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
   // A player must be active and must have a hint available to propose the clue

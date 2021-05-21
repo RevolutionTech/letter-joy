@@ -10,7 +10,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 import { playerHasHintAvailable } from "../../../../game/hints";
 import { PlayerViewG } from "../../../../game/types";
-import { Button } from "../../../sidebar/Button";
+import { Button } from "../../../common/Button";
 import { SidebarContent } from "../../../sidebar/SidebarContent";
 import theme from "../../../theme";
 import { ProposedClueRadioButton } from "./ProposedClueRadioButton";

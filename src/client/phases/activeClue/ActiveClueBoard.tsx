@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import _ from "lodash";
 import { BoardProps } from "boardgame.io/react";
 
+import { getPlayersActing } from "../../../game/phases";
 import { PlayerViewG } from "../../../game/types";
 import { ClueDisplay } from "../../cards/ClueDisplay";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
@@ -14,13 +14,7 @@ export const ActiveClueBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
   const currentPlayer = props.playerID;
 
-  const playersDecidingToAdvance = useMemo(
-    () =>
-      Object.keys(
-        _.pickBy(props.ctx.activePlayers, (phase) => phase === "deciding")
-      ),
-    [props.ctx.activePlayers]
-  );
+  const playersActing = useMemo(() => getPlayersActing(props.ctx), [props.ctx]);
 
   // Assert that there must be an active clue when in this phase
   if (g.activeClue == null) {
@@ -35,8 +29,7 @@ export const ActiveClueBoard = (props: BoardProps) => {
           <div style={{ fontSize: "48pt" }}>
             <ClueDisplay g={g} tokenPlacement={g.activeClue.placement} />
           </div>
-          {currentPlayer != null &&
-          playersDecidingToAdvance.includes(currentPlayer) ? (
+          {currentPlayer != null && playersActing.includes(currentPlayer) ? (
             <AdvanceDecisionContent
               activeLetterIndex={g.players[+currentPlayer].activeLetterIndex}
               onAdvanceLetter={props.moves.advanceLetter}
@@ -46,7 +39,7 @@ export const ActiveClueBoard = (props: BoardProps) => {
             <WaitingContent
               g={g}
               description="Waiting for other players to decide which letter to use in the next round:"
-              playersActing={playersDecidingToAdvance}
+              playersActing={playersActing}
             />
           )}
         </SidebarContent>

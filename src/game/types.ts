@@ -26,13 +26,15 @@ export enum Letter {
 export interface PlayerState {
   playerID: string;
   playerName: string;
+  wordConstructionLetters: Letter[];
   letters: Letter[];
   activeLetterIndex: number;
   nextLetterIndex: number;
   hintsUsed: number;
 }
 
-export interface PlayerViewPlayerState extends Omit<PlayerState, "letters"> {
+export interface PlayerViewPlayerState
+  extends Omit<PlayerState, "wordConstructionLetters" | "letters"> {
   letters: (Letter | null)[];
 }
 
@@ -79,6 +81,7 @@ export interface G {
 }
 
 export interface PlayerViewG extends Omit<G, "players" | "proposedClues"> {
+  wordConstructionLetters: Letter[];
   players: Record<number, PlayerViewPlayerState>;
   proposedClues: PlayerViewProposedClue[];
 }

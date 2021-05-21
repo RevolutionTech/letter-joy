@@ -1,28 +1,25 @@
 import _ from "lodash";
-import { Ctx } from "boardgame.io";
+import { Game } from "boardgame.io";
 
 import {
-  LETTERS_PER_PLAYER,
   MAX_NUM_PLAYERS,
   NUM_HINTS_LOCKED,
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
-import { createShuffledDeck } from "./deck";
+import { createDeckAndDeal } from "./deck";
 import { PHASES } from "./phases";
 import { playerView } from "./playerView";
 import { G } from "./types";
-import { splitArray } from "./utils";
 
-export const LetterJoy = {
-  setup: (ctx: Ctx): G => {
-    const deck = createShuffledDeck(ctx);
-    const [dealtCards] = splitArray(deck, MAX_NUM_PLAYERS * LETTERS_PER_PLAYER);
-    const playerLetters = _.chunk(dealtCards, LETTERS_PER_PLAYER);
+export const LetterJoy: Game<G> = {
+  setup: (ctx) => {
+    const deckCuts = createDeckAndDeal(ctx, MAX_NUM_PLAYERS);
 
-    const playerStates = playerLetters.map((letters, i) => ({
+    const playerStates = deckCuts.map((startingLetters, i) => ({
       playerID: i.toString(),
       playerName: `Player ${i + 1}`,
-      letters,
+      wordConstructionLetters: _.sortBy(startingLetters),
+      letters: [],
       activeLetterIndex: 0,
       nextLetterIndex: 0,
       hintsUsed: 0,

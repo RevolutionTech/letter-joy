@@ -26,7 +26,7 @@ const SidebarPlaceholder = styled("div")({
 
 interface Props {
   g: PlayerViewG;
-  clueTokenPlacement: ClueTokenPlacement;
+  clueTokenPlacement?: ClueTokenPlacement;
   onAddToClue?: (ownerID: string) => void;
 }
 
@@ -39,11 +39,11 @@ export const ActiveTableDisplay = (props: Props) => {
         key={playerState.playerID}
         {...playerState}
         teamHintsAvailable={g.teamHints.available}
-        containsTokens={getTokensAssignedToOwner(
-          clueTokenPlacement,
-          playerState.playerID
-        )}
-        onAddToClue={() => onAddToClue?.(playerState.playerID)}
+        containsTokens={
+          clueTokenPlacement &&
+          getTokensAssignedToOwner(clueTokenPlacement, playerState.playerID)
+        }
+        onAddToClue={onAddToClue && (() => onAddToClue(playerState.playerID))}
       />
     );
   });
@@ -54,8 +54,11 @@ export const ActiveTableDisplay = (props: Props) => {
         {playerDisplays}
         <TeamDisplay
           teamHints={g.teamHints}
-          containsTokens={getTokensAssignedToOwner(clueTokenPlacement, "TEAM")}
-          onAddToClue={() => onAddToClue?.("TEAM")}
+          containsTokens={
+            clueTokenPlacement &&
+            getTokensAssignedToOwner(clueTokenPlacement, "TEAM")
+          }
+          onAddToClue={onAddToClue && (() => onAddToClue("TEAM"))}
         />
       </PlayerRows>
       <SidebarPlaceholder />

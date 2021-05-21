@@ -7,7 +7,14 @@ const playerStatePlayerView = (
   playerState: PlayerState,
   playerViewPlayerID: string
 ): PlayerViewPlayerState => {
-  const { playerID, playerName, letters, activeLetterIndex } = playerState;
+  const {
+    playerID,
+    playerName,
+    letters,
+    activeLetterIndex,
+    nextLetterIndex,
+    hintsUsed,
+  } = playerState;
 
   // Filter out all letters unless it is a different player's active card
   const lettersPlayerView = letters.map((letter, i) =>
@@ -15,10 +22,13 @@ const playerStatePlayerView = (
   );
 
   return {
-    ...playerState,
+    playerID,
     playerName:
       playerViewPlayerID === playerID ? `${playerName} (me)` : playerName,
     letters: lettersPlayerView,
+    activeLetterIndex,
+    nextLetterIndex,
+    hintsUsed,
   };
 };
 
@@ -26,6 +36,7 @@ export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
   const { players, proposedClues } = g;
   return {
     ...g,
+    wordConstructionLetters: g.players[+playerID].wordConstructionLetters,
     players: _.reduce(
       players,
       (result, value, key) => ({
