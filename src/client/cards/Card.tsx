@@ -6,14 +6,15 @@ import theme from "../theme";
 import { LETTER_SVG } from "./letters";
 import { Token } from "./Token";
 
+export const CARD_WIDTH = 136;
 export const CARD_HEIGHT = 240;
 export const CARD_MARGIN_TOP = 48;
 const TOKEN_WIDTH = 64;
 const TOKEN_SLOT_WIDTH = TOKEN_WIDTH * 6;
 
-const CardSlot = styled("div")({
+const CardWrapper = styled("div")({
   position: "relative",
-  width: "136px",
+  width: `${CARD_WIDTH}px`,
   height: `${CARD_HEIGHT}px`,
   marginTop: `${CARD_MARGIN_TOP}px`,
   marginRight: "16px",
@@ -59,7 +60,7 @@ export const Card = (props: Props) => {
   const spaceForToken = TOKEN_SLOT_WIDTH / (numTokensContained + 1);
 
   return (
-    <CardSlot onClick={onClick} style={{ top: active ? "-16px" : "0" }}>
+    <CardWrapper onClick={onClick} style={{ top: active ? "-16px" : "0" }}>
       <Paper
         className={onClick && classes.clickable}
         style={{
@@ -85,6 +86,6 @@ export const Card = (props: Props) => {
           </TokenWrapper>
         );
       })}
-    </CardSlot>
+    </CardWrapper>
   );
 };

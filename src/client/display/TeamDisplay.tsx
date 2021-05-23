@@ -6,8 +6,8 @@ import AvailableHint from "../assets/hints/available.svg";
 import LockedHint from "../assets/hints/locked.svg";
 import { Card } from "../cards/Card";
 import theme from "../theme";
+import { DisplayRow, DisplayStatus } from "./DisplayRow";
 import { Hint } from "./hint";
-import { PlayerInfo, PlayerStatus } from "./playerInfo";
 
 interface Props {
   teamHints: TeamHints;
@@ -18,8 +18,8 @@ interface Props {
 export const TeamDisplay = (props: Props) => {
   const { teamHints, containsTokens, onAddToClue } = props;
   return (
-    <PlayerInfo>
-      <PlayerStatus>
+    <DisplayRow>
+      <DisplayStatus>
         <div>Team</div>
         <div>
           {_.range(teamHints.available).map((_, i) => (
@@ -39,13 +39,13 @@ export const TeamDisplay = (props: Props) => {
             </Tooltip>
           ))}
         </div>
-      </PlayerStatus>
+      </DisplayStatus>
       <Card
         letter={Letter.WILD}
         backgroundColor={theme.grey}
         containsTokens={containsTokens}
         onClick={onAddToClue}
       />
-    </PlayerInfo>
+    </DisplayRow>
   );
 };

@@ -2,7 +2,7 @@ import { styled } from "@material-ui/core";
 
 import { CARD_HEIGHT, CARD_MARGIN_TOP } from "../cards/Card";
 
-export const PlayerInfo = styled("div")({
+export const DisplayRow = styled("div")({
   display: "flex",
   alignItems: "center",
   minHeight: `calc(${CARD_HEIGHT}px + ${CARD_MARGIN_TOP}px)`,
@@ -10,9 +10,15 @@ export const PlayerInfo = styled("div")({
   fontSize: "28pt",
 });
 
-export const PlayerStatus = styled("div")({
+export const DisplayStatus = styled("div")({
   display: "flex",
   flexDirection: "column",
   width: "248px",
   marginRight: "32px",
+});
+
+export const HandOfCards = styled("div")({
+  display: "flex",
+  justifyContent: "flex-start",
+  alignItems: "center",
 });

@@ -1,15 +1,7 @@
-import { styled } from "@material-ui/core";
-
 import { PlayerViewPlayerState } from "../../game/types";
 import { Card } from "../cards/Card";
+import { DisplayRow, DisplayStatus, HandOfCards } from "./DisplayRow";
 import { PlayerHints } from "./PlayerHints";
-import { PlayerInfo, PlayerStatus } from "./playerInfo";
-
-const PlayerHand = styled("div")({
-  display: "flex",
-  justifyContent: "flex-start",
-  alignItems: "center",
-});
 
 interface Props extends PlayerViewPlayerState {
   teamHintsAvailable: number;
@@ -29,8 +21,8 @@ export const PlayerDisplay = (props: Props) => {
     onAddToClue,
   } = props;
   return (
-    <PlayerInfo>
-      <PlayerStatus>
+    <DisplayRow>
+      <DisplayStatus>
         <div>{playerName}</div>
         <PlayerHints
           playerID={playerID}
@@ -38,8 +30,8 @@ export const PlayerDisplay = (props: Props) => {
           hintsUsed={hintsUsed}
           teamHintsAvailable={teamHintsAvailable}
         />
-      </PlayerStatus>
-      <PlayerHand>
+      </DisplayStatus>
+      <HandOfCards>
         {letters.map((letter, i) => {
           const active = i === activeLetterIndex;
           const letterDisplayed = active ? letter : null;
@@ -53,7 +45,7 @@ export const PlayerDisplay = (props: Props) => {
             />
           );
         })}
-      </PlayerHand>
-    </PlayerInfo>
+      </HandOfCards>
+    </DisplayRow>
   );
 };
