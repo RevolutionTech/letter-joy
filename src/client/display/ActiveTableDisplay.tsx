@@ -2,15 +2,10 @@ import { styled } from "@material-ui/core";
 
 import { ClueTokenPlacement, PlayerViewG } from "../../game/types";
 import { getTokensAssignedToOwner } from "../cards/clueTokenPlacement";
+import { GameTable } from "../display/GameTable";
 import { SIDEBAR_WIDTH, SIDEBAR_PADDING } from "../panels/sidebar/Sidebar";
-import theme from "../theme";
 import { PlayerDisplay } from "./PlayerDisplay";
 import { TeamDisplay } from "./TeamDisplay";
-
-const GameTable = styled("div")({
-  display: "flex",
-  backgroundColor: theme.silver,
-});
 
 const PlayerRows = styled("div")({
   display: "flex",

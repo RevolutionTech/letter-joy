@@ -4,17 +4,9 @@ import { styled } from "@material-ui/core";
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter } from "../../../game/types";
 import { Card } from "../../cards/Card";
+import { FullWidthGameTable } from "../../display/GameTable";
 import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
-import theme from "../../theme";
-
-const GameTable = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  width: "100%",
-  height: "100vh",
-  backgroundColor: theme.silver,
-});
 
 const SecretWordConstructionLetters = styled("div")({
   display: "flex",
@@ -65,19 +57,18 @@ export const ChooseSecretWordContent = (props: Props) => {
 
   return (
     <>
-      <GameTable>
+      <FullWidthGameTable>
         <SecretWordConstructionLetters>
           {wordConstructionCards}
         </SecretWordConstructionLetters>
         <BottombarPlaceholder />
-      </GameTable>
+      </FullWidthGameTable>
       <Bottombar
         buttons={[
           <Button
             variant="contained"
             color="primary"
             size="large"
-            style={{ marginBottom: "32px" }}
             disabled={selectedLetters.length !== LETTERS_PER_PLAYER}
             onClick={() => onConfirmSecretWord(secretWord)}
           >
