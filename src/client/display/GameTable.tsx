@@ -9,6 +9,6 @@ export const GameTable = styled("div")({
 
 export const FullWidthGameTable = styled(GameTable)({
   flexDirection: "column",
-  width: "100%",
+  minWidth: "fit-content",
   height: "100vh",
 });
