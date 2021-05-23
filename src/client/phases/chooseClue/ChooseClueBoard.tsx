@@ -4,7 +4,7 @@ import { BoardProps } from "boardgame.io/react";
 import { PlayerViewG } from "../../../game/types";
 import { useClueTokenPlacement } from "../../cards/clueTokenPlacement";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
-import { Sidebar } from "../../sidebar/Sidebar";
+import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { ProposingContent } from "./sidebar/ProposingContent";
 import { VotingContent } from "./sidebar/VotingContent";
 

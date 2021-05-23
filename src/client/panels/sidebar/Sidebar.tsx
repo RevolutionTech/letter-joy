@@ -1,8 +1,8 @@
 import { styled } from "@material-ui/core";
 
-import { PlayerViewG } from "../../game/types";
-import { ClueDisplay } from "../cards/ClueDisplay";
-import theme from "../theme";
+import { PlayerViewG } from "../../../game/types";
+import { ClueDisplay } from "../../cards/ClueDisplay";
+import theme from "../../theme";
 import { SidebarList } from "./SidebarList";
 
 export const SIDEBAR_WIDTH = "400px";

@@ -1,4 +1,4 @@
-import { PlayerViewG } from "../../game/types";
+import { PlayerViewG } from "../../../game/types";
 import { SidebarList } from "./SidebarList";
 
 interface Props {

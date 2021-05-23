@@ -5,9 +5,9 @@ import { getPlayersActing } from "../../../game/phases";
 import { PlayerViewG } from "../../../game/types";
 import { ClueDisplay } from "../../cards/ClueDisplay";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
-import { Sidebar } from "../../sidebar/Sidebar";
-import { SidebarContent } from "../../sidebar/SidebarContent";
-import { WaitingContent } from "../../sidebar/WaitingContent";
+import { Sidebar } from "../../panels/sidebar/Sidebar";
+import { SidebarContent } from "../../panels/sidebar/SidebarContent";
+import { WaitingContent } from "../../panels/sidebar/WaitingContent";
 import { AdvanceDecisionContent } from "./AdvanceDecisionContent";
 
 export const ActiveClueBoard = (props: BoardProps) => {

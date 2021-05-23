@@ -5,8 +5,8 @@ import { getPlayersActing } from "../../../game/phases";
 import { getLeftPlayerID } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
-import { Sidebar } from "../../sidebar/Sidebar";
-import { WaitingContent } from "../../sidebar/WaitingContent";
+import { Sidebar } from "../../panels/sidebar/Sidebar";
+import { WaitingContent } from "../../panels/sidebar/WaitingContent";
 import { ChooseSecretWordContent } from "./ChooseSecretWordContent";
 
 export const ChooseSecretWordBoard = (props: BoardProps) => {
