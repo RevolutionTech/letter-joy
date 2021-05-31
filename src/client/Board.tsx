@@ -5,6 +5,7 @@ import { assertNever } from "../game/utils";
 import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
 import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWordBoard";
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
+import { RearrangeLettersBoard } from "./phases/rearrangeLetters/RearrangeLettersBoard";
 
 const getBoardForPhase = (phase: Phase) => {
   switch (phase) {
@@ -14,6 +15,8 @@ const getBoardForPhase = (phase: Phase) => {
       return ChooseClueBoard;
     case Phase.ACTIVE_CLUE:
       return ActiveClueBoard;
+    case Phase.REARRANGE_LETTERS:
+      return RearrangeLettersBoard;
     default:
       return assertNever(phase);
   }

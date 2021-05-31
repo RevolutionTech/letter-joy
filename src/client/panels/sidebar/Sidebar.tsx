@@ -15,6 +15,7 @@ const FixedSidebar = styled("div")({
   width: SIDEBAR_WIDTH,
   height: "100%",
   padding: SIDEBAR_PADDING,
+  zIndex: 10000, // higher z-index than draggables
 
   backgroundColor: theme.white,
 });

@@ -7,6 +7,8 @@ import { LETTER_SVG } from "./letters";
 
 export const CARD_WIDTH = 136;
 export const CARD_HEIGHT = 240;
+export const CARD_BORDER_WIDTH = 4;
+export const CARD_MARGIN_RIGHT = 16;
 
 const Paper = styled("div")({
   display: "flex",
@@ -14,10 +16,10 @@ const Paper = styled("div")({
   alignItems: "center",
   width: `${CARD_WIDTH}px`,
   height: `${CARD_HEIGHT}px`,
-  marginRight: "16px",
+  marginRight: `${CARD_MARGIN_RIGHT}px`,
 
   borderStyle: "solid",
-  borderWidth: "4px",
+  borderWidth: `${CARD_BORDER_WIDTH}px`,
   borderRadius: "10px",
   userSelect: "none",
 });

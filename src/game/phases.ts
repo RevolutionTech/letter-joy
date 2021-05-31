@@ -15,6 +15,7 @@ export enum Phase {
   CHOOSE_SECRET_WORD = "chooseSecretWord",
   CHOOSE_CLUE = "chooseClue",
   ACTIVE_CLUE = "activeClue",
+  REARRANGE_LETTERS = "rearrangeLetters",
 }
 
 export const getPlayersActing = (ctx: Ctx) =>
@@ -93,4 +94,5 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
     endIf: isEveryPlayerWaiting,
     next: Phase.CHOOSE_CLUE,
   },
+  [Phase.REARRANGE_LETTERS]: {},
 };

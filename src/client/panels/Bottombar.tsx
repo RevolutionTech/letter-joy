@@ -30,6 +30,7 @@ const FixedBottombar = styled("div")({
   width: "100%",
   height: BOTTOMBAR_HEIGHT,
   padding: BOTTOMBAR_PADDING,
+  zIndex: 10000, // higher z-index than draggables
 
   backgroundColor: theme.white,
 });
