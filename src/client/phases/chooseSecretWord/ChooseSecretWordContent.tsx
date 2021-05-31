@@ -3,7 +3,7 @@ import { styled } from "@material-ui/core";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter } from "../../../game/types";
-import { Card } from "../../cards/Card";
+import { PresentedCard } from "../../cards/PresentedCard";
 import { FullWidthGameTable } from "../../display/GameTable";
 import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
@@ -40,7 +40,7 @@ export const ChooseSecretWordContent = (props: Props) => {
         const containsToken =
           letterSelectedAtIndex === -1 ? [] : [letterSelectedAtIndex + 1];
         return (
-          <Card
+          <PresentedCard
             key={i}
             letter={letter}
             containsTokens={containsToken}
@@ -66,6 +66,7 @@ export const ChooseSecretWordContent = (props: Props) => {
       <Bottombar
         buttons={[
           <Button
+            key="confirm"
             variant="contained"
             color="primary"
             size="large"
@@ -75,6 +76,7 @@ export const ChooseSecretWordContent = (props: Props) => {
             Confirm
           </Button>,
           <Button
+            key="reset"
             variant="outlined"
             size="large"
             disabled={selectedLetters.length === 0}

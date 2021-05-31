@@ -1,11 +1,12 @@
 import { styled } from "@material-ui/core";
 
-import { CARD_HEIGHT, CARD_MARGIN_TOP } from "../cards/Card";
+import { CARD_HEIGHT } from "../cards/Card";
+import { PRESENTED_CARD_MARGIN_TOP } from "../cards/PresentedCard";
 
 export const DisplayRow = styled("div")({
   display: "flex",
   alignItems: "center",
-  minHeight: `calc(${CARD_HEIGHT}px + ${CARD_MARGIN_TOP}px)`,
+  minHeight: `calc(${CARD_HEIGHT}px + ${PRESENTED_CARD_MARGIN_TOP}px)`,
   marginLeft: "32px",
   marginRight: "32px",
   fontSize: "28pt",

@@ -4,7 +4,7 @@ import { Tooltip } from "@material-ui/core";
 import { Letter, TeamHints } from "../../game/types";
 import AvailableHint from "../assets/hints/available.svg";
 import LockedHint from "../assets/hints/locked.svg";
-import { Card } from "../cards/Card";
+import { PresentedCard } from "../cards/PresentedCard";
 import theme from "../theme";
 import { DisplayRow, DisplayStatus } from "./DisplayRow";
 import { Hint } from "./hint";
@@ -40,7 +40,7 @@ export const TeamDisplay = (props: Props) => {
           ))}
         </div>
       </DisplayStatus>
-      <Card
+      <PresentedCard
         letter={Letter.WILD}
         backgroundColor={theme.grey}
         containsTokens={containsTokens}

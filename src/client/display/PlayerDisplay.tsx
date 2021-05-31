@@ -1,5 +1,5 @@
 import { PlayerViewPlayerState } from "../../game/types";
-import { Card } from "../cards/Card";
+import { PresentedCard } from "../cards/PresentedCard";
 import { DisplayRow, DisplayStatus, HandOfCards } from "./DisplayRow";
 import { PlayerHints } from "./PlayerHints";
 
@@ -36,7 +36,7 @@ export const PlayerDisplay = (props: Props) => {
           const active = i === activeLetterIndex;
           const letterDisplayed = active ? letter : null;
           return (
-            <Card
+            <PresentedCard
               key={`${playerID}-${i}`}
               letter={letterDisplayed}
               active={active}
