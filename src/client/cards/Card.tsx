@@ -19,6 +19,7 @@ const Paper = styled("div")({
   borderStyle: "solid",
   borderWidth: "4px",
   borderRadius: "10px",
+  userSelect: "none",
 });
 
 const useStyles = makeStyles({
