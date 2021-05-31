@@ -31,19 +31,18 @@ const useStyles = makeStyles({
 
 interface Props {
   letter: Letter | null;
-  backgroundColor?: string;
   isClickable?: boolean;
 }
 
 export const Card = (props: Props) => {
   const classes = useStyles();
-  const { letter, backgroundColor, isClickable } = props;
+  const { letter, isClickable } = props;
 
   return (
     <Paper
       className={isClickable ? classes.clickable : undefined}
       style={{
-        backgroundColor: backgroundColor ?? theme.white,
+        backgroundColor: letter === Letter.WILD ? theme.grey : theme.white,
       }}
     >
       {letter == null ? (
