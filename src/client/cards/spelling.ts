@@ -17,9 +17,10 @@ export const useSpelling = (g: PlayerViewG) => {
   const addCardLocation = useCallback(
     (ownerID: string) =>
       setSpelling((cardLocations) => {
+        // TODO: Add support for multiple team letters
         const cardLocation: CardLocation =
           ownerID === "TEAM"
-            ? { ownerID }
+            ? { ownerID, letterIndex: 0 }
             : { ownerID, letterIndex: g.players[+ownerID].activeLetterIndex };
         return [...cardLocations, cardLocation];
       }),

@@ -9,7 +9,7 @@ import {
 import { createDeckAndDeal } from "./deck";
 import { PHASES } from "./phases";
 import { playerView } from "./playerView";
-import { G } from "./types";
+import { Letter, G } from "./types";
 
 export const LetterJoy: Game<G> = {
   setup: (ctx) => {
@@ -27,6 +27,7 @@ export const LetterJoy: Game<G> = {
 
     return {
       players: _.assign({}, playerStates),
+      teamLetters: [Letter.WILD],
       teamHints: {
         available: NUM_HINTS_STARTING_AVAILABLE,
         locked: NUM_HINTS_LOCKED,

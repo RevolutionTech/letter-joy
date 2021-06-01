@@ -1,10 +1,4 @@
-import {
-  Letter,
-  PlayerCardLocation,
-  CardLocation,
-  Spelling,
-  PlayerViewG,
-} from "../../game/types";
+import { CardLocation, Spelling, PlayerViewG } from "../../game/types";
 
 interface Props {
   g: PlayerViewG;
@@ -13,23 +7,19 @@ interface Props {
 
 const getLetterDisplay = (g: PlayerViewG, cardLocation: CardLocation) => {
   const { ownerID } = cardLocation;
-  if (ownerID === "TEAM") {
-    return <>{Letter.WILD}</>;
-  } else {
-    // TODO: Surely there is a way to avoid this assertion
-    const letterIndex = (cardLocation as PlayerCardLocation).letterIndex;
-    const player = g.players[+ownerID];
-    const letter = (
-      <>
-        {player.letters[letterIndex] ?? (
-          <>
-            ?<sub>{letterIndex + 1}</sub>
-          </>
-        )}
-      </>
-    );
-    return letter;
-  }
+  const letters =
+    ownerID === "TEAM" ? g.teamLetters : g.players[+ownerID].letters;
+  const letterIndex = cardLocation.letterIndex;
+  const letter = (
+    <>
+      {letters[letterIndex] ?? (
+        <>
+          ?<sub>{letterIndex + 1}</sub>
+        </>
+      )}
+    </>
+  );
+  return letter;
 };
 
 export const ClueDisplay = (props: Props) => {

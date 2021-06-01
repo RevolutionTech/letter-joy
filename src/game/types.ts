@@ -43,10 +43,7 @@ export interface TeamHints {
   locked: number;
 }
 
-export type PlayerCardLocation = { ownerID: string; letterIndex: number };
-
-export type CardLocation = PlayerCardLocation | { ownerID: "TEAM" };
-
+export type CardLocation = { ownerID: string; letterIndex: number };
 export type Spelling = CardLocation[];
 
 export interface Clue {
@@ -73,6 +70,7 @@ export interface G {
   // TODO: Perhaps keys in players should be strings
   // so that we don't have to cast in all of the places that have playerIDs as strings
   players: Record<number, PlayerState>;
+  teamLetters: Letter[];
   teamHints: TeamHints;
   activeClue: Clue | null;
   previousClues: Clue[];

@@ -35,7 +35,7 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   g.proposedClues.push({
     authorID: ctx.playerID,
     spelling,
-    summary: clueSummary(spelling),
+    summary: clueSummary(g.teamLetters, spelling),
     votes: [],
   });
 };

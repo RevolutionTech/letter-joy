@@ -9,13 +9,14 @@ import { DisplayRow, DisplayStatus } from "./DisplayRow";
 import { Hint } from "./hint";
 
 interface Props {
+  teamLetters: Letter[];
   teamHints: TeamHints;
-  containsTokens?: number[];
-  onAddToSpelling?: () => void;
+  containsTokens?: number[]; // TODO: Add support for multiple team letters
+  onAddToSpelling?: () => void; // TODO: Add support for multiple team letters
 }
 
 export const TeamDisplay = (props: Props) => {
-  const { teamHints, containsTokens, onAddToSpelling } = props;
+  const { teamLetters, teamHints, containsTokens, onAddToSpelling } = props;
   return (
     <DisplayRow>
       <DisplayStatus>
@@ -39,11 +40,14 @@ export const TeamDisplay = (props: Props) => {
           ))}
         </div>
       </DisplayStatus>
-      <PresentedCard
-        letter={Letter.WILD}
-        containsTokens={containsTokens}
-        onClick={onAddToSpelling}
-      />
+      {teamLetters.map((letter, i) => (
+        <PresentedCard
+          key={i}
+          letter={letter}
+          containsTokens={containsTokens}
+          onClick={onAddToSpelling}
+        />
+      ))}
     </DisplayRow>
   );
 };

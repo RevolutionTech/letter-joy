@@ -1,11 +1,13 @@
 import _ from "lodash";
 
-import { Spelling } from "./types";
+import { Letter, Spelling } from "./types";
 
-export const clueSummary = (placement: Spelling) => {
+export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
   const usesWild = _.some(
     placement,
-    (cardLocation) => cardLocation.ownerID === "TEAM"
+    (cardLocation) =>
+      cardLocation.ownerID === "TEAM" &&
+      teamLetters[cardLocation.letterIndex] === Letter.WILD
   );
   return {
     numLetters: placement.length,

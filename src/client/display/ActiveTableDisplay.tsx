@@ -50,6 +50,7 @@ export const ActiveTableDisplay = (props: Props) => {
       <PlayerRows>
         {playerDisplays}
         <TeamDisplay
+          teamLetters={g.teamLetters}
           teamHints={g.teamHints}
           containsTokens={
             spelling && getCardLocationsAssignedToOwner(spelling, "TEAM")

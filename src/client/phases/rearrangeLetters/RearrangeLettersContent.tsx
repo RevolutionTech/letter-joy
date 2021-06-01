@@ -3,7 +3,7 @@ import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { Letter, PlayerViewG } from "../../../game/types";
+import { PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
 import { FullWidthGameTable } from "../../display/GameTable";
 import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
@@ -23,19 +23,25 @@ interface Props {
 export const RearrangeLettersContent = (props: Props) => {
   const { g, currentPlayer } = props;
 
+  const initialTeamLetters = g.teamLetters;
   const initialPlayerLetters = g.players[+currentPlayer].letters;
   const initialPlayerCards = useMemo(
     () =>
-      initialPlayerLetters.map((letter, i) => ({
+      initialPlayerLetters.map((letter, index) => ({
         origin: CardOrigin.PLAYER,
-        index: i,
+        index,
         letter,
       })),
     [initialPlayerLetters]
   );
   const initialBonusCards = useMemo(
-    () => [{ origin: CardOrigin.BONUS, index: 0, letter: Letter.WILD }],
-    []
+    () =>
+      initialTeamLetters.map((letter, index) => ({
+        origin: CardOrigin.BONUS,
+        index,
+        letter,
+      })),
+    [initialTeamLetters]
   );
 
   const [sortedCards, setSortedCards] = useState<SortableCard[]>([]);
