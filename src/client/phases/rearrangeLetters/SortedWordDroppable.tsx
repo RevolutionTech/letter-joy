@@ -3,6 +3,7 @@ import { styled } from "@material-ui/core";
 import { Droppable } from "react-beautiful-dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
+import { Letter, Spelling } from "../../../game/types";
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -12,7 +13,7 @@ import {
 import { HandOfCards } from "../../display/DisplayRow";
 import theme from "../../theme";
 import { DraggableCard } from "./DraggableCard";
-import { SortableCard, getSortableCardId } from "./sortableCard";
+import { getDraggableId } from "./draggableId";
 
 export const SORTED_WORD_DROPPABLE_ID = "sorted-word";
 const CARD_SLOT_HEIGHT = CARD_HEIGHT + 8;
@@ -33,11 +34,12 @@ const cardSlotWidth = (numCards: number) =>
   `calc(${CARD_SLOT_PADDING}px * 2 + (${CARD_WIDTH}px + ${CARD_BORDER_WIDTH}px * 2 + ${CARD_MARGIN_RIGHT}px) * ${numCards} - ${CARD_MARGIN_RIGHT}px)`;
 
 interface Props {
-  sortedCards: SortableCard[];
+  teamLetters: Letter[];
+  sortedCards: Spelling;
 }
 
 export const SortedWordDroppable = (props: Props) => {
-  const { sortedCards } = props;
+  const { teamLetters, sortedCards } = props;
   return (
     <HandOfCards>
       <Droppable droppableId={SORTED_WORD_DROPPABLE_ID} direction="horizontal">
@@ -53,13 +55,15 @@ export const SortedWordDroppable = (props: Props) => {
             }}
           >
             {sortedCards.map((card, i) => {
-              const sortableCardId = getSortableCardId(card);
+              const draggableId = getDraggableId(card);
+              const letter =
+                card.ownerID === "TEAM" ? teamLetters[card.letterIndex] : null;
               return (
                 <DraggableCard
-                  key={sortableCardId}
-                  draggableId={sortableCardId}
+                  key={draggableId}
+                  draggableId={draggableId}
                   index={i}
-                  letter={card.letter}
+                  letter={letter}
                 />
               );
             })}

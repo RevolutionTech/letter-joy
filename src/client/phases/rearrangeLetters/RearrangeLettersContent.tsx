@@ -3,12 +3,12 @@ import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { PlayerViewG } from "../../../game/types";
+import { Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
 import { FullWidthGameTable } from "../../display/GameTable";
 import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
-import { CardOrigin, SortableCard, getSortableCardId } from "./sortableCard";
+import { getDraggableId } from "./draggableId";
 import {
   SORTED_WORD_DROPPABLE_ID,
   SortedWordDroppable,
@@ -25,26 +25,24 @@ export const RearrangeLettersContent = (props: Props) => {
 
   const initialTeamLetters = g.teamLetters;
   const initialPlayerLetters = g.players[+currentPlayer].letters;
-  const initialPlayerCards = useMemo(
+  const initialPlayerCardLocations = useMemo(
     () =>
-      initialPlayerLetters.map((letter, index) => ({
-        origin: CardOrigin.PLAYER,
-        index,
-        letter,
+      initialPlayerLetters.map((_, i) => ({
+        ownerID: currentPlayer,
+        letterIndex: i,
       })),
-    [initialPlayerLetters]
+    [currentPlayer, initialPlayerLetters]
   );
-  const initialBonusCards = useMemo(
+  const initialTeamCardLocations = useMemo(
     () =>
-      initialTeamLetters.map((letter, index) => ({
-        origin: CardOrigin.BONUS,
-        index,
-        letter,
+      initialTeamLetters.map((_, i) => ({
+        ownerID: "TEAM",
+        letterIndex: i,
       })),
     [initialTeamLetters]
   );
 
-  const [sortedCards, setSortedCards] = useState<SortableCard[]>([]);
+  const [sortedCards, setSortedCards] = useState<Spelling>([]);
 
   const onDragEnd = useCallback(
     (result) => {
@@ -63,8 +61,8 @@ export const RearrangeLettersContent = (props: Props) => {
 
       // Get the card that was dragged
       const draggedCard = _.find(
-        _.concat(initialPlayerCards, initialBonusCards),
-        (card) => getSortableCardId(card) === draggableId
+        _.concat(initialPlayerCardLocations, initialTeamCardLocations),
+        (card) => getDraggableId(card) === draggableId
       )!;
 
       // Remove the dragged card from the sorted list (if it was there at all)
@@ -78,7 +76,7 @@ export const RearrangeLettersContent = (props: Props) => {
         ];
       });
     },
-    [initialPlayerCards, initialBonusCards]
+    [initialPlayerCardLocations, initialTeamCardLocations]
   );
 
   return (
@@ -89,20 +87,25 @@ export const RearrangeLettersContent = (props: Props) => {
             <DisplayRow>
               <DisplayStatus>Your letters</DisplayStatus>
               <UnsortedCards
-                initialCards={initialPlayerCards}
+                teamLetters={g.teamLetters}
+                initialCardLocations={initialPlayerCardLocations}
                 sortedCards={sortedCards}
               />
             </DisplayRow>
             <DisplayRow>
               <DisplayStatus>Bonus letters</DisplayStatus>
               <UnsortedCards
-                initialCards={initialBonusCards}
+                teamLetters={g.teamLetters}
+                initialCardLocations={initialTeamCardLocations}
                 sortedCards={sortedCards}
               />
             </DisplayRow>
             <DisplayRow>
               <DisplayStatus>Your word</DisplayStatus>
-              <SortedWordDroppable sortedCards={sortedCards} />
+              <SortedWordDroppable
+                teamLetters={g.teamLetters}
+                sortedCards={sortedCards}
+              />
             </DisplayRow>
           </div>
         </DragDropContext>

@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { styled } from "@material-ui/core";
 
+import { Letter, Spelling } from "../../../game/types";
 import { HandOfCards } from "../../display/DisplayRow";
 import { SingleDroppableCard } from "./SingleDroppableCard";
-import { SortableCard } from "./sortableCard";
 import { CARD_SLOT_PADDING } from "./SortedWordDroppable";
 
 const UnsortedHandOfCards = styled(HandOfCards)({
@@ -11,21 +11,25 @@ const UnsortedHandOfCards = styled(HandOfCards)({
 });
 
 interface Props {
-  initialCards: SortableCard[];
-  sortedCards: SortableCard[];
+  teamLetters: Letter[];
+  initialCardLocations: Spelling;
+  sortedCards: Spelling;
 }
 
 export const UnsortedCards = (props: Props) => {
-  const { initialCards, sortedCards } = props;
+  const { teamLetters, initialCardLocations, sortedCards } = props;
   return (
     <UnsortedHandOfCards>
-      {initialCards.map((card, i) => (
+      {initialCardLocations.map((cardLocation, i) => (
         <SingleDroppableCard
           key={i}
-          card={card}
+          teamLetters={teamLetters}
+          cardLocation={cardLocation}
           isPlaceholder={_.some(
             sortedCards,
-            (c) => c.origin === card.origin && c.index === card.index
+            (c) =>
+              c.ownerID === cardLocation.ownerID &&
+              c.letterIndex === cardLocation.letterIndex
           )}
         />
       ))}
