@@ -2,8 +2,8 @@ import _ from "lodash";
 import { styled } from "@material-ui/core";
 
 import { HandOfCards } from "../../display/DisplayRow";
-import { SortableCard } from "../../../game/types";
 import { SingleDroppableCard } from "./SingleDroppableCard";
+import { SortableCard } from "./sortableCard";
 import { CARD_SLOT_PADDING } from "./SortedWordDroppable";
 
 const UnsortedHandOfCards = styled(HandOfCards)({

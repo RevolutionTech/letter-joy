@@ -60,12 +60,6 @@ interface ClueSummary {
   numPlayers: number;
 }
 
-// TODO: Use in place of Letter in many cases
-export interface SortableCard {
-  id: string;
-  letter: Letter | null;
-}
-
 interface ProposedClue extends Clue {
   summary: ClueSummary;
   votes: string[];

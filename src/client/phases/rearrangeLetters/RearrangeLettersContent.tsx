@@ -3,11 +3,12 @@ import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { Letter, SortableCard, PlayerViewG } from "../../../game/types";
+import { Letter, PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
 import { FullWidthGameTable } from "../../display/GameTable";
 import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
+import { SortableCard } from "./sortableCard";
 import {
   SORTED_WORD_DROPPABLE_ID,
   SortedWordDroppable,

@@ -3,7 +3,6 @@ import { styled } from "@material-ui/core";
 import { Droppable } from "react-beautiful-dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { SortableCard } from "../../../game/types";
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -13,6 +12,7 @@ import {
 import { HandOfCards } from "../../display/DisplayRow";
 import theme from "../../theme";
 import { DraggableCard } from "./DraggableCard";
+import { SortableCard } from "./sortableCard";
 
 export const SORTED_WORD_DROPPABLE_ID = "sorted-word";
 const CARD_SLOT_HEIGHT = CARD_HEIGHT + 8;
