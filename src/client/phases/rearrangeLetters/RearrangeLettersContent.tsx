@@ -8,7 +8,7 @@ import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
 import { FullWidthGameTable } from "../../display/GameTable";
 import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
-import { SortableCard } from "./sortableCard";
+import { CardOrigin, SortableCard, getSortableCardId } from "./sortableCard";
 import {
   SORTED_WORD_DROPPABLE_ID,
   SortedWordDroppable,
@@ -27,13 +27,14 @@ export const RearrangeLettersContent = (props: Props) => {
   const initialPlayerCards = useMemo(
     () =>
       initialPlayerLetters.map((letter, i) => ({
-        id: `player-${currentPlayer}-card-${i}`,
+        origin: CardOrigin.PLAYER,
+        index: i,
         letter,
       })),
-    [currentPlayer, initialPlayerLetters]
+    [initialPlayerLetters]
   );
   const initialBonusCards = useMemo(
-    () => [{ id: "bonus-card-0", letter: Letter.WILD }],
+    () => [{ origin: CardOrigin.BONUS, index: 0, letter: Letter.WILD }],
     []
   );
 
@@ -57,7 +58,7 @@ export const RearrangeLettersContent = (props: Props) => {
       // Get the card that was dragged
       const draggedCard = _.find(
         _.concat(initialPlayerCards, initialBonusCards),
-        (card) => card.id === draggableId
+        (card) => getSortableCardId(card) === draggableId
       )!;
 
       // Remove the dragged card from the sorted list (if it was there at all)

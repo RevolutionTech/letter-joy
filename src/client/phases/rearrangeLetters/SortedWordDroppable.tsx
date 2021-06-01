@@ -12,7 +12,7 @@ import {
 import { HandOfCards } from "../../display/DisplayRow";
 import theme from "../../theme";
 import { DraggableCard } from "./DraggableCard";
-import { SortableCard } from "./sortableCard";
+import { SortableCard, getSortableCardId } from "./sortableCard";
 
 export const SORTED_WORD_DROPPABLE_ID = "sorted-word";
 const CARD_SLOT_HEIGHT = CARD_HEIGHT + 8;
@@ -52,14 +52,17 @@ export const SortedWordDroppable = (props: Props) => {
               ),
             }}
           >
-            {sortedCards.map((card, i) => (
-              <DraggableCard
-                key={card.id}
-                draggableId={card.id}
-                index={i}
-                letter={card.letter}
-              />
-            ))}
+            {sortedCards.map((card, i) => {
+              const sortableCardId = getSortableCardId(card);
+              return (
+                <DraggableCard
+                  key={sortableCardId}
+                  draggableId={sortableCardId}
+                  index={i}
+                  letter={card.letter}
+                />
+              );
+            })}
             {provided.placeholder}
           </CardSlot>
         )}

@@ -22,9 +22,11 @@ export const UnsortedCards = (props: Props) => {
       {initialCards.map((card, i) => (
         <SingleDroppableCard
           key={i}
-          droppableId={card.id}
-          letter={card.letter}
-          isPlaceholder={_.some(sortedCards, (c) => c.id === card.id)}
+          card={card}
+          isPlaceholder={_.some(
+            sortedCards,
+            (c) => c.origin === card.origin && c.index === card.index
+          )}
         />
       ))}
     </UnsortedHandOfCards>

@@ -1,13 +1,13 @@
 import { styled } from "@material-ui/core";
 import { Droppable } from "react-beautiful-dnd";
 
-import { Letter } from "../../../game/types";
 import {
   CARD_WIDTH,
   CARD_BORDER_WIDTH,
   CARD_MARGIN_RIGHT,
 } from "../../cards/Card";
 import { DraggableCard } from "./DraggableCard";
+import { SortableCard, getSortableCardId } from "./sortableCard";
 
 const CardPlaceholder = styled("div")({
   width: `calc(${CARD_WIDTH}px + ${CARD_BORDER_WIDTH}px * 2)`,
@@ -15,15 +15,15 @@ const CardPlaceholder = styled("div")({
 });
 
 interface Props {
-  droppableId: string;
-  letter: Letter | null;
+  card: SortableCard;
   isPlaceholder: boolean;
 }
 
 export const SingleDroppableCard = (props: Props) => {
-  const { droppableId, letter, isPlaceholder } = props;
+  const { card, isPlaceholder } = props;
+  const sortableCardId = getSortableCardId(card);
   return (
-    <Droppable droppableId={droppableId} isDropDisabled>
+    <Droppable droppableId={sortableCardId} isDropDisabled>
       {(droppableProvided) => (
         <div
           ref={droppableProvided.innerRef}
@@ -33,9 +33,9 @@ export const SingleDroppableCard = (props: Props) => {
             <CardPlaceholder />
           ) : (
             <DraggableCard
-              draggableId={droppableId}
+              draggableId={sortableCardId}
               index={0}
-              letter={letter}
+              letter={card.letter}
             />
           )}
           {droppableProvided.placeholder}
