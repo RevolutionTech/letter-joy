@@ -23,11 +23,11 @@ export const ActiveClueBoard = (props: BoardProps) => {
 
   return (
     <>
-      <ActiveTableDisplay g={g} clueTokenPlacement={g.activeClue.placement} />
+      <ActiveTableDisplay g={g} spelling={g.activeClue.spelling} />
       <Sidebar g={g}>
         <SidebarContent header="Active clue" buttons={[]}>
           <div style={{ fontSize: "48pt" }}>
-            <ClueDisplay g={g} tokenPlacement={g.activeClue.placement} />
+            <ClueDisplay g={g} spelling={g.activeClue.spelling} />
           </div>
           {currentPlayer != null && playersActing.includes(currentPlayer) ? (
             <AdvanceDecisionContent

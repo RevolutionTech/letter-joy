@@ -1,11 +1,11 @@
 import _ from "lodash";
 
-import { ClueTokenPlacement } from "./types";
+import { Spelling } from "./types";
 
-export const clueSummary = (placement: ClueTokenPlacement) => {
+export const clueSummary = (placement: Spelling) => {
   const usesWild = _.some(
     placement,
-    (clueTokenLocation) => clueTokenLocation.ownerID === "TEAM"
+    (cardLocation) => cardLocation.ownerID === "TEAM"
   );
   return {
     numLetters: placement.length,

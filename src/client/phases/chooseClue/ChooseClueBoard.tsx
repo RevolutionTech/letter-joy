@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { BoardProps } from "boardgame.io/react";
 
 import { PlayerViewG } from "../../../game/types";
-import { useClueTokenPlacement } from "../../cards/clueTokenPlacement";
+import { useSpelling } from "../../cards/spelling";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { ProposingContent } from "./sidebar/ProposingContent";
@@ -12,36 +12,30 @@ export const ChooseClueBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
 
   const [isProposing, setIsProposing] = useState(false);
-  const [
-    proposedClueTokenPlacement,
-    addProposedClueToken,
-    clearProposedClueTokenPlacement,
-  ] = useClueTokenPlacement(g);
+  const [spelling, addCardLocation, clearSpelling] = useSpelling(g);
   const onCloseProposing = useCallback(() => {
     setIsProposing(false);
-    clearProposedClueTokenPlacement();
-  }, [clearProposedClueTokenPlacement]);
+    clearSpelling();
+  }, [clearSpelling]);
   const onConfirmProposing = useCallback(() => {
-    props.moves.proposeClue(proposedClueTokenPlacement);
+    props.moves.proposeClue(spelling);
     onCloseProposing();
-  }, [props.moves, onCloseProposing, proposedClueTokenPlacement]);
+  }, [props.moves, onCloseProposing, spelling]);
 
   return (
     <>
       <ActiveTableDisplay
         g={g}
-        clueTokenPlacement={proposedClueTokenPlacement}
-        onAddToClue={isProposing ? addProposedClueToken : undefined}
+        spelling={spelling}
+        onAddToSpelling={isProposing ? addCardLocation : undefined}
       />
       <Sidebar g={g}>
         {isProposing ? (
           <ProposingContent
             g={g}
-            clueProposingPlacement={proposedClueTokenPlacement}
+            clueProposingPlacement={spelling}
             onConfirmProposing={
-              proposedClueTokenPlacement.length > 0
-                ? onConfirmProposing
-                : undefined
+              spelling.length > 0 ? onConfirmProposing : undefined
             }
             onCancelProposing={onCloseProposing}
           />

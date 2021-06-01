@@ -43,15 +43,15 @@ export interface TeamHints {
   locked: number;
 }
 
-export type ClueTokenPlayerLocation = { ownerID: string; letterIndex: number };
+export type PlayerCardLocation = { ownerID: string; letterIndex: number };
 
-export type ClueTokenLocation = ClueTokenPlayerLocation | { ownerID: "TEAM" };
+export type CardLocation = PlayerCardLocation | { ownerID: "TEAM" };
 
-export type ClueTokenPlacement = ClueTokenLocation[];
+export type Spelling = CardLocation[];
 
 export interface Clue {
   authorID: string;
-  placement: ClueTokenPlacement;
+  spelling: Spelling;
 }
 
 interface ClueSummary {
@@ -65,9 +65,8 @@ interface ProposedClue extends Clue {
   votes: string[];
 }
 
-export interface PlayerViewProposedClue
-  extends Omit<ProposedClue, "placement"> {
-  placement?: ClueTokenPlacement;
+export interface PlayerViewProposedClue extends Omit<ProposedClue, "spelling"> {
+  spelling?: Spelling;
 }
 
 export interface G {

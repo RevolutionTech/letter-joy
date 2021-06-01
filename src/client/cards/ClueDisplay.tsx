@@ -1,27 +1,23 @@
 import {
   Letter,
-  ClueTokenPlayerLocation,
-  ClueTokenLocation,
-  ClueTokenPlacement,
+  PlayerCardLocation,
+  CardLocation,
+  Spelling,
   PlayerViewG,
 } from "../../game/types";
 
 interface Props {
   g: PlayerViewG;
-  tokenPlacement: ClueTokenPlacement;
+  spelling: Spelling;
 }
 
-const getLetterDisplay = (
-  g: PlayerViewG,
-  clueTokenLocation: ClueTokenLocation
-) => {
-  const { ownerID } = clueTokenLocation;
+const getLetterDisplay = (g: PlayerViewG, cardLocation: CardLocation) => {
+  const { ownerID } = cardLocation;
   if (ownerID === "TEAM") {
     return <>{Letter.WILD}</>;
   } else {
     // TODO: Surely there is a way to avoid this assertion
-    const letterIndex = (clueTokenLocation as ClueTokenPlayerLocation)
-      .letterIndex;
+    const letterIndex = (cardLocation as PlayerCardLocation).letterIndex;
     const player = g.players[+ownerID];
     const letter = (
       <>
@@ -37,10 +33,10 @@ const getLetterDisplay = (
 };
 
 export const ClueDisplay = (props: Props) => {
-  const { g, tokenPlacement } = props;
-  return tokenPlacement.reduce(
-    (display: React.ReactNode, clueTokenLocation: ClueTokenLocation) => {
-      const letterDisplay = getLetterDisplay(g, clueTokenLocation);
+  const { g, spelling } = props;
+  return spelling.reduce(
+    (display: React.ReactNode, cardLocation: CardLocation) => {
+      const letterDisplay = getLetterDisplay(g, cardLocation);
       return display == null ? (
         letterDisplay
       ) : (

@@ -6,7 +6,7 @@ import { PlayerHints } from "./PlayerHints";
 interface Props extends PlayerViewPlayerState {
   teamHintsAvailable: number;
   containsTokens?: number[];
-  onAddToClue?: () => void;
+  onAddToSpelling?: () => void;
 }
 
 export const PlayerDisplay = (props: Props) => {
@@ -18,7 +18,7 @@ export const PlayerDisplay = (props: Props) => {
     hintsUsed,
     teamHintsAvailable,
     containsTokens,
-    onAddToClue,
+    onAddToSpelling,
   } = props;
   return (
     <DisplayRow>
@@ -41,7 +41,7 @@ export const PlayerDisplay = (props: Props) => {
               letter={letterDisplayed}
               active={active}
               containsTokens={active ? containsTokens : undefined}
-              onClick={letterDisplayed == null ? undefined : onAddToClue}
+              onClick={letterDisplayed == null ? undefined : onAddToSpelling}
             />
           );
         })}

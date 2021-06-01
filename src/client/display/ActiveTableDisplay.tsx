@@ -1,7 +1,7 @@
 import { styled } from "@material-ui/core";
 
-import { ClueTokenPlacement, PlayerViewG } from "../../game/types";
-import { getTokensAssignedToOwner } from "../cards/clueTokenPlacement";
+import { Spelling, PlayerViewG } from "../../game/types";
+import { getCardLocationsAssignedToOwner } from "../cards/spelling";
 import { GameTable } from "../display/GameTable";
 import { SIDEBAR_WIDTH, SIDEBAR_PADDING } from "../panels/sidebar/Sidebar";
 import { PlayerDisplay } from "./PlayerDisplay";
@@ -21,12 +21,12 @@ const SidebarPlaceholder = styled("div")({
 
 interface Props {
   g: PlayerViewG;
-  clueTokenPlacement?: ClueTokenPlacement;
-  onAddToClue?: (ownerID: string) => void;
+  spelling?: Spelling;
+  onAddToSpelling?: (ownerID: string) => void;
 }
 
 export const ActiveTableDisplay = (props: Props) => {
-  const { g, clueTokenPlacement, onAddToClue } = props;
+  const { g, spelling, onAddToSpelling } = props;
 
   const playerDisplays = Object.values(g.players).map((playerState) => {
     return (
@@ -35,10 +35,12 @@ export const ActiveTableDisplay = (props: Props) => {
         {...playerState}
         teamHintsAvailable={g.teamHints.available}
         containsTokens={
-          clueTokenPlacement &&
-          getTokensAssignedToOwner(clueTokenPlacement, playerState.playerID)
+          spelling &&
+          getCardLocationsAssignedToOwner(spelling, playerState.playerID)
         }
-        onAddToClue={onAddToClue && (() => onAddToClue(playerState.playerID))}
+        onAddToSpelling={
+          onAddToSpelling && (() => onAddToSpelling(playerState.playerID))
+        }
       />
     );
   });
@@ -50,10 +52,9 @@ export const ActiveTableDisplay = (props: Props) => {
         <TeamDisplay
           teamHints={g.teamHints}
           containsTokens={
-            clueTokenPlacement &&
-            getTokensAssignedToOwner(clueTokenPlacement, "TEAM")
+            spelling && getCardLocationsAssignedToOwner(spelling, "TEAM")
           }
-          onAddToClue={onAddToClue && (() => onAddToClue("TEAM"))}
+          onAddToSpelling={onAddToSpelling && (() => onAddToSpelling("TEAM"))}
         />
       </PlayerRows>
       <SidebarPlaceholder />

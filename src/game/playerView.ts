@@ -46,9 +46,9 @@ export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
       {}
     ),
     proposedClues: proposedClues.map((proposedClue) => {
-      const { authorID, placement, summary, votes } = proposedClue;
-      const maybePlacement = authorID === playerID ? { placement } : {};
-      return { authorID, ...maybePlacement, summary, votes };
+      const { authorID, spelling, summary, votes } = proposedClue;
+      const maybeSpelling = authorID === playerID ? { spelling } : {};
+      return { authorID, ...maybeSpelling, summary, votes };
     }),
   };
 };

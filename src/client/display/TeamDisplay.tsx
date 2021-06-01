@@ -11,11 +11,11 @@ import { Hint } from "./hint";
 interface Props {
   teamHints: TeamHints;
   containsTokens?: number[];
-  onAddToClue?: () => void;
+  onAddToSpelling?: () => void;
 }
 
 export const TeamDisplay = (props: Props) => {
-  const { teamHints, containsTokens, onAddToClue } = props;
+  const { teamHints, containsTokens, onAddToSpelling } = props;
   return (
     <DisplayRow>
       <DisplayStatus>
@@ -42,7 +42,7 @@ export const TeamDisplay = (props: Props) => {
       <PresentedCard
         letter={Letter.WILD}
         containsTokens={containsTokens}
-        onClick={onAddToClue}
+        onClick={onAddToSpelling}
       />
     </DisplayRow>
   );

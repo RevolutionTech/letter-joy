@@ -1,6 +1,6 @@
 import { styled } from "@material-ui/core";
 
-import { ClueTokenPlacement, PlayerViewG } from "../../../../game/types";
+import { Spelling, PlayerViewG } from "../../../../game/types";
 import { ClueDisplay } from "../../../cards/ClueDisplay";
 import { Button } from "../../../panels/Button";
 import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
@@ -9,7 +9,7 @@ const SidebarClueText = styled("div")({ fontSize: "48pt" });
 
 interface Props {
   g: PlayerViewG;
-  clueProposingPlacement: ClueTokenPlacement;
+  clueProposingPlacement: Spelling;
   onConfirmProposing?: () => void;
   onCancelProposing: () => void;
 }
@@ -45,7 +45,7 @@ export const ProposingContent = (props: Props) => {
       ]}
     >
       <SidebarClueText>
-        <ClueDisplay g={g} tokenPlacement={clueProposingPlacement} />
+        <ClueDisplay g={g} spelling={clueProposingPlacement} />
       </SidebarClueText>
     </SidebarContent>
   );

@@ -41,7 +41,7 @@ interface Props {
 
 export const ProposedClueRadioButton = (props: Props) => {
   const { g, proposedClue, value, disabled } = props;
-  const { authorID, placement, summary } = proposedClue;
+  const { authorID, spelling, summary } = proposedClue;
   const authorName = g.players[+authorID].playerName;
   const { numLetters, usesWild, numPlayers } = summary;
 
@@ -66,9 +66,9 @@ export const ProposedClueRadioButton = (props: Props) => {
               <PersonIcon style={{ marginRight: "4px" }} />
               <div>{authorName}</div>
             </SidebarProposedClueSummaryDetail>
-            {placement && (
+            {spelling && (
               <SidebarProposedClueDisplay>
-                (<ClueDisplay g={g} tokenPlacement={placement} />)
+                (<ClueDisplay g={g} spelling={spelling} />)
               </SidebarProposedClueDisplay>
             )}
           </SidebarProposedClueSummary>

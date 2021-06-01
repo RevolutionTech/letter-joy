@@ -33,10 +33,7 @@ export const Sidebar = (props: React.PropsWithChildren<Props>) => (
         <SidebarList>
           {props.g.previousClues.map((previousClue, i) => (
             <li key={i}>
-              <ClueDisplay
-                g={props.g}
-                tokenPlacement={previousClue.placement}
-              />
+              <ClueDisplay g={props.g} spelling={previousClue.spelling} />
             </li>
           ))}
         </SidebarList>

@@ -6,7 +6,7 @@ import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
 import { playerHasHintAvailable } from "./hints";
 import { getLeftPlayerID } from "./players";
-import { Letter, ClueTokenPlacement, G } from "./types";
+import { Letter, Spelling, G } from "./types";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   // A player must be active to choose a secret word
@@ -26,7 +26,7 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   ctx.events?.endStage?.();
 };
 
-export const proposeClue = (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
+export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   // A player must be active and must have a hint available to propose the clue
   if (ctx.playerID == null || !playerHasHintAvailable(g, ctx.playerID)) {
     return INVALID_MOVE;
@@ -34,8 +34,8 @@ export const proposeClue = (g: G, ctx: Ctx, placement: ClueTokenPlacement) => {
 
   g.proposedClues.push({
     authorID: ctx.playerID,
-    placement,
-    summary: clueSummary(placement),
+    spelling,
+    summary: clueSummary(spelling),
     votes: [],
   });
 };
