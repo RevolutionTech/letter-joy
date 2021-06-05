@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { Ctx, PhaseConfig } from "boardgame.io";
+import { TurnOrder } from "boardgame.io/core";
 
 import { MAX_NUM_PLAYERS } from "./constants";
 import { consumeHint } from "./hints";
@@ -8,6 +9,8 @@ import {
   proposeClue,
   supportClue,
   advanceLetter,
+  rearrangeLetters,
+  confirmUnexpectedWord,
 } from "./moves";
 import { G } from "./types";
 
@@ -43,6 +46,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       stages: {
         chooseClueMain: {
           moves: {
+            // TODO: Add a move to transition to the rearrange letters phase
             proposeClue,
             supportClue,
           },
@@ -94,5 +98,19 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
     endIf: isEveryPlayerWaiting,
     next: Phase.CHOOSE_CLUE,
   },
-  [Phase.REARRANGE_LETTERS]: {},
+  [Phase.REARRANGE_LETTERS]: {
+    moves: { rearrangeLetters },
+    turn: {
+      order: TurnOrder.RESET,
+      activePlayers: {
+        currentPlayer: { stage: "rearrangeLettersMain" },
+        others: { stage: "scoring" },
+      },
+      stages: {
+        rearrangeLettersMain: { moves: { rearrangeLetters } },
+        unexpectedWord: { moves: { confirmUnexpectedWord }, next: "scoring" },
+        scoring: {},
+      },
+    },
+  },
 };

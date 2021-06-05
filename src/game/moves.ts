@@ -7,6 +7,7 @@ import { LETTERS_PER_PLAYER } from "./constants";
 import { playerHasHintAvailable } from "./hints";
 import { getLeftPlayerID } from "./players";
 import { Letter, Spelling, G } from "./types";
+import { isWordEqual } from "./word";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   // A player must be active to choose a secret word
@@ -91,4 +92,77 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
     ...playerState,
     nextLetterIndex,
   };
+};
+
+export const rearrangeLetters = (
+  g: G,
+  ctx: Ctx,
+  spelling: Spelling,
+  expectedWord: string
+) => {
+  // The player rearranging letters must be the active player
+  if (ctx.playerID !== ctx.currentPlayer) {
+    return INVALID_MOVE;
+  }
+
+  // Determine the word the user spelled
+  const playerState = g.players[+ctx.currentPlayer];
+  const spelledWord = spelling
+    .map((cardLocation) =>
+      cardLocation.ownerID === "TEAM"
+        ? g.teamLetters[cardLocation.letterIndex]
+        : playerState.letters[cardLocation.letterIndex]
+    )
+    .join("");
+
+  // Assign the player outcome
+  const isSpelledWordExpected = isWordEqual(expectedWord, spelledWord);
+  g.players[+ctx.currentPlayer] = {
+    ...playerState,
+    playerOutcome: {
+      expectedWord,
+      spelledWord,
+      // If the user didn't spell the word they expected,
+      // we don't yet know if it's a word
+      isWord: isSpelledWordExpected || undefined,
+    },
+  };
+
+  // Remove any team letters that were used
+  const indicesToRemove = spelling
+    .filter((cardLocation) => cardLocation.ownerID === "TEAM")
+    .map((cardLocation) => cardLocation.letterIndex);
+  g.teamLetters = _.pullAt(g.teamLetters, indicesToRemove);
+
+  // Determine the active player's next stage depending on
+  // whether they spelled what they meant to or not
+  if (isSpelledWordExpected) {
+    ctx.events?.setStage?.("scoring");
+    ctx.events?.endTurn?.();
+  } else {
+    ctx.events?.setStage?.("unexpectedWord");
+  }
+};
+
+export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
+  // The player confirming must be the active player and they must already have a player outcome
+  if (ctx.playerID !== ctx.currentPlayer) {
+    return INVALID_MOVE;
+  }
+
+  // The player must have a player outcome assigned
+  const playerState = g.players[+ctx.currentPlayer];
+  if (playerState.playerOutcome == null) {
+    return INVALID_MOVE;
+  }
+
+  // Add the player's input on whether or not they have spelled a word
+  g.players[+ctx.currentPlayer] = {
+    ...playerState,
+    playerOutcome: { ...playerState.playerOutcome, isWord },
+  };
+
+  // Move the active player into the scoring stage and end the turn
+  ctx.events?.endStage?.();
+  ctx.events?.endTurn?.();
 };

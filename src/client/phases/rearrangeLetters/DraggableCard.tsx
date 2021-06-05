@@ -7,12 +7,17 @@ interface Props {
   draggableId: string;
   index: number;
   letter: Letter | null;
+  isDragDisabled: boolean;
 }
 
 export const DraggableCard = (props: Props) => {
-  const { draggableId, index, letter } = props;
+  const { draggableId, index, letter, isDragDisabled } = props;
   return (
-    <Draggable draggableId={draggableId} index={index}>
+    <Draggable
+      draggableId={draggableId}
+      index={index}
+      isDragDisabled={isDragDisabled}
+    >
       {(provided) => (
         <div
           ref={provided.innerRef}

@@ -16,13 +16,14 @@ const CardPlaceholder = styled("div")({
 });
 
 interface Props {
+  isDragDisabled: boolean;
   teamLetters: Letter[];
   cardLocation: CardLocation;
   isPlaceholder: boolean;
 }
 
 export const SingleDroppableCard = (props: Props) => {
-  const { teamLetters, cardLocation, isPlaceholder } = props;
+  const { isDragDisabled, teamLetters, cardLocation, isPlaceholder } = props;
   const draggableId = getDraggableId(cardLocation);
   const letter =
     cardLocation.ownerID === "TEAM"
@@ -43,6 +44,7 @@ export const SingleDroppableCard = (props: Props) => {
               draggableId={draggableId}
               index={0}
               letter={letter}
+              isDragDisabled={isDragDisabled}
             />
           )}
           {droppableProvided.placeholder}

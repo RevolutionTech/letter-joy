@@ -14,11 +14,16 @@ const playerStatePlayerView = (
     activeLetterIndex,
     nextLetterIndex,
     hintsUsed,
+    playerOutcome,
   } = playerState;
 
   // Filter out all letters unless it is a different player's active card
+  // or it is the end of the game where the player has flipped over their cards
   const lettersPlayerView = letters.map((letter, i) =>
-    playerViewPlayerID === playerID || activeLetterIndex < i ? null : letter
+    playerOutcome == null &&
+    (playerViewPlayerID === playerID || activeLetterIndex < i)
+      ? null
+      : letter
   );
 
   return {
@@ -29,6 +34,7 @@ const playerStatePlayerView = (
     activeLetterIndex,
     nextLetterIndex,
     hintsUsed,
+    playerOutcome,
   };
 };
 

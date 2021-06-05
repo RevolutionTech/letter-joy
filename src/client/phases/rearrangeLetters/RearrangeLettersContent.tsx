@@ -2,12 +2,12 @@ import { useMemo, useState, useCallback } from "react";
 import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
 import { FullWidthGameTable } from "../../display/GameTable";
-import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
-import { Button } from "../../panels/Button";
+import { BottombarPlaceholder } from "../../panels/Bottombar";
+import { ConfirmExpectedWordContent } from "./ConfirmExpectedWordContent";
+import { ConfirmSortedCardsContent } from "./ConfirmSortedCardsContent";
 import { getDraggableId } from "./draggableId";
 import {
   SORTED_WORD_DROPPABLE_ID,
@@ -18,10 +18,11 @@ import { UnsortedCards } from "./UnsortedCards";
 interface Props {
   g: PlayerViewG;
   currentPlayer: string;
+  onConfirmExpectedWord: (spelling: Spelling, expectedWord: string) => void;
 }
 
 export const RearrangeLettersContent = (props: Props) => {
-  const { g, currentPlayer } = props;
+  const { g, currentPlayer, onConfirmExpectedWord } = props;
 
   const initialTeamLetters = g.teamLetters;
   const initialPlayerLetters = g.players[+currentPlayer].letters;
@@ -42,6 +43,9 @@ export const RearrangeLettersContent = (props: Props) => {
     [initialTeamLetters]
   );
 
+  const [isRearrangingLetters, setIsRearrangingLetters] = useState<boolean>(
+    true
+  );
   const [sortedCards, setSortedCards] = useState<Spelling>([]);
 
   const onDragEnd = useCallback(
@@ -87,7 +91,8 @@ export const RearrangeLettersContent = (props: Props) => {
             <DisplayRow>
               <DisplayStatus>Your letters</DisplayStatus>
               <UnsortedCards
-                teamLetters={g.teamLetters}
+                isDragDisabled={!isRearrangingLetters}
+                teamLetters={initialTeamLetters}
                 initialCardLocations={initialPlayerCardLocations}
                 sortedCards={sortedCards}
               />
@@ -95,7 +100,8 @@ export const RearrangeLettersContent = (props: Props) => {
             <DisplayRow>
               <DisplayStatus>Bonus letters</DisplayStatus>
               <UnsortedCards
-                teamLetters={g.teamLetters}
+                isDragDisabled={!isRearrangingLetters}
+                teamLetters={initialTeamLetters}
                 initialCardLocations={initialTeamCardLocations}
                 sortedCards={sortedCards}
               />
@@ -103,7 +109,9 @@ export const RearrangeLettersContent = (props: Props) => {
             <DisplayRow>
               <DisplayStatus>Your word</DisplayStatus>
               <SortedWordDroppable
-                teamLetters={g.teamLetters}
+                isDragDisabled={!isRearrangingLetters}
+                playerLetters={initialPlayerLetters}
+                teamLetters={initialTeamLetters}
                 sortedCards={sortedCards}
               />
             </DisplayRow>
@@ -111,37 +119,21 @@ export const RearrangeLettersContent = (props: Props) => {
         </DragDropContext>
         <BottombarPlaceholder />
       </FullWidthGameTable>
-      <Bottombar
-        buttons={[
-          <Button
-            key="confirm"
-            variant="contained"
-            color="primary"
-            size="large"
-            disabled={sortedCards.length < LETTERS_PER_PLAYER}
-          >
-            Confirm
-          </Button>,
-          <Button
-            key="reset"
-            variant="outlined"
-            size="large"
-            disabled={sortedCards.length === 0}
-            onClick={() => setSortedCards([])}
-          >
-            Reset
-          </Button>,
-        ]}
-      >
-        <div>
-          <div style={{ fontSize: "36pt" }}>
-            Rearrange your letters to spell a word.
-          </div>
-          <div style={{ fontSize: "24pt" }}>
-            You may use bonus letters too, but then no one else can.
-          </div>
-        </div>
-      </Bottombar>
+      {isRearrangingLetters ? (
+        <ConfirmSortedCardsContent
+          numSortedCards={sortedCards.length}
+          onConfirmSortedCards={() => setIsRearrangingLetters(false)}
+          onResetSortedCards={() => setSortedCards([])}
+        />
+      ) : (
+        <ConfirmExpectedWordContent
+          numSortedCards={sortedCards.length}
+          onConfirmExpectedWord={(expectedWord) =>
+            onConfirmExpectedWord(sortedCards, expectedWord)
+          }
+          onCancelExpectedWord={() => setIsRearrangingLetters(true)}
+        />
+      )}
     </>
   );
 };

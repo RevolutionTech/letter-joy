@@ -34,12 +34,14 @@ const cardSlotWidth = (numCards: number) =>
   `calc(${CARD_SLOT_PADDING}px * 2 + (${CARD_WIDTH}px + ${CARD_BORDER_WIDTH}px * 2 + ${CARD_MARGIN_RIGHT}px) * ${numCards} - ${CARD_MARGIN_RIGHT}px)`;
 
 interface Props {
+  isDragDisabled: boolean;
+  playerLetters: (Letter | null)[];
   teamLetters: Letter[];
   sortedCards: Spelling;
 }
 
 export const SortedWordDroppable = (props: Props) => {
-  const { teamLetters, sortedCards } = props;
+  const { isDragDisabled, playerLetters, teamLetters, sortedCards } = props;
   return (
     <HandOfCards>
       <Droppable droppableId={SORTED_WORD_DROPPABLE_ID} direction="horizontal">
@@ -49,21 +51,26 @@ export const SortedWordDroppable = (props: Props) => {
             {...provided.droppableProps}
             style={{
               width: cardSlotWidth(
-                _.max([LETTERS_PER_PLAYER, sortedCards.length + 1]) ??
-                  LETTERS_PER_PLAYER
+                _.max([
+                  LETTERS_PER_PLAYER,
+                  sortedCards.length + (isDragDisabled ? 0 : 1),
+                ]) ?? LETTERS_PER_PLAYER
               ),
             }}
           >
             {sortedCards.map((card, i) => {
               const draggableId = getDraggableId(card);
               const letter =
-                card.ownerID === "TEAM" ? teamLetters[card.letterIndex] : null;
+                card.ownerID === "TEAM"
+                  ? teamLetters[card.letterIndex]
+                  : playerLetters[card.letterIndex];
               return (
                 <DraggableCard
                   key={draggableId}
                   draggableId={draggableId}
                   index={i}
                   letter={letter}
+                  isDragDisabled={isDragDisabled}
                 />
               );
             })}

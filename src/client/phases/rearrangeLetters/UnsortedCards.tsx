@@ -11,18 +11,25 @@ const UnsortedHandOfCards = styled(HandOfCards)({
 });
 
 interface Props {
+  isDragDisabled: boolean;
   teamLetters: Letter[];
   initialCardLocations: Spelling;
   sortedCards: Spelling;
 }
 
 export const UnsortedCards = (props: Props) => {
-  const { teamLetters, initialCardLocations, sortedCards } = props;
+  const {
+    isDragDisabled,
+    teamLetters,
+    initialCardLocations,
+    sortedCards,
+  } = props;
   return (
     <UnsortedHandOfCards>
       {initialCardLocations.map((cardLocation, i) => (
         <SingleDroppableCard
           key={i}
+          isDragDisabled={isDragDisabled}
           teamLetters={teamLetters}
           cardLocation={cardLocation}
           isPlaceholder={_.some(
