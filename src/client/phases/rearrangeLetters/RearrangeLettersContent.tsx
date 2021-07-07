@@ -6,8 +6,7 @@ import { Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
 import { FullWidthGameTable } from "../../display/GameTable";
 import { BottombarPlaceholder } from "../../panels/Bottombar";
-import { ConfirmExpectedWordContent } from "./ConfirmExpectedWordContent";
-import { ConfirmSortedCardsContent } from "./ConfirmSortedCardsContent";
+import { RearrangeLettersBottombar } from "./bottombar/RearrangeLettersBottombar";
 import { getDraggableId } from "./draggableId";
 import {
   SORTED_WORD_DROPPABLE_ID,
@@ -18,11 +17,19 @@ import { UnsortedCards } from "./UnsortedCards";
 interface Props {
   g: PlayerViewG;
   currentPlayer: string;
+  stage: "rearrangeLettersMain" | "unexpectedWord";
   onConfirmExpectedWord: (spelling: Spelling, expectedWord: string) => void;
+  onConfirmUnexpectedWord: (isWord: boolean) => void;
 }
 
 export const RearrangeLettersContent = (props: Props) => {
-  const { g, currentPlayer, onConfirmExpectedWord } = props;
+  const {
+    g,
+    currentPlayer,
+    stage,
+    onConfirmExpectedWord,
+    onConfirmUnexpectedWord,
+  } = props;
 
   const initialTeamLetters = g.teamLetters;
   const initialPlayerLetters = g.players[+currentPlayer].letters;
@@ -119,21 +126,19 @@ export const RearrangeLettersContent = (props: Props) => {
         </DragDropContext>
         <BottombarPlaceholder />
       </FullWidthGameTable>
-      {isRearrangingLetters ? (
-        <ConfirmSortedCardsContent
-          numSortedCards={sortedCards.length}
-          onConfirmSortedCards={() => setIsRearrangingLetters(false)}
-          onResetSortedCards={() => setSortedCards([])}
-        />
-      ) : (
-        <ConfirmExpectedWordContent
-          numSortedCards={sortedCards.length}
-          onConfirmExpectedWord={(expectedWord) =>
-            onConfirmExpectedWord(sortedCards, expectedWord)
-          }
-          onCancelExpectedWord={() => setIsRearrangingLetters(true)}
-        />
-      )}
+      <RearrangeLettersBottombar
+        stage={stage}
+        numSortedCards={sortedCards.length}
+        isRearrangingLetters={isRearrangingLetters}
+        spelledWord={g.players[+currentPlayer].playerOutcome?.spelledWord}
+        onConfirmSortedCards={() => setIsRearrangingLetters(false)}
+        onResetSortedCards={() => setSortedCards([])}
+        onConfirmExpectedWord={(expectedWord) =>
+          onConfirmExpectedWord(sortedCards, expectedWord)
+        }
+        onCancelExpectedWord={() => setIsRearrangingLetters(true)}
+        onConfirmUnexpectedWord={onConfirmUnexpectedWord}
+      />
     </>
   );
 };

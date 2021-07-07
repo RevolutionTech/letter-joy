@@ -1,6 +1,6 @@
-import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { Bottombar } from "../../panels/Bottombar";
-import { Button } from "../../panels/Button";
+import { LETTERS_PER_PLAYER } from "../../../../game/constants";
+import { Bottombar } from "../../../panels/Bottombar";
+import { Button } from "../../../panels/Button";
 
 interface Props {
   numSortedCards: number;

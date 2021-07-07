@@ -2,8 +2,8 @@ import { useState } from "react";
 import _ from "lodash";
 import { styled, TextField } from "@material-ui/core";
 
-import { Bottombar } from "../../panels/Bottombar";
-import { Button } from "../../panels/Button";
+import { Bottombar } from "../../../panels/Bottombar";
+import { Button } from "../../../panels/Button";
 
 const StyledTextField = styled(TextField)({
   width: "100%",
