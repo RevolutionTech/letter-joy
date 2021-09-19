@@ -1,3 +1,4 @@
+import { displayWord } from "../../../../game/word";
 import { Bottombar } from "../../../panels/Bottombar";
 import { Button } from "../../../panels/Button";
 
@@ -31,11 +32,9 @@ export const ConfirmUnexpectedWordContent = (props: Props) => {
     >
       <div>
         <div style={{ fontSize: "24pt" }}>
-          Actually... it turns out you spelled:
+          Actually&#8230; it turns out you spelled:
         </div>
-        <div style={{ fontSize: "36pt" }}>
-          {Array.from(spelledWord).join(" ")}
-        </div>
+        <div style={{ fontSize: "36pt" }}>{displayWord(spelledWord)}</div>
         <div style={{ fontSize: "24pt" }}>Is this a word?</div>
       </div>
     </Bottombar>

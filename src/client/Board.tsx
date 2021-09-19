@@ -7,7 +7,7 @@ import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWor
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
 import { RearrangeLettersBoard } from "./phases/rearrangeLetters/RearrangeLettersBoard";
 
-const getBoardForPhase = (phase: Phase) => {
+const getBoardForPhase = (phase: Phase | null) => {
   switch (phase) {
     case Phase.CHOOSE_SECRET_WORD:
       return ChooseSecretWordBoard;
@@ -16,6 +16,7 @@ const getBoardForPhase = (phase: Phase) => {
     case Phase.ACTIVE_CLUE:
       return ActiveClueBoard;
     case Phase.REARRANGE_LETTERS:
+    case null:
       return RearrangeLettersBoard;
     default:
       return assertNever(phase);
@@ -23,7 +24,7 @@ const getBoardForPhase = (phase: Phase) => {
 };
 
 export const LetterJoyBoard = (props: BoardProps) => {
-  const phase = props.ctx.phase as Phase;
+  const phase = props.ctx.phase as Phase | null;
   const Board = getBoardForPhase(phase);
   return <Board {...props} />;
 };

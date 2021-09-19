@@ -23,7 +23,7 @@ export enum Letter {
   WILD = "＊", // full-width asterisk (U+FF0A)
 }
 
-interface PlayerOutcome {
+export interface PlayerOutcome {
   spelledWord: string;
   expectedWord: string;
   isWord?: boolean;

@@ -37,6 +37,11 @@ export const LetterJoy: Game<G> = {
       proposedClues: [],
     };
   },
+  endIf: (g) =>
+    _.every(
+      g.players,
+      (playerState) => playerState.playerOutcome?.isWord != null
+    ),
 
   phases: PHASES,
   playerView,

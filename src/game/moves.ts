@@ -132,7 +132,7 @@ export const rearrangeLetters = (
   const indicesToRemove = spelling
     .filter((cardLocation) => cardLocation.ownerID === "TEAM")
     .map((cardLocation) => cardLocation.letterIndex);
-  g.teamLetters = _.pullAt(g.teamLetters, indicesToRemove);
+  _.pullAt(g.teamLetters, indicesToRemove);
 
   // Determine the active player's next stage depending on
   // whether they spelled what they meant to or not
