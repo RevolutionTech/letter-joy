@@ -1,0 +1,25 @@
+import _ from "lodash";
+
+import { MAX_NUM_STARS, totalStars } from "../../../game/scoring";
+import starFilled from "../../assets/starFilled.svg";
+import starUnfilled from "../../assets/starUnfilled.svg";
+
+interface Props {
+  score: number;
+}
+
+export const StarRating = (props: Props) => {
+  const numStars = totalStars(props.score);
+  const numStarsText = `${numStars}/${MAX_NUM_STARS} stars`;
+
+  return (
+    <>
+      {_.range(numStars).map((_) => (
+        <img src={starFilled} alt={numStarsText} />
+      ))}
+      {_.range(MAX_NUM_STARS - numStars).map((_) => (
+        <img src={starUnfilled} alt={numStarsText} />
+      ))}
+    </>
+  );
+};

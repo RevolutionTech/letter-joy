@@ -7,6 +7,7 @@ import { PlayerViewG } from "../../../game/types";
 import { displayWord } from "../../../game/word";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
+import { StarRating } from "./StarRating";
 
 const Body = styled("p")({ fontSize: "16pt" });
 const EmphasisBody = styled("span")({ fontSize: "24pt" });
@@ -21,6 +22,10 @@ export const ScoringContent = (props: Props) => {
   const teamHintsAvailable = g.teamHints.available;
   const finishedPlayers = Object.values(g.players).filter(
     (player) => player.playerOutcome
+  );
+  const teamScore = totalScore(
+    finishedPlayers.map((player) => player.playerOutcome!),
+    teamHintsAvailable
   );
   return (
     <>
@@ -49,15 +54,9 @@ export const ScoringContent = (props: Props) => {
         ))}
         <h5>Total Score</h5>
         <p>
-          <EmphasisBody>
-            {totalScore(
-              finishedPlayers.map((player) => player.playerOutcome!),
-              teamHintsAvailable
-            )}{" "}
-            points
-          </EmphasisBody>
+          <EmphasisBody>{teamScore} points</EmphasisBody>
         </p>
-        {/* TODO: Add star rating */}
+        <StarRating score={teamScore} />
       </Sidebar>
     </>
   );
