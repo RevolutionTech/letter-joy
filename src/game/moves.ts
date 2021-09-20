@@ -41,7 +41,12 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   });
 };
 
-export const resetSupport = (g: G, ctx: Ctx, activeClueIndex?: number) => {
+export const resetSupport = (
+  g: G,
+  ctx: Ctx,
+  resetEndSupport: boolean,
+  activeClueIndex?: number
+) => {
   // A player must be active to reset their support
   const activePlayer = ctx.playerID;
   if (activePlayer == null) {
@@ -58,6 +63,11 @@ export const resetSupport = (g: G, ctx: Ctx, activeClueIndex?: number) => {
       };
     }
   });
+
+  // Possibly clear support for ending the game
+  if (resetEndSupport) {
+    g.endGameVotes = _.without(g.endGameVotes, activePlayer);
+  }
 };
 
 export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
@@ -73,7 +83,7 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
   }
 
   // Clear the player's vote from all of the other proposed clues
-  resetSupport(g, ctx, clueIndex);
+  resetSupport(g, ctx, true, clueIndex);
 
   // Add the player's vote to the provided clue
   if (clueIndex != null) {
@@ -83,6 +93,20 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
       votes: _.union(proposedClue.votes, [activePlayer]),
     };
   }
+};
+
+export const supportEnd = (g: G, ctx: Ctx) => {
+  // A player must be active to support ending the game
+  const activePlayer = ctx.playerID;
+  if (activePlayer == null) {
+    return INVALID_MOVE;
+  }
+
+  // Clear the player's vote from any proposed clues
+  resetSupport(g, ctx, false);
+
+  // Add the player's vote to ending the game
+  g.endGameVotes = _.union(g.endGameVotes, [activePlayer]);
 };
 
 export const advanceLetter = (g: G, ctx: Ctx) => {

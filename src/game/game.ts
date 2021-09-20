@@ -35,6 +35,7 @@ export const LetterJoy: Game<G> = {
       activeClue: null,
       previousClues: [],
       proposedClues: [],
+      endGameVotes: [],
     };
   },
   endIf: (g) =>

@@ -1,4 +1,4 @@
-import { styled, Radio, FormControlLabel, Chip } from "@material-ui/core";
+import { styled } from "@material-ui/core";
 import FontDownloadIcon from "@material-ui/icons/FontDownload";
 import GroupIcon from "@material-ui/icons/Group";
 import PersonIcon from "@material-ui/icons/Person";
@@ -10,6 +10,9 @@ import {
 } from "../../../../game/types";
 import { ClueDisplay } from "../../../cards/ClueDisplay";
 import theme from "../../../theme";
+import { VoteOption } from "./VoteOption";
+
+const ClueVoteOption = styled(VoteOption)({ marginTop: "16px" });
 
 const SidebarProposedClueSummary = styled("div")({
   display: "flex",
@@ -46,44 +49,32 @@ export const ProposedClueRadioButton = (props: Props) => {
   const { numLetters, usesWild, numPlayers } = summary;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <FormControlLabel
-        value={value}
-        disabled={disabled}
-        control={<Radio />}
-        label={
-          <SidebarProposedClueSummary>
-            <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
-              <FontDownloadIcon style={{ marginRight: "4px" }} />
-              <div>{numLetters}</div>
-              {usesWild && <div>{Letter.WILD}</div>}
-            </SidebarProposedClueSummaryDetail>
-            <SidebarProposedClueSummaryDetail>
-              <GroupIcon style={{ marginRight: "4px" }} />
-              <div>{numPlayers}</div>
-            </SidebarProposedClueSummaryDetail>
-            <SidebarProposedClueSummaryDetail>
-              <PersonIcon style={{ marginRight: "4px" }} />
-              <div>{authorName}</div>
-            </SidebarProposedClueSummaryDetail>
-            {spelling && (
-              <SidebarProposedClueDisplay>
-                (<ClueDisplay g={g} spelling={spelling} />)
-              </SidebarProposedClueDisplay>
-            )}
-          </SidebarProposedClueSummary>
-        }
-        style={{ marginTop: "16px" }}
-      />
-      <div>
-        {proposedClue.votes.map((playerID) => (
-          <Chip
-            key={playerID}
-            label={g.players[+playerID].playerName}
-            style={{ marginRight: "8px", marginTop: "8px" }}
-          />
-        ))}
-      </div>
-    </div>
+    <ClueVoteOption
+      g={g}
+      votes={proposedClue.votes}
+      value={value}
+      disabled={disabled}
+    >
+      <SidebarProposedClueSummary>
+        <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
+          <FontDownloadIcon style={{ marginRight: "4px" }} />
+          <div>{numLetters}</div>
+          {usesWild && <div>{Letter.WILD}</div>}
+        </SidebarProposedClueSummaryDetail>
+        <SidebarProposedClueSummaryDetail>
+          <GroupIcon style={{ marginRight: "4px" }} />
+          <div>{numPlayers}</div>
+        </SidebarProposedClueSummaryDetail>
+        <SidebarProposedClueSummaryDetail>
+          <PersonIcon style={{ marginRight: "4px" }} />
+          <div>{authorName}</div>
+        </SidebarProposedClueSummaryDetail>
+        {spelling && (
+          <SidebarProposedClueDisplay>
+            (<ClueDisplay g={g} spelling={spelling} />)
+          </SidebarProposedClueDisplay>
+        )}
+      </SidebarProposedClueSummary>
+    </ClueVoteOption>
   );
 };

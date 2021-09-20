@@ -82,6 +82,7 @@ export interface G {
   activeClue: Clue | null;
   previousClues: Clue[];
   proposedClues: ProposedClue[];
+  endGameVotes: string[];
 }
 
 export interface PlayerViewG extends Omit<G, "players" | "proposedClues"> {

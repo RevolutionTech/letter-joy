@@ -9,6 +9,7 @@ import {
   proposeClue,
   resetSupport,
   supportClue,
+  supportEnd,
   advanceLetter,
   rearrangeLetters,
   confirmUnexpectedWord,
@@ -47,10 +48,10 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       stages: {
         chooseClueMain: {
           moves: {
-            // TODO: Add a move to transition to the rearrange letters phase
             proposeClue,
             resetSupport,
             supportClue,
+            supportEnd,
           },
         },
       },
@@ -60,17 +61,23 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         g.proposedClues,
         (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
       );
-      const activeClue = _.omit(acceptedClue, "votes");
-      g.activeClue = activeClue;
+      if (acceptedClue != null) {
+        const activeClue = _.omit(acceptedClue, "votes");
+        g.activeClue = activeClue;
+        consumeHint(g, activeClue.authorID);
+      }
       g.proposedClues = [];
-      consumeHint(g, activeClue.authorID);
     },
     endIf: (g) =>
+      g.endGameVotes.length === MAX_NUM_PLAYERS ||
       _.some(
         g.proposedClues,
         (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
       ),
-    next: Phase.ACTIVE_CLUE,
+    next: (g) =>
+      g.endGameVotes.length === MAX_NUM_PLAYERS
+        ? Phase.REARRANGE_LETTERS
+        : Phase.ACTIVE_CLUE,
   },
   [Phase.ACTIVE_CLUE]: {
     turn: {
