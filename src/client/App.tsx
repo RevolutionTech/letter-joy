@@ -5,7 +5,7 @@ import { LetterJoyBoard } from "./Board";
 import { MAX_NUM_PLAYERS } from "../game/constants";
 import { LetterJoy } from "../game/game";
 
-const SERVER_HOST = "localhost";
+const SERVER_HOST = "http://localhost";
 
 const LetterJoyClient = Client({
   game: LetterJoy,

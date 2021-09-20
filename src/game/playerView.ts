@@ -5,7 +5,7 @@ import { G, PlayerViewG, PlayerState, PlayerViewPlayerState } from "./types";
 
 const playerStatePlayerView = (
   playerState: PlayerState,
-  playerViewPlayerID: string
+  playerViewPlayerID: string | null
 ): PlayerViewPlayerState => {
   const {
     playerID,
@@ -38,11 +38,16 @@ const playerStatePlayerView = (
   };
 };
 
-export const playerView = (g: G, ctx: Ctx, playerID: string): PlayerViewG => {
+export const playerView = (
+  g: G,
+  ctx: Ctx,
+  playerID: string | null
+): PlayerViewG => {
   const { players, proposedClues } = g;
   return {
     ...g,
-    wordConstructionLetters: g.players[+playerID].wordConstructionLetters,
+    wordConstructionLetters:
+      playerID == null ? [] : g.players[+playerID].wordConstructionLetters,
     players: _.reduce(
       players,
       (result, value, key) => ({
