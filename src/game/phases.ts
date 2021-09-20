@@ -7,6 +7,7 @@ import { consumeHint } from "./hints";
 import {
   chooseSecretWord,
   proposeClue,
+  resetSupport,
   supportClue,
   advanceLetter,
   rearrangeLetters,
@@ -48,6 +49,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
           moves: {
             // TODO: Add a move to transition to the rearrange letters phase
             proposeClue,
+            resetSupport,
             supportClue,
           },
         },

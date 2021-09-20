@@ -44,7 +44,8 @@ export const ChooseClueBoard = (props: BoardProps) => {
             g={g}
             currentPlayer={props.playerID}
             onStartProposing={() => setIsProposing(true)}
-            onChangeVote={props.moves.supportClue}
+            onResetSupport={props.moves.resetSupport}
+            onSupportClue={props.moves.supportClue}
           />
         )}
       </Sidebar>

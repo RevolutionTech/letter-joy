@@ -21,15 +21,26 @@ const SidebarNonIdealText = styled("p")({
   fontWeight: "lighter",
 });
 
+enum SpecialVote {
+  RESET_SUPPORT = "Reset support",
+}
+
 interface Props {
   g: PlayerViewG;
   currentPlayer: string | null;
   onStartProposing: () => void;
-  onChangeVote: (clueIndex: number | null) => void;
+  onResetSupport: () => void;
+  onSupportClue: (clueIndex: number) => void;
 }
 
 export const VotingContent = (props: Props) => {
-  const { g, currentPlayer, onStartProposing, onChangeVote } = props;
+  const {
+    g,
+    currentPlayer,
+    onStartProposing,
+    onResetSupport,
+    onSupportClue,
+  } = props;
   const { proposedClues } = g;
   const supportedClueIndex =
     currentPlayer == null
@@ -61,8 +72,16 @@ export const VotingContent = (props: Props) => {
         <RadioGroup
           aria-label="Vote on proposed clues"
           name="proposed-clues"
-          value={supportedClueIndex === -1 ? "" : `${supportedClueIndex}`}
-          onChange={(_, value) => onChangeVote(value === "" ? null : +value)}
+          value={
+            supportedClueIndex === -1
+              ? SpecialVote.RESET_SUPPORT
+              : `${supportedClueIndex}`
+          }
+          onChange={(_, value) =>
+            value === SpecialVote.RESET_SUPPORT
+              ? onResetSupport()
+              : onSupportClue(+value)
+          }
         >
           {proposedClues.map((proposedClue, i) => (
             <ProposedClueRadioButton
@@ -79,7 +98,7 @@ export const VotingContent = (props: Props) => {
             currentPlayer != null && (
               <FormControlLabel
                 control={<Radio />}
-                value=""
+                value={SpecialVote.RESET_SUPPORT}
                 disabled={currentPlayer == null}
                 label={
                   <SidebarNonIdealText>

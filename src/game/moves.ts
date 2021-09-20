@@ -41,27 +41,39 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   });
 };
 
-export const supportClue = (g: G, ctx: Ctx, clueIndex: number | null) => {
-  // A player must be active to support a clue
-  // and the clue being supported must be one of the ones displayed
+export const resetSupport = (g: G, ctx: Ctx, activeClueIndex?: number) => {
+  // A player must be active to reset their support
   const activePlayer = ctx.playerID;
-  if (
-    activePlayer == null ||
-    (clueIndex != null &&
-      (clueIndex < 0 || clueIndex >= g.proposedClues.length))
-  ) {
+  if (activePlayer == null) {
     return INVALID_MOVE;
   }
 
-  // Clear the player's vote from all of the other proposed clues
+  // Clear any support the player currently has,
+  // aside from the clue with active support (if any)
   g.proposedClues.forEach((proposedClue, i) => {
-    if (i !== clueIndex) {
+    if (i !== activeClueIndex) {
       g.proposedClues[i] = {
         ...proposedClue,
         votes: _.without(proposedClue.votes, activePlayer),
       };
     }
   });
+};
+
+export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
+  // A player must be active to support a clue
+  // and the clue being supported must be one of the ones displayed
+  const activePlayer = ctx.playerID;
+  if (
+    activePlayer == null ||
+    clueIndex < 0 ||
+    clueIndex >= g.proposedClues.length
+  ) {
+    return INVALID_MOVE;
+  }
+
+  // Clear the player's vote from all of the other proposed clues
+  resetSupport(g, ctx, clueIndex);
 
   // Add the player's vote to the provided clue
   if (clueIndex != null) {
