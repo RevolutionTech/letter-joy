@@ -17,7 +17,11 @@ export const RearrangeLettersBoard = (props: BoardProps) => {
     "scoring") as RearrangeLettersStage;
 
   return currentPlayer == null || stage === "scoring" ? (
-    <ScoringContent g={g} activePlayers={activePlayers} />
+    <ScoringContent
+      g={g}
+      playerNames={props.matchData}
+      activePlayers={activePlayers}
+    />
   ) : (
     <RearrangeLettersContent
       g={g}

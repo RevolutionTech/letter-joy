@@ -10,6 +10,7 @@ import { VotingContent } from "./sidebar/VotingContent";
 
 export const ChooseClueBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
+  const playerNames = props.matchData;
 
   const [isProposing, setIsProposing] = useState(false);
   const [spelling, addCardLocation, clearSpelling] = useSpelling(g);
@@ -26,6 +27,7 @@ export const ChooseClueBoard = (props: BoardProps) => {
     <>
       <ActiveTableDisplay
         g={g}
+        playerNames={playerNames}
         spelling={spelling}
         onAddToSpelling={isProposing ? addCardLocation : undefined}
       />
@@ -42,6 +44,7 @@ export const ChooseClueBoard = (props: BoardProps) => {
         ) : (
           <VotingContent
             g={g}
+            playerNames={playerNames}
             currentPlayer={props.playerID}
             onStartProposing={() => setIsProposing(true)}
             onResetSupport={() => props.moves.resetSupport(true)}

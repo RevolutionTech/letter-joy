@@ -5,6 +5,7 @@ import { getCardLocationsAssignedToOwner } from "../cards/spelling";
 import { GameTable } from "../display/GameTable";
 import { SIDEBAR_WIDTH, SIDEBAR_PADDING } from "../panels/sidebar/Sidebar";
 import { PlayerDisplay } from "./PlayerDisplay";
+import { MaybePlayerNames, playerNameDisplay } from "./playerName";
 import { TeamDisplay } from "./TeamDisplay";
 
 const PlayerRows = styled("div")({
@@ -21,26 +22,26 @@ const SidebarPlaceholder = styled("div")({
 
 interface Props {
   g: PlayerViewG;
+  playerNames: MaybePlayerNames;
   spelling?: Spelling;
   onAddToSpelling?: (ownerID: string) => void;
 }
 
 export const ActiveTableDisplay = (props: Props) => {
-  const { g, spelling, onAddToSpelling } = props;
+  const { g, playerNames, spelling, onAddToSpelling } = props;
 
   const playerDisplays = Object.values(g.players).map((playerState) => {
+    const playerID = playerState.playerID;
     return (
       <PlayerDisplay
-        key={playerState.playerID}
+        key={playerID}
         {...playerState}
+        playerName={playerNameDisplay(playerNames, +playerID)}
         teamHintsAvailable={g.teamHints.available}
         containsTokens={
-          spelling &&
-          getCardLocationsAssignedToOwner(spelling, playerState.playerID)
+          spelling && getCardLocationsAssignedToOwner(spelling, playerID)
         }
-        onAddToSpelling={
-          onAddToSpelling && (() => onAddToSpelling(playerState.playerID))
-        }
+        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(playerID))}
       />
     );
   });

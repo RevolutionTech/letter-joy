@@ -9,7 +9,6 @@ const playerStatePlayerView = (
 ): PlayerViewPlayerState => {
   const {
     playerID,
-    playerName,
     letters,
     activeLetterIndex,
     nextLetterIndex,
@@ -28,8 +27,6 @@ const playerStatePlayerView = (
 
   return {
     playerID,
-    playerName:
-      playerViewPlayerID === playerID ? `${playerName} (me)` : playerName,
     letters: lettersPlayerView,
     activeLetterIndex,
     nextLetterIndex,

@@ -1,20 +1,20 @@
-import { PlayerViewG } from "../../../game/types";
+import { MaybePlayerNames, playerNameDisplay } from "../../display/playerName";
 import { SidebarList } from "./SidebarList";
 
 interface Props {
-  g: PlayerViewG;
+  playerNames: MaybePlayerNames;
   description: string;
   playersActing: string[];
 }
 
 export const WaitingContent = (props: Props) => {
-  const { g, description, playersActing } = props;
+  const { playerNames, description, playersActing } = props;
   return (
     <>
       <div style={{ fontSize: "16pt" }}>{description}</div>
       <SidebarList>
         {playersActing.map((playerID) => (
-          <li key={playerID}>{g.players[+playerID].playerName}</li>
+          <li key={playerID}>{playerNameDisplay(playerNames, +playerID)}</li>
         ))}
       </SidebarList>
     </>

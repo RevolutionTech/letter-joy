@@ -6,6 +6,7 @@ import { playerScore, totalScore } from "../../../game/scoring";
 import { PlayerViewG } from "../../../game/types";
 import { displayWord } from "../../../game/word";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
+import { MaybePlayerNames, playerNameDisplay } from "../../display/playerName";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { StarRating } from "./StarRating";
 
@@ -14,11 +15,12 @@ const EmphasisBody = styled("span")({ fontSize: "24pt" });
 
 interface Props {
   g: PlayerViewG;
+  playerNames: MaybePlayerNames;
   activePlayers: ActivePlayers;
 }
 
 export const ScoringContent = (props: Props) => {
-  const { g, activePlayers } = props;
+  const { g, playerNames, activePlayers } = props;
   const teamHintsAvailable = g.teamHints.available;
   const finishedPlayers = Object.values(g.players).filter(
     (player) => player.playerOutcome
@@ -29,14 +31,16 @@ export const ScoringContent = (props: Props) => {
   );
   return (
     <>
-      <ActiveTableDisplay g={g} />
+      <ActiveTableDisplay g={g} playerNames={playerNames} />
       <Sidebar g={g}>
         {_.sortBy(finishedPlayers, (player) => player.playerID).map(
           (player) => (
             <Body key={player.playerID}>
-              <EmphasisBody>{player.playerName}</EmphasisBody> scored{" "}
-              {playerScore(player.playerOutcome!, teamHintsAvailable)} points
-              with{" "}
+              <EmphasisBody>
+                {playerNameDisplay(playerNames, +player.playerID)}
+              </EmphasisBody>{" "}
+              scored {playerScore(player.playerOutcome!, teamHintsAvailable)}{" "}
+              points with{" "}
               <EmphasisBody>
                 {displayWord(player.playerOutcome!.spelledWord)}
               </EmphasisBody>
@@ -48,8 +52,10 @@ export const ScoringContent = (props: Props) => {
           _.pickBy(activePlayers, (stage) => stage === "rearrangeLettersMain")
         ).map((playerID) => (
           <Body key={playerID}>
-            <EmphasisBody>{g.players[+playerID].playerName}</EmphasisBody> is
-            rearranging letters to make a word.
+            <EmphasisBody>
+              {playerNameDisplay(playerNames, +playerID)}
+            </EmphasisBody>{" "}
+            is rearranging letters to make a word.
           </Body>
         ))}
         <h5>Total Score</h5>

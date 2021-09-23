@@ -18,7 +18,6 @@ export const LetterJoy: Game<G> = {
 
     const playerStates = deckCuts.map((startingLetters, i) => ({
       playerID: i.toString(),
-      playerName: `Player ${i + 1}`,
       wordConstructionLetters: _.sortBy(startingLetters),
       letters: [],
       activeLetterIndex: 0,

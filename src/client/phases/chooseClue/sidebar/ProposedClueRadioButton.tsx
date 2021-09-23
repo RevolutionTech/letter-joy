@@ -9,6 +9,10 @@ import {
   PlayerViewProposedClue,
 } from "../../../../game/types";
 import { ClueDisplay } from "../../../cards/ClueDisplay";
+import {
+  MaybePlayerNames,
+  playerNameDisplay,
+} from "../../../display/playerName";
 import theme from "../../../theme";
 import { VoteOption } from "./VoteOption";
 
@@ -37,20 +41,21 @@ const SidebarProposedClueDisplay = styled(SidebarProposedClueSummaryDetail)({
 
 interface Props {
   g: PlayerViewG;
+  playerNames: MaybePlayerNames;
   proposedClue: PlayerViewProposedClue;
   value: string;
   disabled?: boolean;
 }
 
 export const ProposedClueRadioButton = (props: Props) => {
-  const { g, proposedClue, value, disabled } = props;
+  const { g, playerNames, proposedClue, value, disabled } = props;
   const { authorID, spelling, summary } = proposedClue;
-  const authorName = g.players[+authorID].playerName;
+  const authorName = playerNameDisplay(playerNames, +authorID);
   const { numLetters, usesWild, numPlayers } = summary;
 
   return (
     <ClueVoteOption
-      g={g}
+      playerNames={playerNames}
       votes={proposedClue.votes}
       value={value}
       disabled={disabled}

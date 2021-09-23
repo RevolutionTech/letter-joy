@@ -31,7 +31,6 @@ export interface PlayerOutcome {
 
 export interface PlayerState {
   playerID: string;
-  playerName: string;
   wordConstructionLetters: Letter[];
   letters: Letter[];
   activeLetterIndex: number;

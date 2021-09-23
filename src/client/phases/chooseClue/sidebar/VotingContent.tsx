@@ -4,6 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 import { playerHasHintAvailable } from "../../../../game/hints";
 import { PlayerViewG } from "../../../../game/types";
+import { MaybePlayerNames } from "../../../display/playerName";
 import { Button } from "../../../panels/Button";
 import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
 import theme from "../../../theme";
@@ -40,6 +41,7 @@ const voteValue = (g: PlayerViewG, currentPlayer: string | null): string => {
 
 interface Props {
   g: PlayerViewG;
+  playerNames: MaybePlayerNames;
   currentPlayer: string | null;
   onStartProposing: () => void;
   onResetSupport: () => void;
@@ -50,6 +52,7 @@ interface Props {
 export const VotingContent = (props: Props) => {
   const {
     g,
+    playerNames,
     currentPlayer,
     onStartProposing,
     onResetSupport,
@@ -102,6 +105,7 @@ export const VotingContent = (props: Props) => {
               <ProposedClueRadioButton
                 key={i}
                 g={g}
+                playerNames={playerNames}
                 proposedClue={proposedClue}
                 value={`${i}`}
                 disabled={currentPlayer == null}
@@ -110,7 +114,7 @@ export const VotingContent = (props: Props) => {
           )}
           {/* TODO: Construct implicit votes of players doing nothing */}
           <VoteOption
-            g={g}
+            playerNames={playerNames}
             votes={[]}
             value={SpecialVote.RESET_SUPPORT}
             disabled={currentPlayer == null}
@@ -118,7 +122,7 @@ export const VotingContent = (props: Props) => {
             <SidebarNonIdealText>Let's keep thinking...</SidebarNonIdealText>
           </VoteOption>
           <VoteOption
-            g={g}
+            playerNames={playerNames}
             votes={g.endGameVotes}
             value={SpecialVote.SUPPORT_END}
             disabled={currentPlayer == null}

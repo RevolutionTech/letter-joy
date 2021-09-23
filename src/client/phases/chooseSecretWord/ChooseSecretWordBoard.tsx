@@ -5,19 +5,21 @@ import { getPlayersActing } from "../../../game/phases";
 import { getLeftPlayerID } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
+import { playerNameDisplay } from "../../display/playerName";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { WaitingContent } from "../../panels/sidebar/WaitingContent";
 import { ChooseSecretWordContent } from "./ChooseSecretWordContent";
 
 export const ChooseSecretWordBoard = (props: BoardProps) => {
   const g: PlayerViewG = props.G;
+  const playerNames = props.matchData;
   const currentPlayer = props.playerID;
 
   const playersActing = useMemo(() => getPlayersActing(props.ctx), [props.ctx]);
 
   if (currentPlayer != null && playersActing.includes(currentPlayer)) {
     const leftPlayerID = getLeftPlayerID(+currentPlayer);
-    const leftPlayerName = g.players[leftPlayerID].playerName;
+    const leftPlayerName = playerNameDisplay(playerNames, leftPlayerID);
     return (
       <ChooseSecretWordContent
         wordConstructionLetters={g.wordConstructionLetters}
@@ -28,10 +30,10 @@ export const ChooseSecretWordBoard = (props: BoardProps) => {
   } else {
     return (
       <>
-        <ActiveTableDisplay g={g} />
+        <ActiveTableDisplay g={g} playerNames={playerNames} />
         <Sidebar g={g}>
           <WaitingContent
-            g={g}
+            playerNames={playerNames}
             description="Waiting for other players to choose a secret word:"
             playersActing={playersActing}
           />

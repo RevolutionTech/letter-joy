@@ -23,7 +23,11 @@ export const ActiveClueBoard = (props: BoardProps) => {
 
   return (
     <>
-      <ActiveTableDisplay g={g} spelling={g.activeClue.spelling} />
+      <ActiveTableDisplay
+        g={g}
+        playerNames={props.matchData}
+        spelling={g.activeClue.spelling}
+      />
       <Sidebar g={g}>
         <SidebarContent header="Active clue" buttons={[]}>
           <div style={{ fontSize: "48pt" }}>
@@ -37,7 +41,7 @@ export const ActiveClueBoard = (props: BoardProps) => {
             />
           ) : (
             <WaitingContent
-              g={g}
+              playerNames={props.matchData}
               description="Waiting for other players to decide which letter to use in the next round:"
               playersActing={playersActing}
             />
