@@ -12,6 +12,7 @@ import { playerView } from "./playerView";
 import { Letter, G } from "./types";
 
 export const LetterJoy: Game<G> = {
+  name: "letter-joy",
   setup: (ctx) => {
     const deckCuts = createDeckAndDeal(ctx, MAX_NUM_PLAYERS);
 
@@ -46,4 +47,7 @@ export const LetterJoy: Game<G> = {
 
   phases: PHASES,
   playerView,
+
+  minPlayers: MAX_NUM_PLAYERS,
+  maxPlayers: MAX_NUM_PLAYERS,
 };

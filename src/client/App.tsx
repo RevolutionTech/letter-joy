@@ -1,19 +1,16 @@
-import { Client } from "boardgame.io/react";
-import { SocketIO } from "boardgame.io/multiplayer";
+import { Lobby } from "boardgame.io/react";
 
 import { LetterJoyBoard } from "./Board";
-import { MAX_NUM_PLAYERS } from "../game/constants";
 import { LetterJoy } from "../game/game";
 
-const SERVER_HOST = "http://localhost";
+const SERVER_HOST = "http://localhost:8000";
 
-const LetterJoyClient = Client({
-  game: LetterJoy,
-  numPlayers: MAX_NUM_PLAYERS,
-  board: LetterJoyBoard,
-  multiplayer: SocketIO({ server: `${SERVER_HOST}:8000` }),
-});
-
-const App = () => <LetterJoyClient playerID="0" />;
+const App = () => (
+  <Lobby
+    gameServer={SERVER_HOST}
+    lobbyServer={SERVER_HOST}
+    gameComponents={[{ game: LetterJoy, board: LetterJoyBoard }]}
+  />
+);
 
 export default App;
