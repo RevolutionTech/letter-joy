@@ -1,8 +1,7 @@
 import { useMemo } from "react";
 import { BoardProps } from "boardgame.io/react";
 
-import { getPlayersActing } from "../../../game/phases";
-import { getLeftPlayerID } from "../../../game/players";
+import { getLeftPlayerID, getPlayersActing } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
 import { playerNameDisplay } from "../../display/playerName";

@@ -4,20 +4,23 @@ import { INVALID_MOVE } from "boardgame.io/core";
 
 import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
+import { shuffleCards, dealCards } from "./deck";
 import { playerHasHintAvailable } from "./hints";
-import { getLeftPlayerID } from "./players";
+import { getLeftPlayerID, getPlayersActing } from "./players";
 import { Letter, Spelling, G } from "./types";
+import { pullOnce } from "./utils";
 import { isWordEqual } from "./word";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   // A player must be active to choose a secret word
-  if (ctx.playerID == null) {
+  const activePlayer = ctx.playerID;
+  if (activePlayer == null) {
     return INVALID_MOVE;
   }
 
   // Update the letters of the player to the left using the secret word
   // that the active player generated
-  const leftPlayerID = getLeftPlayerID(+ctx.playerID);
+  const leftPlayerID = getLeftPlayerID(+activePlayer);
   g.players[leftPlayerID] = {
     ...g.players[leftPlayerID],
     letters: ctx.random!.Shuffle(secretWord),
@@ -25,6 +28,35 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
 
   // Move the active player into the waiting stage
   ctx.events?.endStage?.();
+
+  // Distribute unused letters to the remaining players
+  const otherActivePlayers = _.without(getPlayersActing(ctx), activePlayer);
+  const unusedLetters = pullOnce(
+    g.players[+activePlayer].wordConstructionLetters,
+    secretWord
+  );
+  const deckCuts = dealCards(
+    shuffleCards(ctx, unusedLetters),
+    otherActivePlayers.length
+  );
+  otherActivePlayers.forEach((playerID, i) => {
+    const prevWordConstructionLetters =
+      g.players[+playerID].wordConstructionLetters;
+    const wordConstructionLetters = _.sortBy([
+      ...prevWordConstructionLetters,
+      ...deckCuts[i],
+    ]);
+    g.players[+playerID] = {
+      ...g.players[+playerID],
+      wordConstructionLetters,
+    };
+  });
+
+  // Reset the active player's letters available to create secret words
+  g.players[+activePlayer] = {
+    ...g.players[+activePlayer],
+    wordConstructionLetters: [],
+  };
 };
 
 export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {

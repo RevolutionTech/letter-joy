@@ -14,6 +14,7 @@ import {
   rearrangeLetters,
   confirmUnexpectedWord,
 } from "./moves";
+import { getPlayersActing } from "./players";
 import { G } from "./types";
 
 export enum Phase {
@@ -22,9 +23,6 @@ export enum Phase {
   ACTIVE_CLUE = "activeClue",
   REARRANGE_LETTERS = "rearrangeLetters",
 }
-
-export const getPlayersActing = (ctx: Ctx) =>
-  Object.keys(_.pickBy(ctx.activePlayers, (stage) => stage !== "waiting"));
 
 const isEveryPlayerWaiting = (_g: G, ctx: Ctx) =>
   ctx.activePlayers != null && getPlayersActing(ctx).length === 0;
@@ -35,7 +33,12 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
     turn: {
       activePlayers: { all: "chooseSecretWordMain" },
       stages: {
-        chooseSecretWordMain: { moves: { chooseSecretWord }, next: "waiting" },
+        chooseSecretWordMain: {
+          moves: {
+            chooseSecretWord: { move: chooseSecretWord, client: false },
+          },
+          next: "waiting",
+        },
         waiting: {},
       },
     },

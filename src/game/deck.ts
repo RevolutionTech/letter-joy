@@ -4,8 +4,8 @@ import { Ctx } from "boardgame.io";
 import { LETTER_DISTRIBUTION } from "./constants";
 import { Letter } from "./types";
 
-const createShuffledDeck = (ctx: Ctx) => {
-  const unshuffledDeck = _.reduce(
+export const createDeck = (): Letter[] =>
+  _.reduce(
     LETTER_DISTRIBUTION,
     (result: string[], value: number, key: string) => [
       ...result,
@@ -13,11 +13,11 @@ const createShuffledDeck = (ctx: Ctx) => {
     ],
     []
   ) as Letter[];
-  const shuffledDeck = ctx.random!.Shuffle(unshuffledDeck);
-  return shuffledDeck;
-};
 
-const dealCards = (deck: Letter[], numPlayers: number) => {
+export const shuffleCards = (ctx: Ctx, deck: Letter[]) =>
+  ctx.random!.Shuffle(deck);
+
+export const dealCards = (deck: Letter[], numPlayers: number) => {
   const extraCardsLeftover = deck.length % numPlayers;
   const maxNumCardsPerPlayer = Math.ceil(deck.length / numPlayers);
   const deckMoreCardsPerPlayer = _.slice(
@@ -30,14 +30,9 @@ const dealCards = (deck: Letter[], numPlayers: number) => {
     maxNumCardsPerPlayer * extraCardsLeftover,
     deck.length
   );
+  // TODO: Shuffle chunks so that later players do not consistently get fewer cards
   return [
     ..._.chunk(deckMoreCardsPerPlayer, maxNumCardsPerPlayer),
     ..._.chunk(deckFewerCardsPerPlayer, maxNumCardsPerPlayer - 1),
   ];
-};
-
-export const createDeckAndDeal = (ctx: Ctx, numPlayers: number) => {
-  const deck = createShuffledDeck(ctx);
-  const playerCards = dealCards(deck, numPlayers);
-  return playerCards;
 };
