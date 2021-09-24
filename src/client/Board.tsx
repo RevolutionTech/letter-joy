@@ -1,30 +1,20 @@
 import { BoardProps } from "boardgame.io/react";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+import { styled } from "@material-ui/core";
 
-import { Phase } from "../game/phases";
-import { assertNever } from "../game/utils";
-import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
-import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWordBoard";
-import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
-import { RearrangeLettersBoard } from "./phases/rearrangeLetters/RearrangeLettersBoard";
+import { GameBoard } from "./GameBoard";
 
-const getBoardForPhase = (phase: Phase | null) => {
-  switch (phase) {
-    case Phase.CHOOSE_SECRET_WORD:
-      return ChooseSecretWordBoard;
-    case Phase.CHOOSE_CLUE:
-      return ChooseClueBoard;
-    case Phase.ACTIVE_CLUE:
-      return ActiveClueBoard;
-    case Phase.REARRANGE_LETTERS:
-    case null:
-      return RearrangeLettersBoard;
-    default:
-      return assertNever(phase);
-  }
-};
+const ScrollableFullScreen = styled(FullScreen)({ overflow: "auto" });
 
 export const LetterJoyBoard = (props: BoardProps) => {
-  const phase = props.ctx.phase as Phase | null;
-  const Board = getBoardForPhase(phase);
-  return <Board {...props} />;
+  const fshandle = useFullScreenHandle();
+
+  return (
+    <>
+      <button onClick={fshandle.enter}>Return to game (fullscreen)</button>
+      <ScrollableFullScreen handle={fshandle}>
+        {fshandle.active && <GameBoard {...props} />}
+      </ScrollableFullScreen>
+    </>
+  );
 };
