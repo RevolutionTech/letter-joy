@@ -3,7 +3,7 @@ import { styled } from "@material-ui/core";
 import { Spelling, PlayerViewG } from "../../game/types";
 import { getCardLocationsAssignedToOwner } from "../cards/spelling";
 import { GameTable } from "../display/GameTable";
-import { SIDEBAR_WIDTH, SIDEBAR_PADDING } from "../panels/sidebar/Sidebar";
+import { SidebarPlaceholder } from "../panels/sidebar/Sidebar";
 import { PlayerDisplay } from "./PlayerDisplay";
 import { MaybePlayerNames, playerNameDisplay } from "./playerName";
 import { TeamDisplay } from "./TeamDisplay";
@@ -13,13 +13,6 @@ const PlayerRows = styled("div")({
   flexDirection: "column",
   marginBottom: "48px",
 });
-
-// The SidebarPlaceholder allows the horizontal scrollbar to appear
-// when the sidebar is covering some of the main content
-const SidebarPlaceholder = styled("div")({
-  minWidth: `calc(${SIDEBAR_WIDTH} + ${SIDEBAR_PADDING} * 2)`,
-});
-
 interface Props {
   g: PlayerViewG;
   playerNames: MaybePlayerNames;

@@ -4,8 +4,9 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 import { Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
-import { FullWidthGameTable } from "../../display/GameTable";
+import { GameTable, FullWidthGameTable } from "../../display/GameTable";
 import { BottombarPlaceholder } from "../../panels/Bottombar";
+import { SidebarPlaceholder, Sidebar } from "../../panels/sidebar/Sidebar";
 import { RearrangeLettersBottombar } from "./bottombar/RearrangeLettersBottombar";
 import { getDraggableId } from "./draggableId";
 import {
@@ -93,39 +94,43 @@ export const RearrangeLettersContent = (props: Props) => {
   return (
     <>
       <FullWidthGameTable>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <DisplayRow>
-              <DisplayStatus>Your letters</DisplayStatus>
-              <UnsortedCards
-                isDragDisabled={!isRearrangingLetters}
-                teamLetters={initialTeamLetters}
-                initialCardLocations={initialPlayerCardLocations}
-                sortedCards={sortedCards}
-              />
-            </DisplayRow>
-            <DisplayRow>
-              <DisplayStatus>Bonus letters</DisplayStatus>
-              <UnsortedCards
-                isDragDisabled={!isRearrangingLetters}
-                teamLetters={initialTeamLetters}
-                initialCardLocations={initialTeamCardLocations}
-                sortedCards={sortedCards}
-              />
-            </DisplayRow>
-            <DisplayRow>
-              <DisplayStatus>Your word</DisplayStatus>
-              <SortedWordDroppable
-                isDragDisabled={!isRearrangingLetters}
-                playerLetters={initialPlayerLetters}
-                teamLetters={initialTeamLetters}
-                sortedCards={sortedCards}
-              />
-            </DisplayRow>
-          </div>
-        </DragDropContext>
+        <GameTable>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <DisplayRow>
+                <DisplayStatus>Your letters</DisplayStatus>
+                <UnsortedCards
+                  isDragDisabled={!isRearrangingLetters}
+                  teamLetters={initialTeamLetters}
+                  initialCardLocations={initialPlayerCardLocations}
+                  sortedCards={sortedCards}
+                />
+              </DisplayRow>
+              <DisplayRow>
+                <DisplayStatus>Bonus letters</DisplayStatus>
+                <UnsortedCards
+                  isDragDisabled={!isRearrangingLetters}
+                  teamLetters={initialTeamLetters}
+                  initialCardLocations={initialTeamCardLocations}
+                  sortedCards={sortedCards}
+                />
+              </DisplayRow>
+              <DisplayRow>
+                <DisplayStatus>Your word</DisplayStatus>
+                <SortedWordDroppable
+                  isDragDisabled={!isRearrangingLetters}
+                  playerLetters={initialPlayerLetters}
+                  teamLetters={initialTeamLetters}
+                  sortedCards={sortedCards}
+                />
+              </DisplayRow>
+            </div>
+          </DragDropContext>
+          <SidebarPlaceholder />
+        </GameTable>
         <BottombarPlaceholder />
       </FullWidthGameTable>
+      <Sidebar g={g} />
       <RearrangeLettersBottombar
         stage={stage}
         numSortedCards={sortedCards.length}

@@ -5,8 +5,8 @@ import { ClueDisplay } from "../../cards/ClueDisplay";
 import theme from "../../theme";
 import { SidebarList } from "./SidebarList";
 
-export const SIDEBAR_WIDTH = "400px";
-export const SIDEBAR_PADDING = "24px";
+const SIDEBAR_WIDTH = "400px";
+const SIDEBAR_PADDING = "24px";
 
 const FixedSidebar = styled("div")({
   position: "fixed",
@@ -18,6 +18,12 @@ const FixedSidebar = styled("div")({
   zIndex: 10000, // higher z-index than draggables
 
   backgroundColor: theme.white,
+});
+
+// The SidebarPlaceholder allows the horizontal scrollbar to appear
+// when the sidebar is covering some of the main content
+export const SidebarPlaceholder = styled("div")({
+  minWidth: `calc(${SIDEBAR_WIDTH} + ${SIDEBAR_PADDING} * 2)`,
 });
 
 interface Props {
