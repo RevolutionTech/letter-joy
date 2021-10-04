@@ -3,6 +3,7 @@
     "strict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,

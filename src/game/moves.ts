@@ -57,6 +57,7 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
     ...g.players[+activePlayer],
     wordConstructionLetters: [],
   };
+  return;
 };
 
 export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
@@ -71,6 +72,7 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
     summary: clueSummary(g.teamLetters, spelling),
     votes: [],
   });
+  return;
 };
 
 export const resetSupport = (
@@ -100,6 +102,7 @@ export const resetSupport = (
   if (resetEndSupport) {
     g.endGameVotes = _.without(g.endGameVotes, activePlayer);
   }
+  return;
 };
 
 export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
@@ -125,6 +128,7 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
       votes: _.union(proposedClue.votes, [activePlayer]),
     };
   }
+  return;
 };
 
 export const supportEnd = (g: G, ctx: Ctx) => {
@@ -139,6 +143,7 @@ export const supportEnd = (g: G, ctx: Ctx) => {
 
   // Add the player's vote to ending the game
   g.endGameVotes = _.union(g.endGameVotes, [activePlayer]);
+  return;
 };
 
 export const advanceLetter = (g: G, ctx: Ctx) => {
@@ -160,6 +165,7 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
     ...playerState,
     nextLetterIndex,
   };
+  return;
 };
 
 export const rearrangeLetters = (
@@ -210,6 +216,7 @@ export const rearrangeLetters = (
   } else {
     ctx.events?.setStage?.("unexpectedWord");
   }
+  return;
 };
 
 export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
@@ -233,4 +240,5 @@ export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
   // Move the active player into the scoring stage and end the turn
   ctx.events?.endStage?.();
   ctx.events?.endTurn?.();
+  return;
 };
