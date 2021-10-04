@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Ctx, PhaseConfig } from "boardgame.io";
 import { TurnOrder } from "boardgame.io/core";
 
+import { createPreviousClue } from "./clue";
 import { MAX_NUM_PLAYERS } from "./constants";
 import { consumeHint } from "./hints";
 import {
@@ -96,7 +97,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
     onEnd: (g) => {
       // Move the active clue to previous clues
       if (g.activeClue != null) {
-        g.previousClues.push(g.activeClue);
+        g.previousClues.push(createPreviousClue(g.teamLetters, g.activeClue));
         g.activeClue = null;
       }
 

@@ -1,15 +1,18 @@
-import { CardLocation, Spelling, PlayerViewG } from "../../game/types";
+import { Letter, CardLocation, PlayerViewG } from "../../game/types";
 
 interface Props {
   g: PlayerViewG;
-  spelling: Spelling;
+  spelling: (CardLocation | Letter)[];
 }
 
-const getLetterDisplay = (g: PlayerViewG, cardLocation: CardLocation) => {
-  const { ownerID } = cardLocation;
+const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
+  if (typeof card === "string") {
+    return <>{card}</>;
+  }
+
+  const { ownerID, letterIndex } = card;
   const letters =
     ownerID === "TEAM" ? g.teamLetters : g.players[+ownerID].letters;
-  const letterIndex = cardLocation.letterIndex;
   const letter = (
     <>
       {letters[letterIndex] ?? (
@@ -25,8 +28,8 @@ const getLetterDisplay = (g: PlayerViewG, cardLocation: CardLocation) => {
 export const ClueDisplay = (props: Props) => {
   const { g, spelling } = props;
   return spelling.reduce(
-    (display: React.ReactNode, cardLocation: CardLocation) => {
-      const letterDisplay = getLetterDisplay(g, cardLocation);
+    (display: React.ReactNode, card: CardLocation | Letter) => {
+      const letterDisplay = getLetterDisplay(g, card);
       return display == null ? (
         letterDisplay
       ) : (

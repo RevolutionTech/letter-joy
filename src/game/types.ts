@@ -72,6 +72,10 @@ export interface PlayerViewProposedClue extends Omit<ProposedClue, "spelling"> {
   spelling?: Spelling;
 }
 
+interface PreviousClue extends Omit<Clue, "spelling"> {
+  spelling: (CardLocation | Letter)[];
+}
+
 export interface G {
   // TODO: Perhaps keys in players should be strings
   // so that we don't have to cast in all of the places that have playerIDs as strings
@@ -79,7 +83,7 @@ export interface G {
   teamLetters: Letter[];
   teamHints: TeamHints;
   activeClue: Clue | null;
-  previousClues: Clue[];
+  previousClues: PreviousClue[];
   proposedClues: ProposedClue[];
   endGameVotes: string[];
 }
