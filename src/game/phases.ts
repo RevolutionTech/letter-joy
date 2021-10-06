@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Ctx, PhaseConfig } from "boardgame.io";
+import { PhaseConfig } from "boardgame.io";
 import { TurnOrder } from "boardgame.io/core";
 
 import { createPreviousClue } from "./clue";
@@ -15,7 +15,7 @@ import {
   rearrangeLetters,
   confirmUnexpectedWord,
 } from "./moves";
-import { getPlayersActing } from "./players";
+import { isEveryPlayerWaiting } from "./players";
 import { G } from "./types";
 
 export enum Phase {
@@ -24,9 +24,6 @@ export enum Phase {
   ACTIVE_CLUE = "activeClue",
   REARRANGE_LETTERS = "rearrangeLetters",
 }
-
-const isEveryPlayerWaiting = (_g: G, ctx: Ctx) =>
-  ctx.activePlayers != null && getPlayersActing(ctx).length === 0;
 
 export const PHASES: Record<Phase, PhaseConfig<G>> = {
   [Phase.CHOOSE_SECRET_WORD]: {
@@ -43,7 +40,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         waiting: {},
       },
     },
-    endIf: isEveryPlayerWaiting,
+    endIf: (_, ctx) => isEveryPlayerWaiting(ctx),
     next: Phase.CHOOSE_CLUE,
   },
   [Phase.CHOOSE_CLUE]: {
@@ -108,7 +105,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         activeLetterIndex: playerState.nextLetterIndex,
       }));
     },
-    endIf: isEveryPlayerWaiting,
+    endIf: (_, ctx) => isEveryPlayerWaiting(ctx),
     next: Phase.CHOOSE_CLUE,
   },
   [Phase.REARRANGE_LETTERS]: {

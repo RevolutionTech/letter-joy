@@ -8,6 +8,7 @@ import {
 } from "./constants";
 import { createDeck, shuffleCards, dealCards } from "./deck";
 import { PHASES } from "./phases";
+import { isEveryPlayerWaiting } from "./players";
 import { playerView } from "./playerView";
 import { Letter, G } from "./types";
 
@@ -40,11 +41,11 @@ export const LetterJoy: Game<G> = {
       endGameVotes: [],
     };
   },
-  endIf: (g) =>
+  endIf: (g, ctx) =>
     _.every(
       g.players,
       (playerState) => playerState.playerOutcome?.isWord != null
-    ),
+    ) && isEveryPlayerWaiting(ctx),
 
   phases: PHASES,
   playerView,

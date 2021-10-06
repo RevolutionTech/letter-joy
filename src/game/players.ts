@@ -8,4 +8,12 @@ export const getLeftPlayerID = (playerID: number) =>
   modulo(playerID - 1, MAX_NUM_PLAYERS);
 
 export const getPlayersActing = (ctx: Ctx) =>
-  Object.keys(_.pickBy(ctx.activePlayers, (stage) => stage !== "waiting"));
+  Object.keys(
+    _.pickBy(
+      ctx.activePlayers,
+      (stage) => !["waiting", "scoring"].includes(stage)
+    )
+  );
+
+export const isEveryPlayerWaiting = (ctx: Ctx) =>
+  ctx.activePlayers != null && getPlayersActing(ctx).length === 0;
