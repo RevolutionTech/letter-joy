@@ -17,11 +17,11 @@ export const StarRating = (props: Props) => {
 
   return (
     <RatingContainer>
-      {_.range(numStars).map((_) => (
-        <img src={starFilled} alt={numStarsText} />
+      {_.range(numStars).map((i) => (
+        <img key={i} src={starFilled} alt={numStarsText} />
       ))}
-      {_.range(MAX_NUM_STARS - numStars).map((_) => (
-        <img src={starUnfilled} alt={numStarsText} />
+      {_.range(MAX_NUM_STARS - numStars).map((i) => (
+        <img key={i} src={starUnfilled} alt={numStarsText} />
       ))}
     </RatingContainer>
   );

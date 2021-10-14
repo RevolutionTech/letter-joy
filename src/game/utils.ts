@@ -14,7 +14,7 @@ export const modulo = (dividend: number, divisor: number) =>
   ((dividend % divisor) + divisor) % divisor;
 
 export function pullOnce<T>(array: T[], values: T[]) {
-  let newArray = [...array];
+  const newArray = [...array];
   values.forEach((value) => {
     _.pullAt(newArray, _.indexOf(newArray, value));
   });

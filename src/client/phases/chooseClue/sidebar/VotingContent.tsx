@@ -119,7 +119,9 @@ export const VotingContent = (props: Props) => {
             value={SpecialVote.RESET_SUPPORT}
             disabled={currentPlayer == null}
           >
-            <SidebarNonIdealText>Let's keep thinking...</SidebarNonIdealText>
+            <SidebarNonIdealText>
+              Let&apos;s keep thinking...
+            </SidebarNonIdealText>
           </VoteOption>
           <VoteOption
             playerNames={playerNames}
@@ -128,7 +130,7 @@ export const VotingContent = (props: Props) => {
             disabled={currentPlayer == null}
           >
             <SidebarNonIdealText>
-              Let's spell our secret words...
+              Let&apos;s spell our secret words...
             </SidebarNonIdealText>
           </VoteOption>
         </RadioGroup>
