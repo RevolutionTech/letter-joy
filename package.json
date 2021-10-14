@@ -13,7 +13,7 @@
   },
   "browserslist": "defaults and supports async-functions",
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "boardgame.io": "^0.48.0",
     "lodash": "^4.17.21",
