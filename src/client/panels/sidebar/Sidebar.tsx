@@ -13,9 +13,10 @@ const FixedSidebar = styled("div")({
   top: "0",
   right: "0",
   width: SIDEBAR_WIDTH,
-  height: "100%",
+  height: `calc(100% - ${SIDEBAR_PADDING} * 2)`,
   padding: SIDEBAR_PADDING,
   zIndex: 10000, // higher z-index than draggables
+  overflowY: "scroll",
 
   backgroundColor: theme.white,
 });
