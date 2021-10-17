@@ -31,7 +31,7 @@ export interface PlayerOutcome {
 
 export interface PlayerState {
   playerID: string;
-  wordConstructionLetters: Letter[];
+  wordConstructionLetters: Record<Letter, number>;
   letters: Letter[];
   activeLetterIndex: number;
   nextLetterIndex: number;
@@ -89,7 +89,7 @@ export interface G {
 }
 
 export interface PlayerViewG extends Omit<G, "players" | "proposedClues"> {
-  wordConstructionLetters: Letter[];
+  wordConstructionLetters: Record<Letter, number>;
   players: Record<number, PlayerViewPlayerState>;
   proposedClues: PlayerViewProposedClue[];
 }

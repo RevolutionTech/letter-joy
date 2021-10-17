@@ -1,12 +1,11 @@
 import _ from "lodash";
 import { Ctx } from "boardgame.io";
 
-import { LETTER_DISTRIBUTION } from "./constants";
 import { Letter } from "./types";
 
-export const createDeck = (): Letter[] =>
+export const createDeck = (distribution: Record<Letter, number>): Letter[] =>
   _.reduce(
-    LETTER_DISTRIBUTION,
+    distribution,
     (result: string[], value: number, key: string) => [
       ...result,
       ...Array(value).fill(key),

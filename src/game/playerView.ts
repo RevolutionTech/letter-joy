@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { Ctx } from "boardgame.io";
 
+import { ZERO_LETTERS } from "./letters";
 import { G, PlayerViewG, PlayerState, PlayerViewPlayerState } from "./types";
 
 const playerStatePlayerView = (
@@ -37,14 +38,16 @@ const playerStatePlayerView = (
 
 export const playerView = (
   g: G,
-  ctx: Ctx,
+  _ctx: Ctx,
   playerID: string | null
 ): PlayerViewG => {
   const { players, proposedClues } = g;
   return {
     ...g,
     wordConstructionLetters:
-      playerID == null ? [] : g.players[+playerID].wordConstructionLetters,
+      playerID == null
+        ? ZERO_LETTERS
+        : g.players[+playerID].wordConstructionLetters,
     players: _.reduce(
       players,
       (result, value, key) => ({

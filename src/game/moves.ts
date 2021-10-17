@@ -4,11 +4,11 @@ import { INVALID_MOVE } from "boardgame.io/core";
 
 import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
-import { shuffleCards, dealCards } from "./deck";
+import { createDeck, shuffleCards, dealCards } from "./deck";
 import { playerHasHintAvailable } from "./hints";
+import { ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
 import { Letter, Spelling, G } from "./types";
-import { pullOnce } from "./utils";
 import { isWordEqual } from "./word";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
@@ -31,21 +31,21 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
 
   // Distribute unused letters to the remaining players
   const otherActivePlayers = _.without(getPlayersActing(ctx), activePlayer);
-  const unusedLetters = pullOnce(
+  const unusedLetterCounts = countLetters(
+    secretWord,
     g.players[+activePlayer].wordConstructionLetters,
-    secretWord
+    -1
   );
+  const unusedLetters = createDeck(unusedLetterCounts);
   const deckCuts = dealCards(
     shuffleCards(ctx, unusedLetters),
     otherActivePlayers.length
   );
   otherActivePlayers.forEach((playerID, i) => {
-    const prevWordConstructionLetters =
-      g.players[+playerID].wordConstructionLetters;
-    const wordConstructionLetters = _.sortBy([
-      ...prevWordConstructionLetters,
-      ...deckCuts[i],
-    ]);
+    const wordConstructionLetters = countLetters(
+      deckCuts[i],
+      g.players[+playerID].wordConstructionLetters
+    );
     g.players[+playerID] = {
       ...g.players[+playerID],
       wordConstructionLetters,
@@ -55,7 +55,7 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   // Reset the active player's letters available to create secret words
   g.players[+activePlayer] = {
     ...g.players[+activePlayer],
-    wordConstructionLetters: [],
+    wordConstructionLetters: { ...ZERO_LETTERS },
   };
   return;
 };

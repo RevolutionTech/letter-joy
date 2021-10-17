@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import _ from "lodash";
 import { styled } from "@material-ui/core";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
@@ -16,43 +17,52 @@ const SecretWordConstructionLetters = styled("div")({
 });
 
 interface Props {
-  wordConstructionLetters: Letter[];
+  wordConstructionLetters: Record<Letter, number>;
   leftPlayerName: string;
   onConfirmSecretWord: (secretWord: Letter[]) => void;
 }
 
 export const ChooseSecretWordContent = (props: Props) => {
-  const {
-    wordConstructionLetters,
-    leftPlayerName,
-    onConfirmSecretWord,
-  } = props;
+  const { wordConstructionLetters, leftPlayerName, onConfirmSecretWord } =
+    props;
 
-  const [selectedLetters, setSelectedLetters] = useState<number[]>([]);
-  const secretWord = useMemo(
-    () => selectedLetters.map((i) => wordConstructionLetters[i]),
-    [wordConstructionLetters, selectedLetters]
+  const [selectedLetters, setSelectedLetters] = useState<[Letter, number][]>(
+    []
   );
-  const wordConstructionCards = useMemo(
-    () =>
-      wordConstructionLetters.map((letter, i) => {
-        const letterSelectedAtIndex = selectedLetters.indexOf(i);
-        const containsToken =
-          letterSelectedAtIndex === -1 ? [] : [letterSelectedAtIndex + 1];
-        return (
-          <PresentedCard
-            key={i}
-            letter={letter}
-            containsTokens={containsToken}
-            onClick={
-              letterSelectedAtIndex === -1
-                ? () => setSelectedLetters((letters) => [...letters, i])
-                : undefined
-            }
-          />
-        );
-      }),
-    [wordConstructionLetters, selectedLetters]
+  const secretWord = useMemo(
+    () => selectedLetters.map(([letter]) => letter),
+    [selectedLetters]
+  );
+  const wordConstructionHand = _.sortBy(
+    _.reduce(
+      wordConstructionLetters as Record<Letter, number>,
+      (result, value, key) =>
+        value ? [...result, Array(value).fill(key)] : result,
+      [] as Letter[][]
+    ),
+    (letters) => letters[0]
+  );
+  const wordConstructionCards = wordConstructionHand.map((specificLetters) =>
+    specificLetters.map((letter, i) => {
+      const letterSelectedAtIndex = _.findIndex(
+        selectedLetters,
+        ([l, idx]) => l === letter && idx === i
+      );
+      const containsToken =
+        letterSelectedAtIndex === -1 ? [] : [letterSelectedAtIndex + 1];
+      return (
+        <PresentedCard
+          key={`${letter}-${i}`}
+          letter={letter}
+          containsTokens={containsToken}
+          onClick={
+            letterSelectedAtIndex === -1
+              ? () => setSelectedLetters((sl) => [...sl, [letter, i]])
+              : undefined
+          }
+        />
+      );
+    })
   );
 
   return (

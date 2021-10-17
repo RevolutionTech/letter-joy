@@ -7,6 +7,7 @@ import {
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
 import { createDeck, shuffleCards, dealCards } from "./deck";
+import { LETTER_DISTRIBUTION, countLetters } from "./letters";
 import { PHASES } from "./phases";
 import { isEveryPlayerWaiting } from "./players";
 import { playerView } from "./playerView";
@@ -15,13 +16,13 @@ import { Letter, G } from "./types";
 export const LetterJoy: Game<G> = {
   name: "letter-joy",
   setup: (ctx) => {
-    const unshuffledDeck = createDeck();
+    const unshuffledDeck = createDeck(LETTER_DISTRIBUTION);
     const deck = shuffleCards(ctx, unshuffledDeck);
     const deckCuts = dealCards(deck, MAX_NUM_PLAYERS);
 
     const playerStates = deckCuts.map((startingLetters, i) => ({
       playerID: i.toString(),
-      wordConstructionLetters: _.sortBy(startingLetters),
+      wordConstructionLetters: countLetters(startingLetters),
       letters: [],
       activeLetterIndex: 0,
       nextLetterIndex: 0,
