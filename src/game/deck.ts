@@ -19,6 +19,9 @@ export const shuffleCards = (ctx: Ctx, deck: Letter[]) =>
 export const dealCards = (deck: Letter[], numPlayers: number) => {
   const extraCardsLeftover = deck.length % numPlayers;
   const maxNumCardsPerPlayer = Math.ceil(deck.length / numPlayers);
+  const minNumCardsPerPlayer = extraCardsLeftover
+    ? maxNumCardsPerPlayer - 1
+    : maxNumCardsPerPlayer;
   const deckMoreCardsPerPlayer = _.slice(
     deck,
     0,
@@ -32,6 +35,6 @@ export const dealCards = (deck: Letter[], numPlayers: number) => {
   // TODO: Shuffle chunks so that later players do not consistently get fewer cards
   return [
     ..._.chunk(deckMoreCardsPerPlayer, maxNumCardsPerPlayer),
-    ..._.chunk(deckFewerCardsPerPlayer, maxNumCardsPerPlayer - 1),
+    ..._.chunk(deckFewerCardsPerPlayer, minNumCardsPerPlayer),
   ];
 };
