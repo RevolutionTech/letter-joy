@@ -3,7 +3,8 @@ import { Lobby } from "boardgame.io/react";
 import { LetterJoyBoard } from "./Board";
 import { LetterJoy } from "../game/game";
 
-const SERVER_HOST = "http://localhost:8000";
+const { protocol, hostname, port } = window.location;
+const SERVER_HOST = `${protocol}//${hostname}:${port}`;
 
 const App = () => (
   <Lobby

@@ -1,1 +1,8 @@
-{ "compilerOptions": { "esModuleInterop": true, "module": "commonjs" } }
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "outDir": "dist"
+  },
+  "include": ["src/game", "src/server.ts"]
+}
