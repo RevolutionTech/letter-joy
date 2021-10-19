@@ -1,3 +1,5 @@
+import { Textfit } from "react-textfit";
+
 import { Letter, CardLocation, PlayerViewG } from "../../game/types";
 
 interface Props {
@@ -27,17 +29,21 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
 
 export const ClueDisplay = (props: Props) => {
   const { g, spelling } = props;
-  return spelling.reduce(
-    (display: React.ReactNode, card: CardLocation | Letter) => {
-      const letterDisplay = getLetterDisplay(g, card);
-      return display == null ? (
-        letterDisplay
-      ) : (
-        <>
-          {display} {letterDisplay}
-        </>
-      );
-    },
-    null
+  return (
+    <Textfit mode="single" max="64">
+      {spelling.reduce(
+        (display: React.ReactNode, card: CardLocation | Letter) => {
+          const letterDisplay = getLetterDisplay(g, card);
+          return display == null ? (
+            letterDisplay
+          ) : (
+            <>
+              {display} {letterDisplay}
+            </>
+          );
+        },
+        null
+      )}
+    </Textfit>
   );
 };

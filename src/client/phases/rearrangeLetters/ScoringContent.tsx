@@ -11,7 +11,7 @@ import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { StarRating } from "./StarRating";
 
 const Body = styled("p")({ fontSize: "16pt" });
-const EmphasisBody = styled("span")({ fontSize: "24pt" });
+const EmphasisBody = styled("span")({ fontSize: "24pt", whiteSpace: "nowrap" });
 
 interface Props {
   g: PlayerViewG;
