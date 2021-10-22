@@ -5,6 +5,7 @@ import theme from "../theme";
 export const GameTable = styled("div")({
   display: "flex",
   backgroundColor: theme.silver,
+  paddingBottom: "12px",
 });
 
 export const FullWidthGameTable = styled(GameTable)({
