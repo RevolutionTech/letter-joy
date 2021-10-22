@@ -12,8 +12,8 @@ import { Button } from "../../panels/Button";
 const SecretWordConstructionLetters = styled("div")({
   display: "flex",
   flexWrap: "wrap",
-  marginLeft: "48px",
-  marginRight: "48px",
+  marginLeft: "24px",
+  marginRight: "24px",
 });
 
 interface Props {

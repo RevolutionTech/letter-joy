@@ -11,7 +11,7 @@ import { TeamDisplay } from "./TeamDisplay";
 const PlayerRows = styled("div")({
   display: "flex",
   flexDirection: "column",
-  marginBottom: "48px",
+  marginBottom: "24px",
 });
 interface Props {
   g: PlayerViewG;

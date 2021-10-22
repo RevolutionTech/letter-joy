@@ -5,10 +5,10 @@ import cardBack from "../assets/cardBack.svg";
 import theme from "../theme";
 import { LETTER_SVG } from "./letters";
 
-export const CARD_WIDTH = 136;
-export const CARD_HEIGHT = 240;
-export const CARD_BORDER_WIDTH = 4;
-export const CARD_MARGIN_RIGHT = 16;
+export const CARD_WIDTH = 68;
+export const CARD_HEIGHT = 120;
+export const CARD_BORDER_WIDTH = 2;
+export const CARD_MARGIN_RIGHT = 8;
 
 const Paper = styled("div")({
   display: "flex",
@@ -20,7 +20,7 @@ const Paper = styled("div")({
 
   borderStyle: "solid",
   borderWidth: `${CARD_BORDER_WIDTH}px`,
-  borderRadius: "10px",
+  borderRadius: "6px",
   userSelect: "none",
 });
 
@@ -49,7 +49,7 @@ export const Card = (props: Props) => {
       }}
     >
       {letter == null ? (
-        <img src={cardBack} alt="Letter Joy" style={{ marginTop: "32px" }} />
+        <img src={cardBack} alt="Letter Joy" style={{ marginTop: "16px" }} />
       ) : (
         <img src={LETTER_SVG[letter]} alt={letter} />
       )}

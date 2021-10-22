@@ -4,8 +4,8 @@ import { Letter } from "../../game/types";
 import { Card } from "./Card";
 import { Token } from "./Token";
 
-export const PRESENTED_CARD_MARGIN_TOP = 48;
-const TOKEN_WIDTH = 64;
+export const PRESENTED_CARD_MARGIN_TOP = 24;
+const TOKEN_WIDTH = 32;
 const TOKEN_SLOT_WIDTH = TOKEN_WIDTH * 6;
 
 const CardWrapper = styled("div")({
@@ -15,7 +15,7 @@ const CardWrapper = styled("div")({
 
 const TokenWrapper = styled("div")({
   position: "absolute",
-  bottom: "calc(-64px - 4px)",
+  bottom: "calc(-32px - 4px)",
   zIndex: 10,
 });
 
@@ -32,7 +32,7 @@ export const PresentedCard = (props: Props) => {
   const spaceForToken = TOKEN_SLOT_WIDTH / (numTokensContained + 1);
 
   return (
-    <CardWrapper onClick={onClick} style={{ top: active ? "-16px" : "0" }}>
+    <CardWrapper onClick={onClick} style={{ top: active ? "-8px" : "0" }}>
       <Card letter={letter} isClickable={onClick != null} />
       {containsTokens?.map((tokenValue, i) => {
         const offset = spaceForToken * (i + 1);
@@ -40,7 +40,7 @@ export const PresentedCard = (props: Props) => {
           <TokenWrapper
             key={i}
             style={{
-              left: `calc(${TOKEN_SLOT_WIDTH / 2}px * -1 + 4px + ${offset}px)`,
+              left: `calc(${TOKEN_SLOT_WIDTH / 2}px * -1 + 2px + ${offset}px)`,
             }}
           >
             <Token value={tokenValue} />

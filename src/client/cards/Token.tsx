@@ -17,25 +17,25 @@ export const Token = (props: Props) => {
   const { value } = props;
   return (
     <svg
-      width="128"
-      height="128"
-      viewBox="0 0 128 128"
+      width="64"
+      height="64"
+      viewBox="0 0 64 64"
       xmlns="http://www.w3.org/2000/svg"
     >
       <circle
-        cx="64"
-        cy="64"
-        r="62"
+        cx="32"
+        cy="32"
+        r="31"
         fill={COLORS[(value - 1) % COLORS.length]}
         stroke="black"
-        strokeWidth="4"
+        strokeWidth="2"
       />
       <text
         x="50%"
         y="50%"
         dominantBaseline="central"
         textAnchor="middle"
-        style={{ fontSize: "72pt" }}
+        style={{ fontSize: "36pt" }}
       >
         {value}
       </text>

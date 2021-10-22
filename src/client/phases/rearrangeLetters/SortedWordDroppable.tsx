@@ -25,7 +25,7 @@ const CardSlot = styled("div")({
   padding: `${CARD_SLOT_PADDING}px`,
 
   backgroundColor: theme.white,
-  borderRadius: "10px",
+  borderRadius: "4px",
 
   transition: "width 0.4s ease",
 });
