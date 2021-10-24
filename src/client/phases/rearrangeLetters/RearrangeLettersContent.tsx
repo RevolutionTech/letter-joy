@@ -6,8 +6,8 @@ import { Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayCell, DisplayStatus } from "../../display/DisplayCell";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
-import { RearrangeLettersBottombar } from "./bottombar/RearrangeLettersBottombar";
 import { getDraggableId } from "./draggableId";
+import { RearrangeLettersFooter } from "./footer/RearrangeLettersFooter";
 import {
   SORTED_WORD_DROPPABLE_ID,
   SortedWordDroppable,
@@ -92,8 +92,8 @@ export const RearrangeLettersContent = (props: Props) => {
   return (
     <PanelLayout
       sidebar={<Sidebar g={g} />}
-      bottombar={
-        <RearrangeLettersBottombar
+      footer={
+        <RearrangeLettersFooter
           stage={stage}
           numSortedCards={sortedCards.length}
           isRearrangingLetters={isRearrangingLetters}

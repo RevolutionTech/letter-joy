@@ -2,8 +2,8 @@ import { useState } from "react";
 import _ from "lodash";
 import { styled, TextField } from "@material-ui/core";
 
-import { Bottombar } from "../../../panels/Bottombar";
 import { Button } from "../../../panels/Button";
+import { Footer } from "../../../panels/Footer";
 
 const StyledTextField = styled(TextField)({
   width: "100%",
@@ -24,7 +24,7 @@ export const ConfirmExpectedWordContent = (props: Props) => {
   const [expectedWord, setExpectedWord] = useState<string>("");
 
   return (
-    <Bottombar
+    <Footer
       buttons={[
         <Button
           key="confirm"
@@ -61,6 +61,6 @@ export const ConfirmExpectedWordContent = (props: Props) => {
           onChange={(event) => setExpectedWord(_.toUpper(event.target.value))}
         />
       </div>
-    </Bottombar>
+    </Footer>
   );
 };

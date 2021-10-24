@@ -1,6 +1,6 @@
 import { displayWord } from "../../../../game/word";
-import { Bottombar } from "../../../panels/Bottombar";
 import { Button } from "../../../panels/Button";
+import { Footer } from "../../../panels/Footer";
 
 interface Props {
   spelledWord: string;
@@ -10,7 +10,7 @@ interface Props {
 export const ConfirmUnexpectedWordContent = (props: Props) => {
   const { spelledWord, onConfirmUnexpectedWord } = props;
   return (
-    <Bottombar
+    <Footer
       buttons={[
         <Button
           key="yes"
@@ -37,6 +37,6 @@ export const ConfirmUnexpectedWordContent = (props: Props) => {
         <div style={{ fontSize: "36pt" }}>{displayWord(spelledWord)}</div>
         <div style={{ fontSize: "24pt" }}>Is this a word?</div>
       </div>
-    </Bottombar>
+    </Footer>
   );
 };

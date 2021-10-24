@@ -2,16 +2,16 @@ import { styled } from "@material-ui/core";
 
 import theme from "../theme";
 
-const BOTTOMBAR_PADDING = "32px";
+const FOOTER_PADDING = "32px";
 
-const BottombarContent = styled("div")({
+const FooterContent = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  width: `calc(100% - ${BOTTOMBAR_PADDING} * 2)`,
+  width: `calc(100% - ${FOOTER_PADDING} * 2)`,
 });
 
-const BottombarButtons = styled("div")({
+const FooterButtons = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -21,10 +21,10 @@ const BottombarButtons = styled("div")({
   },
 });
 
-const FixedBottombar = styled("div")({
+const FixedFooter = styled("div")({
   width: "100%",
   height: "176px",
-  padding: BOTTOMBAR_PADDING,
+  padding: FOOTER_PADDING,
   zIndex: 10000, // higher z-index than draggables
 
   backgroundColor: theme.white,
@@ -34,11 +34,11 @@ interface Props {
   buttons: React.ReactElement[];
 }
 
-export const Bottombar = (props: React.PropsWithChildren<Props>) => (
-  <FixedBottombar>
-    <BottombarContent>
+export const Footer = (props: React.PropsWithChildren<Props>) => (
+  <FixedFooter>
+    <FooterContent>
       {props.children}
-      <BottombarButtons>{props.buttons}</BottombarButtons>
-    </BottombarContent>
-  </FixedBottombar>
+      <FooterButtons>{props.buttons}</FooterButtons>
+    </FooterContent>
+  </FixedFooter>
 );

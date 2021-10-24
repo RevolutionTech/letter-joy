@@ -31,7 +31,7 @@ const GameTable = styled("div")({
 
 interface Props {
   sidebar?: React.ReactNode;
-  bottombar?: React.ReactNode;
+  footer?: React.ReactNode;
 }
 
 export const PanelLayout = (props: React.PropsWithChildren<Props>) => (
@@ -41,7 +41,7 @@ export const PanelLayout = (props: React.PropsWithChildren<Props>) => (
         <GameTable>{props.children}</GameTable>
         {props.sidebar}
       </TopPanels>
-      {props.bottombar}
+      {props.footer}
     </PanelContainer>
   </PanelWrapper>
 );

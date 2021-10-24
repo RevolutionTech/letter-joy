@@ -1,6 +1,6 @@
 import { LETTERS_PER_PLAYER } from "../../../../game/constants";
-import { Bottombar } from "../../../panels/Bottombar";
 import { Button } from "../../../panels/Button";
+import { Footer } from "../../../panels/Footer";
 
 interface Props {
   numSortedCards: number;
@@ -11,7 +11,7 @@ interface Props {
 export const ConfirmSortedCardsContent = (props: Props) => {
   const { numSortedCards, onConfirmSortedCards, onResetSortedCards } = props;
   return (
-    <Bottombar
+    <Footer
       buttons={[
         <Button
           key="confirm"
@@ -42,6 +42,6 @@ export const ConfirmSortedCardsContent = (props: Props) => {
           You may use bonus letters too, but then no one else can.
         </div>
       </div>
-    </Bottombar>
+    </Footer>
   );
 };

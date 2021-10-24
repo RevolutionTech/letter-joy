@@ -5,8 +5,8 @@ import { styled } from "@material-ui/core";
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter } from "../../../game/types";
 import { PresentedCard } from "../../cards/PresentedCard";
-import { Bottombar } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
+import { Footer } from "../../panels/Footer";
 import { PanelLayout } from "../../panels/PanelLayout";
 
 const SecretWordConstructionLetters = styled("div")({
@@ -68,8 +68,8 @@ export const ChooseSecretWordContent = (props: Props) => {
 
   return (
     <PanelLayout
-      bottombar={
-        <Bottombar
+      footer={
+        <Footer
           buttons={[
             <Button
               key="confirm"
@@ -101,7 +101,7 @@ export const ChooseSecretWordContent = (props: Props) => {
               {secretWord.join(" ") || <>&nbsp;</>}
             </div>
           </div>
-        </Bottombar>
+        </Footer>
       }
     >
       <SecretWordConstructionLetters>
