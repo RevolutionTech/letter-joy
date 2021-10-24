@@ -12,7 +12,7 @@ import { PlayerDisplay } from "./PlayerDisplay";
 import { MaybePlayerNames, playerNameDisplay } from "./playerName";
 import { TeamDisplay } from "./TeamDisplay";
 
-const PlayerRows = styled("div")({
+const PlayerDisplayGrid = styled("div")({
   display: "grid",
   width: "100%",
   height: "fit-content",
@@ -46,7 +46,7 @@ export const ActiveTableDisplay = (props: Props) => {
   });
 
   return (
-    <PlayerRows>
+    <PlayerDisplayGrid>
       {playerDisplays}
       <TeamDisplay
         teamLetters={g.teamLetters}
@@ -56,6 +56,6 @@ export const ActiveTableDisplay = (props: Props) => {
         }
         onAddToSpelling={onAddToSpelling && (() => onAddToSpelling("TEAM"))}
       />
-    </PlayerRows>
+    </PlayerDisplayGrid>
   );
 };

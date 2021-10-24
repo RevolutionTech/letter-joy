@@ -5,7 +5,7 @@ import { Letter, TeamHints } from "../../game/types";
 import AvailableHint from "../assets/hints/available.svg";
 import LockedHint from "../assets/hints/locked.svg";
 import { PresentedCard } from "../cards/PresentedCard";
-import { DisplayRow, DisplayStatus, DisplayName } from "./DisplayRow";
+import { DisplayCell, DisplayStatus, DisplayName } from "./DisplayCell";
 import { Hint } from "./hint";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 export const TeamDisplay = (props: Props) => {
   const { teamLetters, teamHints, containsTokens, onAddToSpelling } = props;
   return (
-    <DisplayRow>
+    <DisplayCell>
       <DisplayStatus>
         <DisplayName>Team</DisplayName>
         <div>
@@ -48,6 +48,6 @@ export const TeamDisplay = (props: Props) => {
           onClick={onAddToSpelling}
         />
       ))}
-    </DisplayRow>
+    </DisplayCell>
   );
 };

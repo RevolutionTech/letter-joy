@@ -1,11 +1,11 @@
 import { PlayerViewPlayerState } from "../../game/types";
 import { PresentedCard } from "../cards/PresentedCard";
 import {
-  DisplayRow,
+  DisplayCell,
   DisplayStatus,
   DisplayName,
   HandOfCards,
-} from "./DisplayRow";
+} from "./DisplayCell";
 import { PlayerHints } from "./PlayerHints";
 
 interface Props extends PlayerViewPlayerState {
@@ -27,7 +27,7 @@ export const PlayerDisplay = (props: Props) => {
     onAddToSpelling,
   } = props;
   return (
-    <DisplayRow>
+    <DisplayCell>
       <DisplayStatus>
         <DisplayName>{playerName}</DisplayName>
         <PlayerHints
@@ -52,6 +52,6 @@ export const PlayerDisplay = (props: Props) => {
           );
         })}
       </HandOfCards>
-    </DisplayRow>
+    </DisplayCell>
   );
 };

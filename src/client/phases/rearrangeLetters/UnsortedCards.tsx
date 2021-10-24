@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { Letter, Spelling } from "../../../game/types";
-import { HandOfCards } from "../../display/DisplayRow";
+import { HandOfCards } from "../../display/DisplayCell";
 import { SingleDroppableCard } from "./SingleDroppableCard";
 
 interface Props {

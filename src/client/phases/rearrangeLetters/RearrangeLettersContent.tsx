@@ -3,7 +3,7 @@ import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import { Spelling, PlayerViewG } from "../../../game/types";
-import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
+import { DisplayCell, DisplayStatus } from "../../display/DisplayCell";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { RearrangeLettersBottombar } from "./bottombar/RearrangeLettersBottombar";
@@ -110,7 +110,7 @@ export const RearrangeLettersContent = (props: Props) => {
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <DisplayRow>
+          <DisplayCell>
             <DisplayStatus>Your letters</DisplayStatus>
             <UnsortedCards
               isDragDisabled={!isRearrangingLetters}
@@ -118,8 +118,8 @@ export const RearrangeLettersContent = (props: Props) => {
               initialCardLocations={initialPlayerCardLocations}
               sortedCards={sortedCards}
             />
-          </DisplayRow>
-          <DisplayRow>
+          </DisplayCell>
+          <DisplayCell>
             <DisplayStatus>Bonus letters</DisplayStatus>
             <UnsortedCards
               isDragDisabled={!isRearrangingLetters}
@@ -127,8 +127,8 @@ export const RearrangeLettersContent = (props: Props) => {
               initialCardLocations={initialTeamCardLocations}
               sortedCards={sortedCards}
             />
-          </DisplayRow>
-          <DisplayRow>
+          </DisplayCell>
+          <DisplayCell>
             <DisplayStatus>Your word</DisplayStatus>
             <SortedWordDroppable
               isDragDisabled={!isRearrangingLetters}
@@ -136,7 +136,7 @@ export const RearrangeLettersContent = (props: Props) => {
               teamLetters={initialTeamLetters}
               sortedCards={sortedCards}
             />
-          </DisplayRow>
+          </DisplayCell>
         </div>
       </DragDropContext>
     </PanelLayout>

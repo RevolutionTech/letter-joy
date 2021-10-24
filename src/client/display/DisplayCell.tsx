@@ -1,6 +1,6 @@
 import { styled } from "@material-ui/core";
 
-export const DisplayRow = styled("div")({
+export const DisplayCell = styled("div")({
   display: "flex",
   flexDirection: "column",
   marginTop: "8px",
