@@ -17,7 +17,7 @@ interface Props {
 
 export const TeamDisplay = (props: Props) => {
   const { teamLetters, teamHints, containsTokens, onAddToSpelling } = props;
-  return (
+  return teamLetters.length > 0 ? (
     <DisplayCell>
       <DisplayStatus>
         <DisplayName>Team</DisplayName>
@@ -49,5 +49,5 @@ export const TeamDisplay = (props: Props) => {
         />
       ))}
     </DisplayCell>
-  );
+  ) : null;
 };

@@ -26,7 +26,7 @@ export const PlayerDisplay = (props: Props) => {
     containsTokens,
     onAddToSpelling,
   } = props;
-  return (
+  return letters.length > 0 ? (
     <DisplayCell>
       <DisplayStatus>
         <DisplayName>{playerName}</DisplayName>
@@ -53,5 +53,5 @@ export const PlayerDisplay = (props: Props) => {
         })}
       </HandOfCards>
     </DisplayCell>
-  );
+  ) : null;
 };

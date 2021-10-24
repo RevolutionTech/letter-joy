@@ -31,7 +31,6 @@ export const RearrangeLettersContent = (props: Props) => {
     onConfirmUnexpectedWord,
   } = props;
 
-  const initialTeamLetters = g.teamLetters;
   const initialPlayerLetters = g.players[+currentPlayer].letters;
   const initialPlayerCardLocations = useMemo(
     () =>
@@ -43,11 +42,11 @@ export const RearrangeLettersContent = (props: Props) => {
   );
   const initialTeamCardLocations = useMemo(
     () =>
-      initialTeamLetters.map((_, i) => ({
+      g.teamLetters.map((_, i) => ({
         ownerID: "TEAM",
         letterIndex: i,
       })),
-    [initialTeamLetters]
+    [g.teamLetters]
   );
 
   const [isRearrangingLetters, setIsRearrangingLetters] =
@@ -114,26 +113,28 @@ export const RearrangeLettersContent = (props: Props) => {
             <DisplayStatus>Your letters</DisplayStatus>
             <UnsortedCards
               isDragDisabled={!isRearrangingLetters}
-              teamLetters={initialTeamLetters}
+              teamLetters={g.teamLetters}
               initialCardLocations={initialPlayerCardLocations}
               sortedCards={sortedCards}
             />
           </DisplayCell>
-          <DisplayCell>
-            <DisplayStatus>Bonus letters</DisplayStatus>
-            <UnsortedCards
-              isDragDisabled={!isRearrangingLetters}
-              teamLetters={initialTeamLetters}
-              initialCardLocations={initialTeamCardLocations}
-              sortedCards={sortedCards}
-            />
-          </DisplayCell>
+          {g.teamLetters.length > 0 && (
+            <DisplayCell>
+              <DisplayStatus>Bonus letters</DisplayStatus>
+              <UnsortedCards
+                isDragDisabled={!isRearrangingLetters}
+                teamLetters={g.teamLetters}
+                initialCardLocations={initialTeamCardLocations}
+                sortedCards={sortedCards}
+              />
+            </DisplayCell>
+          )}
           <DisplayCell>
             <DisplayStatus>Your word</DisplayStatus>
             <SortedWordDroppable
               isDragDisabled={!isRearrangingLetters}
               playerLetters={initialPlayerLetters}
-              teamLetters={initialTeamLetters}
+              teamLetters={g.teamLetters}
               sortedCards={sortedCards}
             />
           </DisplayCell>
