@@ -7,6 +7,7 @@ import { PlayerViewG } from "../../../game/types";
 import { displayWord } from "../../../game/word";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
 import { MaybePlayerNames, playerNameDisplay } from "../../display/playerName";
+import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { StarRating } from "./StarRating";
 
@@ -29,41 +30,45 @@ export const ScoringContent = (props: Props) => {
     finishedPlayers.map((player) => player.playerOutcome!),
     teamHintsAvailable
   );
+
   return (
-    <>
-      <ActiveTableDisplay g={g} playerNames={playerNames} />
-      <Sidebar g={g}>
-        {_.sortBy(finishedPlayers, (player) => player.playerID).map(
-          (player) => (
-            <Body key={player.playerID}>
+    <PanelLayout
+      sidebar={
+        <Sidebar g={g}>
+          {_.sortBy(finishedPlayers, (player) => player.playerID).map(
+            (player) => (
+              <Body key={player.playerID}>
+                <EmphasisBody>
+                  {playerNameDisplay(playerNames, +player.playerID)}
+                </EmphasisBody>{" "}
+                scored {playerScore(player.playerOutcome!, teamHintsAvailable)}{" "}
+                points with{" "}
+                <EmphasisBody>
+                  {displayWord(player.playerOutcome!.spelledWord)}
+                </EmphasisBody>
+                .
+              </Body>
+            )
+          )}
+          {Object.keys(
+            _.pickBy(activePlayers, (stage) => stage === "rearrangeLettersMain")
+          ).map((playerID) => (
+            <Body key={playerID}>
               <EmphasisBody>
-                {playerNameDisplay(playerNames, +player.playerID)}
+                {playerNameDisplay(playerNames, +playerID)}
               </EmphasisBody>{" "}
-              scored {playerScore(player.playerOutcome!, teamHintsAvailable)}{" "}
-              points with{" "}
-              <EmphasisBody>
-                {displayWord(player.playerOutcome!.spelledWord)}
-              </EmphasisBody>
-              .
+              is rearranging letters to make a word.
             </Body>
-          )
-        )}
-        {Object.keys(
-          _.pickBy(activePlayers, (stage) => stage === "rearrangeLettersMain")
-        ).map((playerID) => (
-          <Body key={playerID}>
-            <EmphasisBody>
-              {playerNameDisplay(playerNames, +playerID)}
-            </EmphasisBody>{" "}
-            is rearranging letters to make a word.
-          </Body>
-        ))}
-        <h5>Total Score</h5>
-        <p>
-          <EmphasisBody>{teamScore} points</EmphasisBody>
-        </p>
-        <StarRating score={teamScore} />
-      </Sidebar>
-    </>
+          ))}
+          <h5>Total Score</h5>
+          <p>
+            <EmphasisBody>{teamScore} points</EmphasisBody>
+          </p>
+          <StarRating score={teamScore} />
+        </Sidebar>
+      }
+    >
+      <ActiveTableDisplay g={g} playerNames={playerNames} />
+    </PanelLayout>
   );
 };

@@ -1,14 +1,8 @@
 import _ from "lodash";
-import { styled } from "@material-ui/core";
 
 import { Letter, Spelling } from "../../../game/types";
 import { HandOfCards } from "../../display/DisplayRow";
 import { SingleDroppableCard } from "./SingleDroppableCard";
-import { CARD_SLOT_PADDING } from "./SortedWordDroppable";
-
-const UnsortedHandOfCards = styled(HandOfCards)({
-  marginLeft: CARD_SLOT_PADDING,
-});
 
 interface Props {
   isDragDisabled: boolean;
@@ -18,14 +12,10 @@ interface Props {
 }
 
 export const UnsortedCards = (props: Props) => {
-  const {
-    isDragDisabled,
-    teamLetters,
-    initialCardLocations,
-    sortedCards,
-  } = props;
+  const { isDragDisabled, teamLetters, initialCardLocations, sortedCards } =
+    props;
   return (
-    <UnsortedHandOfCards>
+    <HandOfCards>
       {initialCardLocations.map((cardLocation, i) => (
         <SingleDroppableCard
           key={i}
@@ -40,6 +30,6 @@ export const UnsortedCards = (props: Props) => {
           )}
         />
       ))}
-    </UnsortedHandOfCards>
+    </HandOfCards>
   );
 };

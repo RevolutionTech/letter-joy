@@ -5,15 +5,16 @@ import { styled } from "@material-ui/core";
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter } from "../../../game/types";
 import { PresentedCard } from "../../cards/PresentedCard";
-import { FullWidthGameTable } from "../../display/GameTable";
-import { Bottombar, BottombarPlaceholder } from "../../panels/Bottombar";
+import { Bottombar } from "../../panels/Bottombar";
 import { Button } from "../../panels/Button";
+import { PanelLayout } from "../../panels/PanelLayout";
 
 const SecretWordConstructionLetters = styled("div")({
   display: "flex",
   flexWrap: "wrap",
   marginLeft: "24px",
   marginRight: "24px",
+  height: "fit-content",
 });
 
 interface Props {
@@ -66,45 +67,46 @@ export const ChooseSecretWordContent = (props: Props) => {
   );
 
   return (
-    <>
-      <FullWidthGameTable>
-        <SecretWordConstructionLetters>
-          {wordConstructionCards}
-        </SecretWordConstructionLetters>
-        <BottombarPlaceholder />
-      </FullWidthGameTable>
-      <Bottombar
-        buttons={[
-          <Button
-            key="confirm"
-            variant="contained"
-            color="primary"
-            size="large"
-            disabled={selectedLetters.length !== LETTERS_PER_PLAYER}
-            onClick={() => onConfirmSecretWord(secretWord)}
-          >
-            Confirm
-          </Button>,
-          <Button
-            key="reset"
-            variant="outlined"
-            size="large"
-            disabled={selectedLetters.length === 0}
-            onClick={() => setSelectedLetters([])}
-          >
-            Reset
-          </Button>,
-        ]}
-      >
-        <div>
-          <div style={{ fontSize: "36pt" }}>
-            Choose a secret 5-letter word for <strong>{leftPlayerName}</strong>.
+    <PanelLayout
+      bottombar={
+        <Bottombar
+          buttons={[
+            <Button
+              key="confirm"
+              variant="contained"
+              color="primary"
+              size="large"
+              disabled={selectedLetters.length !== LETTERS_PER_PLAYER}
+              onClick={() => onConfirmSecretWord(secretWord)}
+            >
+              Confirm
+            </Button>,
+            <Button
+              key="reset"
+              variant="outlined"
+              size="large"
+              disabled={selectedLetters.length === 0}
+              onClick={() => setSelectedLetters([])}
+            >
+              Reset
+            </Button>,
+          ]}
+        >
+          <div>
+            <div style={{ fontSize: "36pt" }}>
+              Choose a secret 5-letter word for{" "}
+              <strong>{leftPlayerName}</strong>.
+            </div>
+            <div style={{ fontSize: "48pt" }}>
+              {secretWord.join(" ") || <>&nbsp;</>}
+            </div>
           </div>
-          <div style={{ fontSize: "48pt" }}>
-            {secretWord.join(" ") || <>&nbsp;</>}
-          </div>
-        </div>
-      </Bottombar>
-    </>
+        </Bottombar>
+      }
+    >
+      <SecretWordConstructionLetters>
+        {wordConstructionCards}
+      </SecretWordConstructionLetters>
+    </PanelLayout>
   );
 };

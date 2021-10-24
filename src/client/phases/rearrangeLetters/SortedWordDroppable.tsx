@@ -17,12 +17,13 @@ import { getDraggableId } from "./draggableId";
 
 export const SORTED_WORD_DROPPABLE_ID = "sorted-word";
 const CARD_SLOT_HEIGHT = CARD_HEIGHT + 8;
-export const CARD_SLOT_PADDING = 8;
+const CARD_SLOT_PADDING = 8;
 
 const CardSlot = styled("div")({
   display: "flex",
   height: `${CARD_SLOT_HEIGHT}px`,
   padding: `${CARD_SLOT_PADDING}px`,
+  marginBottom: "16px",
 
   backgroundColor: theme.white,
   borderRadius: "4px",

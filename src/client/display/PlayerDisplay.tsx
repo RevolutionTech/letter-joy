@@ -1,6 +1,11 @@
 import { PlayerViewPlayerState } from "../../game/types";
 import { PresentedCard } from "../cards/PresentedCard";
-import { DisplayRow, DisplayStatus, HandOfCards } from "./DisplayRow";
+import {
+  DisplayRow,
+  DisplayStatus,
+  DisplayName,
+  HandOfCards,
+} from "./DisplayRow";
 import { PlayerHints } from "./PlayerHints";
 
 interface Props extends PlayerViewPlayerState {
@@ -24,7 +29,7 @@ export const PlayerDisplay = (props: Props) => {
   return (
     <DisplayRow>
       <DisplayStatus>
-        <div>{playerName}</div>
+        <DisplayName>{playerName}</DisplayName>
         <PlayerHints
           playerID={playerID}
           playerName={playerName}

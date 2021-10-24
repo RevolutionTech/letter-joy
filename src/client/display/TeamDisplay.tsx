@@ -5,7 +5,7 @@ import { Letter, TeamHints } from "../../game/types";
 import AvailableHint from "../assets/hints/available.svg";
 import LockedHint from "../assets/hints/locked.svg";
 import { PresentedCard } from "../cards/PresentedCard";
-import { DisplayRow, DisplayStatus } from "./DisplayRow";
+import { DisplayRow, DisplayStatus, DisplayName } from "./DisplayRow";
 import { Hint } from "./hint";
 
 interface Props {
@@ -20,7 +20,7 @@ export const TeamDisplay = (props: Props) => {
   return (
     <DisplayRow>
       <DisplayStatus>
-        <div>Team</div>
+        <DisplayName>Team</DisplayName>
         <div>
           {_.range(teamHints.available).map((_, i) => (
             <Tooltip

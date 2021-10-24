@@ -4,13 +4,12 @@ import { Letter } from "../../game/types";
 import { Card } from "./Card";
 import { Token } from "./Token";
 
-export const PRESENTED_CARD_MARGIN_TOP = 24;
 const TOKEN_WIDTH = 32;
 const TOKEN_SLOT_WIDTH = TOKEN_WIDTH * 6;
 
 const CardWrapper = styled("div")({
   position: "relative",
-  marginTop: `${PRESENTED_CARD_MARGIN_TOP}px`,
+  marginTop: "8px",
 });
 
 const TokenWrapper = styled("div")({

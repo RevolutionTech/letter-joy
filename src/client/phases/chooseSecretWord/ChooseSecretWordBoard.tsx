@@ -5,6 +5,7 @@ import { getLeftPlayerID, getPlayersActing } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
 import { playerNameDisplay } from "../../display/playerName";
+import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { WaitingContent } from "../../panels/sidebar/WaitingContent";
 import { ChooseSecretWordContent } from "./ChooseSecretWordContent";
@@ -28,16 +29,19 @@ export const ChooseSecretWordBoard = (props: BoardProps) => {
     );
   } else {
     return (
-      <>
+      <PanelLayout
+        sidebar={
+          <Sidebar g={g}>
+            <WaitingContent
+              playerNames={playerNames}
+              description="Waiting for other players to choose a secret word:"
+              playersActing={playersActing}
+            />
+          </Sidebar>
+        }
+      >
         <ActiveTableDisplay g={g} playerNames={playerNames} />
-        <Sidebar g={g}>
-          <WaitingContent
-            playerNames={playerNames}
-            description="Waiting for other players to choose a secret word:"
-            playersActing={playersActing}
-          />
-        </Sidebar>
-      </>
+      </PanelLayout>
     );
   }
 };

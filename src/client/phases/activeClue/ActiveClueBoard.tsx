@@ -5,6 +5,7 @@ import { getPlayersActing } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ClueDisplay } from "../../cards/ClueDisplay";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
+import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { SidebarContent } from "../../panels/sidebar/SidebarContent";
 import { WaitingContent } from "../../panels/sidebar/WaitingContent";
@@ -22,32 +23,35 @@ export const ActiveClueBoard = (props: BoardProps) => {
   }
 
   return (
-    <>
+    <PanelLayout
+      sidebar={
+        <Sidebar g={g}>
+          <SidebarContent header="Active clue" buttons={[]}>
+            <div style={{ fontSize: "48pt" }}>
+              <ClueDisplay g={g} spelling={g.activeClue.spelling} />
+            </div>
+            {currentPlayer != null && playersActing.includes(currentPlayer) ? (
+              <AdvanceDecisionContent
+                activeLetterIndex={g.players[+currentPlayer].activeLetterIndex}
+                onAdvanceLetter={props.moves.advanceLetter}
+                onConfirmActiveLetter={() => props.events.endStage?.()}
+              />
+            ) : (
+              <WaitingContent
+                playerNames={props.matchData}
+                description="Waiting for other players to decide which letter to use in the next round:"
+                playersActing={playersActing}
+              />
+            )}
+          </SidebarContent>
+        </Sidebar>
+      }
+    >
       <ActiveTableDisplay
         g={g}
         playerNames={props.matchData}
         spelling={g.activeClue.spelling}
       />
-      <Sidebar g={g}>
-        <SidebarContent header="Active clue" buttons={[]}>
-          <div style={{ fontSize: "48pt" }}>
-            <ClueDisplay g={g} spelling={g.activeClue.spelling} />
-          </div>
-          {currentPlayer != null && playersActing.includes(currentPlayer) ? (
-            <AdvanceDecisionContent
-              activeLetterIndex={g.players[+currentPlayer].activeLetterIndex}
-              onAdvanceLetter={props.moves.advanceLetter}
-              onConfirmActiveLetter={() => props.events.endStage?.()}
-            />
-          ) : (
-            <WaitingContent
-              playerNames={props.matchData}
-              description="Waiting for other players to decide which letter to use in the next round:"
-              playersActing={playersActing}
-            />
-          )}
-        </SidebarContent>
-      </Sidebar>
-    </>
+    </PanelLayout>
   );
 };

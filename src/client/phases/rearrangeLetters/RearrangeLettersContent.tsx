@@ -4,9 +4,8 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 import { Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayRow, DisplayStatus } from "../../display/DisplayRow";
-import { GameTable, FullWidthGameTable } from "../../display/GameTable";
-import { BottombarPlaceholder } from "../../panels/Bottombar";
-import { SidebarPlaceholder, Sidebar } from "../../panels/sidebar/Sidebar";
+import { PanelLayout } from "../../panels/PanelLayout";
+import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { RearrangeLettersBottombar } from "./bottombar/RearrangeLettersBottombar";
 import { getDraggableId } from "./draggableId";
 import {
@@ -51,9 +50,8 @@ export const RearrangeLettersContent = (props: Props) => {
     [initialTeamLetters]
   );
 
-  const [isRearrangingLetters, setIsRearrangingLetters] = useState<boolean>(
-    true
-  );
+  const [isRearrangingLetters, setIsRearrangingLetters] =
+    useState<boolean>(true);
   const [sortedCards, setSortedCards] = useState<Spelling>([]);
 
   const onDragEnd = useCallback(
@@ -92,58 +90,55 @@ export const RearrangeLettersContent = (props: Props) => {
   );
 
   return (
-    <>
-      <FullWidthGameTable>
-        <GameTable>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <DisplayRow>
-                <DisplayStatus>Your letters</DisplayStatus>
-                <UnsortedCards
-                  isDragDisabled={!isRearrangingLetters}
-                  teamLetters={initialTeamLetters}
-                  initialCardLocations={initialPlayerCardLocations}
-                  sortedCards={sortedCards}
-                />
-              </DisplayRow>
-              <DisplayRow>
-                <DisplayStatus>Bonus letters</DisplayStatus>
-                <UnsortedCards
-                  isDragDisabled={!isRearrangingLetters}
-                  teamLetters={initialTeamLetters}
-                  initialCardLocations={initialTeamCardLocations}
-                  sortedCards={sortedCards}
-                />
-              </DisplayRow>
-              <DisplayRow>
-                <DisplayStatus>Your word</DisplayStatus>
-                <SortedWordDroppable
-                  isDragDisabled={!isRearrangingLetters}
-                  playerLetters={initialPlayerLetters}
-                  teamLetters={initialTeamLetters}
-                  sortedCards={sortedCards}
-                />
-              </DisplayRow>
-            </div>
-          </DragDropContext>
-          <SidebarPlaceholder />
-        </GameTable>
-        <BottombarPlaceholder />
-      </FullWidthGameTable>
-      <Sidebar g={g} />
-      <RearrangeLettersBottombar
-        stage={stage}
-        numSortedCards={sortedCards.length}
-        isRearrangingLetters={isRearrangingLetters}
-        spelledWord={g.players[+currentPlayer].playerOutcome?.spelledWord}
-        onConfirmSortedCards={() => setIsRearrangingLetters(false)}
-        onResetSortedCards={() => setSortedCards([])}
-        onConfirmExpectedWord={(expectedWord) =>
-          onConfirmExpectedWord(sortedCards, expectedWord)
-        }
-        onCancelExpectedWord={() => setIsRearrangingLetters(true)}
-        onConfirmUnexpectedWord={onConfirmUnexpectedWord}
-      />
-    </>
+    <PanelLayout
+      sidebar={<Sidebar g={g} />}
+      bottombar={
+        <RearrangeLettersBottombar
+          stage={stage}
+          numSortedCards={sortedCards.length}
+          isRearrangingLetters={isRearrangingLetters}
+          spelledWord={g.players[+currentPlayer].playerOutcome?.spelledWord}
+          onConfirmSortedCards={() => setIsRearrangingLetters(false)}
+          onResetSortedCards={() => setSortedCards([])}
+          onConfirmExpectedWord={(expectedWord) =>
+            onConfirmExpectedWord(sortedCards, expectedWord)
+          }
+          onCancelExpectedWord={() => setIsRearrangingLetters(true)}
+          onConfirmUnexpectedWord={onConfirmUnexpectedWord}
+        />
+      }
+    >
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <DisplayRow>
+            <DisplayStatus>Your letters</DisplayStatus>
+            <UnsortedCards
+              isDragDisabled={!isRearrangingLetters}
+              teamLetters={initialTeamLetters}
+              initialCardLocations={initialPlayerCardLocations}
+              sortedCards={sortedCards}
+            />
+          </DisplayRow>
+          <DisplayRow>
+            <DisplayStatus>Bonus letters</DisplayStatus>
+            <UnsortedCards
+              isDragDisabled={!isRearrangingLetters}
+              teamLetters={initialTeamLetters}
+              initialCardLocations={initialTeamCardLocations}
+              sortedCards={sortedCards}
+            />
+          </DisplayRow>
+          <DisplayRow>
+            <DisplayStatus>Your word</DisplayStatus>
+            <SortedWordDroppable
+              isDragDisabled={!isRearrangingLetters}
+              playerLetters={initialPlayerLetters}
+              teamLetters={initialTeamLetters}
+              sortedCards={sortedCards}
+            />
+          </DisplayRow>
+        </div>
+      </DragDropContext>
+    </PanelLayout>
   );
 };
