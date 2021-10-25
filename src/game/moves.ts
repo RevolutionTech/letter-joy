@@ -182,38 +182,42 @@ export const rearrangeLetters = (
   // Determine the word the user spelled
   const playerState = g.players[+ctx.currentPlayer];
   const spelledWord = spelling
-    .map((cardLocation) =>
-      cardLocation.ownerID === "TEAM"
-        ? g.teamLetters[cardLocation.letterIndex]
-        : playerState.letters[cardLocation.letterIndex]
+    .map(
+      (cardLocation) =>
+        (cardLocation.ownerID === "TEAM" ? g.teamLetters : playerState.letters)[
+          cardLocation.letterIndex
+        ]
     )
     .join("");
 
   // Assign the player outcome
+  const teamLettersUsed = spelling
+    .filter((cardLocation) => cardLocation.ownerID === "TEAM")
+    .map((cardLocation) => cardLocation.letterIndex);
   const isSpelledWordExpected = isWordEqual(expectedWord, spelledWord);
   g.players[+ctx.currentPlayer] = {
     ...playerState,
     playerOutcome: {
-      expectedWord,
       spelledWord,
+      expectedWord,
+      teamLettersUsed,
       // If the user didn't spell the word they expected,
       // we don't yet know if it's a word
       isWord: isSpelledWordExpected || undefined,
     },
   };
 
-  // Remove any team letters that were used
-  const indicesToRemove = spelling
-    .filter((cardLocation) => cardLocation.ownerID === "TEAM")
-    .map((cardLocation) => cardLocation.letterIndex);
-  _.pullAt(g.teamLetters, indicesToRemove);
-
   // Determine the active player's next stage depending on
   // whether they spelled what they meant to or not
   if (isSpelledWordExpected) {
+    // Remove any team letters that were used
+    _.pullAt(g.teamLetters, teamLettersUsed);
+
+    // End turn and advance to scoring
     ctx.events?.setStage?.("scoring");
     ctx.events?.endTurn?.();
   } else {
+    // Move to unexpected word stage
     ctx.events?.setStage?.("unexpectedWord");
   }
   return;
@@ -236,6 +240,9 @@ export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
     ...playerState,
     playerOutcome: { ...playerState.playerOutcome, isWord },
   };
+
+  // Remove any team letters that were used
+  _.pullAt(g.teamLetters, playerState.playerOutcome.teamLettersUsed);
 
   // Move the active player into the scoring stage and end the turn
   ctx.events?.endStage?.();

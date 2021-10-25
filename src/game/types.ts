@@ -23,9 +23,18 @@ export enum Letter {
   WILD = "＊", // full-width asterisk (U+FF0A)
 }
 
+export interface TeamHints {
+  available: number;
+  locked: number;
+}
+
+export type CardLocation = { ownerID: string; letterIndex: number };
+export type Spelling = CardLocation[];
+
 export interface PlayerOutcome {
   spelledWord: string;
   expectedWord: string;
+  teamLettersUsed: number[];
   isWord?: boolean;
 }
 
@@ -43,14 +52,6 @@ export interface PlayerViewPlayerState
   extends Omit<PlayerState, "wordConstructionLetters" | "letters"> {
   letters: (Letter | null)[];
 }
-
-export interface TeamHints {
-  available: number;
-  locked: number;
-}
-
-export type CardLocation = { ownerID: string; letterIndex: number };
-export type Spelling = CardLocation[];
 
 export interface Clue {
   authorID: string;
