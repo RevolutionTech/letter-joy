@@ -50,6 +50,7 @@ export const ActiveClueBoard = (props: BoardProps) => {
       <ActiveTableDisplay
         g={g}
         playerNames={props.matchData}
+        currentPlayer={currentPlayer}
         spelling={g.activeClue.spelling}
       />
     </PanelLayout>

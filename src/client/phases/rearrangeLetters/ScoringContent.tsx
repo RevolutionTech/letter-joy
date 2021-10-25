@@ -17,6 +17,7 @@ const EmphasisBody = styled("span")({ fontSize: "24pt", whiteSpace: "nowrap" });
 interface Props {
   g: PlayerViewG;
   playerNames: MaybePlayerNames;
+  currentPlayer: string | null;
   activePlayers: ActivePlayers;
 }
 
@@ -68,7 +69,11 @@ export const ScoringContent = (props: Props) => {
         </Sidebar>
       }
     >
-      <ActiveTableDisplay g={g} playerNames={playerNames} />
+      <ActiveTableDisplay
+        g={g}
+        playerNames={playerNames}
+        currentPlayer={props.currentPlayer}
+      />
     </PanelLayout>
   );
 };

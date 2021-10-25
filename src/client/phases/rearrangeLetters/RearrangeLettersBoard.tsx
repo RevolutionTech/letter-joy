@@ -20,6 +20,7 @@ export const RearrangeLettersBoard = (props: BoardProps) => {
     <ScoringContent
       g={g}
       playerNames={props.matchData}
+      currentPlayer={currentPlayer}
       activePlayers={activePlayers}
     />
   ) : (

@@ -1,7 +1,9 @@
 import { styled } from "@material-ui/core";
 
 import { LETTERS_PER_PLAYER } from "../../game/constants";
+import { getRightPlayerID } from "../../game/players";
 import { Spelling, PlayerViewG } from "../../game/types";
+import { cycleArray } from "../../game/utils";
 import {
   CARD_WIDTH,
   CARD_BORDER_WIDTH,
@@ -22,14 +24,18 @@ const PlayerDisplayGrid = styled("div")({
 interface Props {
   g: PlayerViewG;
   playerNames: MaybePlayerNames;
+  currentPlayer: string | null;
   spelling?: Spelling;
   onAddToSpelling?: (ownerID: string) => void;
 }
 
 export const ActiveTableDisplay = (props: Props) => {
-  const { g, playerNames, spelling, onAddToSpelling } = props;
+  const { g, playerNames, currentPlayer, spelling, onAddToSpelling } = props;
 
-  const playerDisplays = Object.values(g.players).map((playerState) => {
+  const rightPlayerID =
+    currentPlayer == null ? 0 : getRightPlayerID(+currentPlayer);
+  const orderedPlayers = cycleArray(Object.values(g.players), rightPlayerID);
+  const playerDisplays = orderedPlayers.map((playerState) => {
     const playerID = playerState.playerID;
     return (
       <PlayerDisplay

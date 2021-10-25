@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 class IllegalStateException extends Error {}
 
 // Source: https://www.typescriptlang.org/docs/handbook/advanced-types.html#exhaustiveness-checking
@@ -10,3 +12,10 @@ export const assertNever = (x: never): never => {
 // Source: https://stackoverflow.com/a/18618250/3241924
 export const modulo = (dividend: number, divisor: number) =>
   ((dividend % divisor) + divisor) % divisor;
+
+export function cycleArray<T>(array: T[], startingIndex: number): T[] {
+  return [
+    ..._.slice(array, startingIndex, array.length),
+    ..._.slice(array, 0, startingIndex),
+  ];
+}

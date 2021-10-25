@@ -40,7 +40,11 @@ export const ChooseSecretWordBoard = (props: BoardProps) => {
           </Sidebar>
         }
       >
-        <ActiveTableDisplay g={g} playerNames={playerNames} />
+        <ActiveTableDisplay
+          g={g}
+          playerNames={playerNames}
+          currentPlayer={currentPlayer}
+        />
       </PanelLayout>
     );
   }
