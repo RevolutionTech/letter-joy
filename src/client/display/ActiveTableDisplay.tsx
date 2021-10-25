@@ -47,7 +47,6 @@ export const ActiveTableDisplay = (props: Props) => {
 
   return (
     <PlayerDisplayGrid>
-      {playerDisplays}
       <TeamDisplay
         teamLetters={g.teamLetters}
         teamHints={g.teamHints}
@@ -56,6 +55,7 @@ export const ActiveTableDisplay = (props: Props) => {
         }
         onAddToSpelling={onAddToSpelling && (() => onAddToSpelling("TEAM"))}
       />
+      {playerDisplays}
     </PlayerDisplayGrid>
   );
 };
