@@ -1,8 +1,14 @@
 import _ from "lodash";
+import { styled } from "@material-ui/core";
 
 import { Letter, Spelling } from "../../../game/types";
+import { CARD_HEIGHT, CARD_BORDER_WIDTH } from "../../cards/Card";
 import { HandOfCards } from "../../display/DisplayCell";
 import { SingleDroppableCard } from "./SingleDroppableCard";
+
+const UnsortedHandOfCards = styled(HandOfCards)({
+  minHeight: `calc(${CARD_HEIGHT}px + ${CARD_BORDER_WIDTH}px * 2)`,
+});
 
 interface Props {
   isDragDisabled: boolean;
@@ -15,7 +21,7 @@ export const UnsortedCards = (props: Props) => {
   const { isDragDisabled, teamLetters, initialCardLocations, sortedCards } =
     props;
   return (
-    <HandOfCards>
+    <UnsortedHandOfCards>
       {initialCardLocations.map((cardLocation, i) => (
         <SingleDroppableCard
           key={i}
@@ -30,6 +36,6 @@ export const UnsortedCards = (props: Props) => {
           )}
         />
       ))}
-    </HandOfCards>
+    </UnsortedHandOfCards>
   );
 };
