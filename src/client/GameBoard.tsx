@@ -1,4 +1,5 @@
 import { BoardProps } from "boardgame.io/react";
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
 
 import { Phase } from "../game/phases";
 import { assertNever } from "../game/utils";
@@ -6,6 +7,8 @@ import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
 import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWordBoard";
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
 import { RearrangeLettersBoard } from "./phases/rearrangeLetters/RearrangeLettersBoard";
+
+const theme = createTheme();
 
 const getBoardForPhase = (phase: Phase | null) => {
   switch (phase) {
@@ -26,5 +29,9 @@ const getBoardForPhase = (phase: Phase | null) => {
 export const GameBoard = (props: BoardProps) => {
   const phase = props.ctx.phase as Phase | null;
   const Board = getBoardForPhase(phase);
-  return <Board {...props} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <Board {...props} />
+    </ThemeProvider>
+  );
 };
