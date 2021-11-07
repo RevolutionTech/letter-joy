@@ -1,6 +1,5 @@
+import isPropValid from "@emotion/is-prop-valid";
 import { styled } from "@mui/material";
-
-import makeStyles from '@mui/styles/makeStyles';
 
 import { Letter } from "../../game/types";
 import cardBack from "../assets/cardBack.svg";
@@ -12,40 +11,40 @@ export const CARD_HEIGHT = 120;
 export const CARD_BORDER_WIDTH = 2;
 export const CARD_MARGIN_RIGHT = 8;
 
-const Paper = styled("div")({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: `${CARD_WIDTH}px`,
-  height: `${CARD_HEIGHT}px`,
-  marginRight: `${CARD_MARGIN_RIGHT}px`,
-
-  borderStyle: "solid",
-  borderWidth: `${CARD_BORDER_WIDTH}px`,
-  borderRadius: "6px",
-  userSelect: "none",
-});
-
-const useStyles = makeStyles({
-  clickable: {
-    "&:hover": {
-      borderStyle: "double",
-    },
-  },
-});
-
-interface Props {
-  letter: Letter | null;
+interface PaperProps {
   isClickable?: boolean;
 }
 
+const Paper = styled("div", { shouldForwardProp: isPropValid })<PaperProps>(
+  ({ isClickable }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: `${CARD_WIDTH}px`,
+    height: `${CARD_HEIGHT}px`,
+    marginRight: `${CARD_MARGIN_RIGHT}px`,
+
+    borderStyle: "solid",
+    borderWidth: `${CARD_BORDER_WIDTH}px`,
+    borderRadius: "6px",
+    userSelect: "none",
+
+    "&:hover": {
+      borderStyle: isClickable ? "double" : "solid",
+    },
+  })
+);
+
+type Props = PaperProps & {
+  letter: Letter | null;
+};
+
 export const Card = (props: Props) => {
-  const classes = useStyles();
   const { letter, isClickable } = props;
 
   return (
     <Paper
-      className={isClickable ? classes.clickable : undefined}
+      isClickable={isClickable}
       style={{
         backgroundColor: letter === Letter.WILD ? theme.grey : theme.white,
       }}
