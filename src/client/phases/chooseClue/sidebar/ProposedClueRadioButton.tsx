@@ -1,7 +1,7 @@
-import { styled } from "@material-ui/core";
-import FontDownloadIcon from "@material-ui/icons/FontDownload";
-import GroupIcon from "@material-ui/icons/Group";
-import PersonIcon from "@material-ui/icons/Person";
+import { styled } from "@mui/material";
+import FontDownloadIcon from "@mui/icons-material/FontDownload";
+import GroupIcon from "@mui/icons-material/Group";
+import PersonIcon from "@mui/icons-material/Person";
 
 import {
   Letter,

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 
 import { NUM_HINTS_STARTING_PER_PLAYER } from "../../game/constants";
 import AvailableHint from "../assets/hints/available.svg";

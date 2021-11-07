@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 const SidebarHeaderText = styled("div")({ flexGrow: 1, fontSize: "18pt" });
 const ButtonList = styled("div")({ display: "flex", flexDirection: "column" });

@@ -1,4 +1,6 @@
-import { styled, makeStyles } from "@material-ui/core";
+import { styled } from "@mui/material";
+
+import makeStyles from '@mui/styles/makeStyles';
 
 import { Letter } from "../../game/types";
 import cardBack from "../assets/cardBack.svg";

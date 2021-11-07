@@ -1,4 +1,4 @@
-import { styled, Button as MUIButton } from "@material-ui/core";
+import { styled, Button as MUIButton } from "@mui/material";
 
 import theme from "../theme";
 

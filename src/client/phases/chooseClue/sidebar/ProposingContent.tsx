@@ -1,4 +1,4 @@
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 import { Spelling, PlayerViewG } from "../../../../game/types";
 import { ClueDisplay } from "../../../cards/ClueDisplay";

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import _ from "lodash";
-import { styled, TextField } from "@material-ui/core";
+import { styled, TextField } from "@mui/material";
 
 import { Button } from "../../../panels/Button";
 import { Footer } from "../../../panels/Footer";

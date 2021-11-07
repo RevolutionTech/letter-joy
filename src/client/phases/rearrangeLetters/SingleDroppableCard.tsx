@@ -1,4 +1,4 @@
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 import { Droppable } from "react-beautiful-dnd";
 
 import { Letter, CardLocation } from "../../../game/types";

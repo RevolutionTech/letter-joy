@@ -1,6 +1,6 @@
 import { ActivePlayers } from "boardgame.io";
 import _ from "lodash";
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 import { playerScore, totalScore } from "../../../game/scoring";
 import { PlayerViewG } from "../../../game/types";

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import _ from "lodash";
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter } from "../../../game/types";

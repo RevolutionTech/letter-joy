@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 import { MAX_NUM_STARS, totalStars } from "../../../game/scoring";
 import starFilled from "../../assets/starFilled.svg";

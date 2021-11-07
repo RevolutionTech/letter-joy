@@ -1,4 +1,4 @@
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 import { LETTERS_PER_PLAYER } from "../../game/constants";
 import { getRightPlayerID } from "../../game/players";

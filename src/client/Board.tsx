@@ -1,6 +1,6 @@
 import { BoardProps } from "boardgame.io/react";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { styled } from "@material-ui/core";
+import { styled } from "@mui/material";
 
 import { GameBoard } from "./GameBoard";
 

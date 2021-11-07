@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Tooltip } from "@material-ui/core";
+import { Tooltip } from "@mui/material";
 
 import { Letter, TeamHints } from "../../game/types";
 import AvailableHint from "../assets/hints/available.svg";

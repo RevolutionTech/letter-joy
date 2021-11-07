@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { styled, FormControl, RadioGroup } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+import { styled, FormControl, RadioGroup } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 import { playerHasHintAvailable } from "../../../../game/hints";
 import { PlayerViewG } from "../../../../game/types";
