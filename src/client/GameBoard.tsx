@@ -1,5 +1,9 @@
 import { BoardProps } from "boardgame.io/react";
-import { ThemeProvider, Theme, StyledEngineProvider, createTheme } from "@mui/material/styles";
+import {
+  ThemeProvider,
+  StyledEngineProvider,
+  createTheme,
+} from "@mui/material/styles";
 
 import { Phase } from "../game/phases";
 import { assertNever } from "../game/utils";
@@ -7,13 +11,6 @@ import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
 import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWordBoard";
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
 import { RearrangeLettersBoard } from "./phases/rearrangeLetters/RearrangeLettersBoard";
-
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
-
 
 const theme = createTheme();
 
