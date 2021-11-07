@@ -8,7 +8,7 @@ import { LETTER_SVG } from "./letters";
 
 export const CARD_WIDTH = 68;
 export const CARD_HEIGHT = 120;
-export const CARD_BORDER_WIDTH = 2;
+export const CARD_BORDER_WIDTH = 3;
 export const CARD_MARGIN_RIGHT = 8;
 
 interface PaperProps {
