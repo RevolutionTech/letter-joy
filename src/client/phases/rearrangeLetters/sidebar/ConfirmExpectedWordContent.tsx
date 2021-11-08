@@ -3,7 +3,7 @@ import _ from "lodash";
 import { styled, TextField } from "@mui/material";
 
 import { Button } from "../../../panels/Button";
-import { Footer } from "../../../panels/Footer";
+import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
 
 const StyledTextField = styled(TextField)({
   width: "100%",
@@ -24,13 +24,13 @@ export const ConfirmExpectedWordContent = (props: Props) => {
   const [expectedWord, setExpectedWord] = useState<string>("");
 
   return (
-    <Footer
+    <SidebarContent
+      header="Submit Word"
       buttons={[
         <Button
           key="confirm"
           variant="contained"
           color="primary"
-          size="large"
           disabled={expectedWord.length !== numSortedCards}
           onClick={() => onConfirmExpectedWord(expectedWord)}
         >
@@ -39,7 +39,6 @@ export const ConfirmExpectedWordContent = (props: Props) => {
         <Button
           key="cancel"
           variant="outlined"
-          size="large"
           onClick={() => {
             setExpectedWord("");
             onCancelExpectedWord();
@@ -50,7 +49,7 @@ export const ConfirmExpectedWordContent = (props: Props) => {
       ]}
     >
       <div>
-        <div style={{ fontSize: "36pt" }}>
+        <div style={{ fontSize: "16pt" }}>
           What do you believe you&apos;ve spelled?
         </div>
         <StyledTextField
@@ -61,6 +60,6 @@ export const ConfirmExpectedWordContent = (props: Props) => {
           onChange={(event) => setExpectedWord(_.toUpper(event.target.value))}
         />
       </div>
-    </Footer>
+    </SidebarContent>
   );
 };

@@ -23,7 +23,11 @@ export const Sidebar = (props: React.PropsWithChildren<Props>) => (
     {props.children}
     {props.g.previousClues.length > 0 && (
       <>
-        <div style={{ fontSize: "18pt" }}>Previous Clues</div>
+        <div
+          style={{ fontSize: "18pt", marginTop: props.children ? "16px" : 0 }}
+        >
+          Previous Clues
+        </div>
         <SidebarList>
           {props.g.previousClues.map((previousClue, i) => (
             <li key={i}>

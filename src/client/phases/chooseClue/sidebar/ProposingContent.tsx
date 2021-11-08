@@ -15,12 +15,8 @@ interface Props {
 }
 
 export const ProposingContent = (props: Props) => {
-  const {
-    g,
-    clueProposingPlacement,
-    onConfirmProposing,
-    onCancelProposing,
-  } = props;
+  const { g, clueProposingPlacement, onConfirmProposing, onCancelProposing } =
+    props;
   return (
     <SidebarContent
       header="Proposing clue"
@@ -34,12 +30,7 @@ export const ProposingContent = (props: Props) => {
         >
           Confirm
         </Button>,
-        <Button
-          key="cancel"
-          variant="outlined"
-          style={{ marginTop: "8px" }}
-          onClick={onCancelProposing}
-        >
+        <Button key="cancel" variant="outlined" onClick={onCancelProposing}>
           Cancel
         </Button>,
       ]}

@@ -1,6 +1,5 @@
 import { displayWord } from "../../../../game/word";
 import { Button } from "../../../panels/Button";
-import { Footer } from "../../../panels/Footer";
 
 interface Props {
   spelledWord: string;
@@ -10,33 +9,32 @@ interface Props {
 export const ConfirmUnexpectedWordContent = (props: Props) => {
   const { spelledWord, onConfirmUnexpectedWord } = props;
   return (
-    <Footer
-      buttons={[
+    <div>
+      <div style={{ fontSize: "16pt" }}>
+        Actually&#8230; it turns out you spelled:
+      </div>
+      <div style={{ fontSize: "48pt" }}>{displayWord(spelledWord)}</div>
+      <div style={{ fontSize: "16pt" }}>Is this a word?</div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-evenly",
+          margin: "8px",
+        }}
+      >
         <Button
-          key="yes"
           variant="outlined"
-          size="large"
           onClick={() => onConfirmUnexpectedWord(true)}
         >
           Yes, it is!
-        </Button>,
+        </Button>
         <Button
-          key="no"
           variant="outlined"
-          size="large"
           onClick={() => onConfirmUnexpectedWord(false)}
         >
           Nah, I messed up.
-        </Button>,
-      ]}
-    >
-      <div>
-        <div style={{ fontSize: "24pt" }}>
-          Actually&#8230; it turns out you spelled:
-        </div>
-        <div style={{ fontSize: "36pt" }}>{displayWord(spelledWord)}</div>
-        <div style={{ fontSize: "24pt" }}>Is this a word?</div>
+        </Button>
       </div>
-    </Footer>
+    </div>
   );
 };

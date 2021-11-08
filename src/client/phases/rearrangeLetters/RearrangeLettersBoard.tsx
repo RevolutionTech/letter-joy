@@ -29,6 +29,7 @@ export const RearrangeLettersBoard = (props: BoardProps) => {
       g={g}
       currentPlayer={currentPlayer}
       stage={stage}
+      onUpdateNote={props.moves.updateNote}
       onConfirmExpectedWord={props.moves.rearrangeLetters}
       onConfirmUnexpectedWord={props.moves.confirmUnexpectedWord}
     />

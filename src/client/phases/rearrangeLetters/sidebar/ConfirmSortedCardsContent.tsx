@@ -1,6 +1,6 @@
 import { LETTERS_PER_PLAYER } from "../../../../game/constants";
 import { Button } from "../../../panels/Button";
-import { Footer } from "../../../panels/Footer";
+import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
 
 interface Props {
   numSortedCards: number;
@@ -11,13 +11,13 @@ interface Props {
 export const ConfirmSortedCardsContent = (props: Props) => {
   const { numSortedCards, onConfirmSortedCards, onResetSortedCards } = props;
   return (
-    <Footer
+    <SidebarContent
+      header="Rearrange Letters"
       buttons={[
         <Button
           key="confirm"
           variant="contained"
           color="primary"
-          size="large"
           disabled={numSortedCards < LETTERS_PER_PLAYER}
           onClick={onConfirmSortedCards}
         >
@@ -26,7 +26,6 @@ export const ConfirmSortedCardsContent = (props: Props) => {
         <Button
           key="reset"
           variant="outlined"
-          size="large"
           disabled={numSortedCards === 0}
           onClick={onResetSortedCards}
         >
@@ -34,14 +33,10 @@ export const ConfirmSortedCardsContent = (props: Props) => {
         </Button>,
       ]}
     >
-      <div>
-        <div style={{ fontSize: "36pt" }}>
-          Rearrange your letters to spell a word.
-        </div>
-        <div style={{ fontSize: "24pt" }}>
-          You may use bonus letters too, but then no one else can.
-        </div>
+      <div style={{ fontSize: "16pt" }}>
+        Rearrange your letters to spell a word. You may use bonus letters too,
+        but then no one else can.
       </div>
-    </Footer>
+    </SidebarContent>
   );
 };

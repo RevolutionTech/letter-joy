@@ -2,12 +2,13 @@ import { useMemo, useState, useCallback } from "react";
 import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { Spelling, PlayerViewG } from "../../../game/types";
+import { Letter, Spelling, PlayerViewG } from "../../../game/types";
 import { DisplayCell, DisplayStatus } from "../../display/DisplayCell";
+import { LetterNotes } from "../../panels/LetterNotes";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { getDraggableId } from "./draggableId";
-import { RearrangeLettersFooter } from "./footer/RearrangeLettersFooter";
+import { RearrangeLettersSidebar } from "./sidebar/RearrangeLettersSidebar";
 import {
   SORTED_WORD_DROPPABLE_ID,
   SortedWordDroppable,
@@ -18,6 +19,11 @@ interface Props {
   g: PlayerViewG;
   currentPlayer: string;
   stage: "rearrangeLettersMain" | "unexpectedWord";
+  onUpdateNote: (
+    letterIndex: number,
+    letter: Letter,
+    isCandidate: boolean
+  ) => void;
   onConfirmExpectedWord: (spelling: Spelling, expectedWord: string) => void;
   onConfirmUnexpectedWord: (isWord: boolean) => void;
 }
@@ -27,6 +33,7 @@ export const RearrangeLettersContent = (props: Props) => {
     g,
     currentPlayer,
     stage,
+    onUpdateNote,
     onConfirmExpectedWord,
     onConfirmUnexpectedWord,
   } = props;
@@ -90,22 +97,24 @@ export const RearrangeLettersContent = (props: Props) => {
 
   return (
     <PanelLayout
-      sidebar={<Sidebar g={g} />}
-      footer={
-        <RearrangeLettersFooter
-          stage={stage}
-          numSortedCards={sortedCards.length}
-          isRearrangingLetters={isRearrangingLetters}
-          spelledWord={g.players[+currentPlayer].playerOutcome?.spelledWord}
-          onConfirmSortedCards={() => setIsRearrangingLetters(false)}
-          onResetSortedCards={() => setSortedCards([])}
-          onConfirmExpectedWord={(expectedWord) =>
-            onConfirmExpectedWord(sortedCards, expectedWord)
-          }
-          onCancelExpectedWord={() => setIsRearrangingLetters(true)}
-          onConfirmUnexpectedWord={onConfirmUnexpectedWord}
-        />
+      sidebar={
+        <Sidebar g={g}>
+          <RearrangeLettersSidebar
+            stage={stage}
+            numSortedCards={sortedCards.length}
+            isRearrangingLetters={isRearrangingLetters}
+            spelledWord={g.players[+currentPlayer].playerOutcome?.spelledWord}
+            onConfirmSortedCards={() => setIsRearrangingLetters(false)}
+            onResetSortedCards={() => setSortedCards([])}
+            onConfirmExpectedWord={(expectedWord) =>
+              onConfirmExpectedWord(sortedCards, expectedWord)
+            }
+            onCancelExpectedWord={() => setIsRearrangingLetters(true)}
+            onConfirmUnexpectedWord={onConfirmUnexpectedWord}
+          />
+        </Sidebar>
       }
+      footer={<LetterNotes notes={g.letterNotes} onUpdateNote={onUpdateNote} />}
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <div style={{ display: "flex", flexDirection: "column" }}>

@@ -80,7 +80,7 @@ export const VotingContent = (props: Props) => {
             ]
       }
     >
-      <FormControl component="fieldset" style={{ marginBottom: "16px" }}>
+      <FormControl component="fieldset">
         <RadioGroup
           aria-label="Vote on proposed clues"
           name="proposed-clues"

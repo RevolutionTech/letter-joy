@@ -15,7 +15,7 @@ interface Props {
   onConfirmUnexpectedWord: (isWord: boolean) => void;
 }
 
-export const RearrangeLettersFooter = (props: Props) => {
+export const RearrangeLettersSidebar = (props: Props) => {
   const {
     stage,
     numSortedCards,
