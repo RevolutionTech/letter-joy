@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 
+import { getOrdinalSuffix } from "../../../game/utils";
 import { Button } from "../../panels/Button";
 
 const AdvanceDecisionButtons = styled("div")({
@@ -17,22 +18,6 @@ const AdvanceDecisionButtonHelpText = styled("div")({
   marginTop: "8px",
   marginBottom: "8px",
 });
-
-// https://stackoverflow.com/a/13627586/3241924
-const getOrdinalSuffix = (i: number): string => {
-  const j = i % 10;
-  const k = i % 100;
-  if (j === 1 && k !== 11) {
-    return i + "st";
-  }
-  if (j === 2 && k !== 12) {
-    return i + "nd";
-  }
-  if (j === 3 && k !== 13) {
-    return i + "rd";
-  }
-  return i + "th";
-};
 
 interface Props {
   activeLetterIndex: number;

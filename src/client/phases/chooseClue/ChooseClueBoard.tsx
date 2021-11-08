@@ -4,6 +4,7 @@ import { BoardProps } from "boardgame.io/react";
 import { PlayerViewG } from "../../../game/types";
 import { useSpelling } from "../../cards/spelling";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
+import { LetterNotes } from "../../panels/LetterNotes";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { ProposingContent } from "./sidebar/ProposingContent";
@@ -50,6 +51,12 @@ export const ChooseClueBoard = (props: BoardProps) => {
             />
           )}
         </Sidebar>
+      }
+      footer={
+        <LetterNotes
+          notes={g.letterNotes}
+          onUpdateNote={props.moves.updateNote}
+        />
       }
     >
       <ActiveTableDisplay

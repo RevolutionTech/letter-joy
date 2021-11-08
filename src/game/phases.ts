@@ -7,6 +7,7 @@ import { MAX_NUM_PLAYERS } from "./constants";
 import { consumeHint } from "./hints";
 import {
   chooseSecretWord,
+  updateNote,
   proposeClue,
   resetSupport,
   supportClue,
@@ -49,6 +50,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       stages: {
         chooseClueMain: {
           moves: {
+            updateNote: { move: updateNote, client: false },
             proposeClue,
             resetSupport,
             supportClue,
@@ -85,10 +87,13 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       activePlayers: { all: "deciding" },
       stages: {
         deciding: {
-          moves: { advanceLetter },
+          moves: {
+            updateNote: { move: updateNote, client: false },
+            advanceLetter,
+          },
           next: "waiting",
         },
-        waiting: {},
+        waiting: { moves: { updateNote: { move: updateNote, client: false } } },
       },
     },
     onEnd: (g) => {
@@ -109,7 +114,6 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
     next: Phase.CHOOSE_CLUE,
   },
   [Phase.REARRANGE_LETTERS]: {
-    moves: { rearrangeLetters },
     turn: {
       order: TurnOrder.RESET,
       activePlayers: {
@@ -117,9 +121,20 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         others: { stage: "scoring" },
       },
       stages: {
-        rearrangeLettersMain: { moves: { rearrangeLetters } },
-        unexpectedWord: { moves: { confirmUnexpectedWord }, next: "scoring" },
-        scoring: {},
+        rearrangeLettersMain: {
+          moves: {
+            updateNote: { move: updateNote, client: false },
+            rearrangeLetters,
+          },
+        },
+        unexpectedWord: {
+          moves: {
+            updateNote: { move: updateNote, client: false },
+            confirmUnexpectedWord,
+          },
+          next: "scoring",
+        },
+        scoring: { moves: { updateNote: { move: updateNote, client: false } } },
       },
     },
   },

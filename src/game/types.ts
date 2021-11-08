@@ -44,12 +44,16 @@ export interface PlayerState {
   letters: Letter[];
   activeLetterIndex: number;
   nextLetterIndex: number;
+  letterNotes: Record<Letter, boolean>[];
   hintsUsed: number;
   playerOutcome?: PlayerOutcome;
 }
 
 export interface PlayerViewPlayerState
-  extends Omit<PlayerState, "wordConstructionLetters" | "letters"> {
+  extends Omit<
+    PlayerState,
+    "wordConstructionLetters" | "letters" | "letterNotes"
+  > {
   letters: (Letter | null)[];
 }
 
@@ -92,5 +96,6 @@ export interface G {
 export interface PlayerViewG extends Omit<G, "players" | "proposedClues"> {
   wordConstructionLetters: Record<Letter, number>;
   players: Record<number, PlayerViewPlayerState>;
+  letterNotes: Record<Letter, boolean>[];
   proposedClues: PlayerViewProposedClue[];
 }

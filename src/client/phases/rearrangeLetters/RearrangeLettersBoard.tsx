@@ -22,6 +22,7 @@ export const RearrangeLettersBoard = (props: BoardProps) => {
       playerNames={props.matchData}
       currentPlayer={currentPlayer}
       activePlayers={activePlayers}
+      onUpdateNote={props.moves.updateNote}
     />
   ) : (
     <RearrangeLettersContent

@@ -60,6 +60,24 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   return;
 };
 
+export const updateNote = (
+  g: G,
+  ctx: Ctx,
+  letterIndex: number,
+  letter: Letter,
+  isCandidate: boolean
+) => {
+  // A player must be active to update a note
+  const activePlayer = ctx.playerID;
+  if (activePlayer == null) {
+    return INVALID_MOVE;
+  }
+
+  // Update the note
+  g.players[+activePlayer].letterNotes[letterIndex][letter] = isCandidate;
+  return;
+};
+
 export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   // A player must be active and must have a hint available to propose the clue
   if (ctx.playerID == null || !playerHasHintAvailable(g, ctx.playerID)) {

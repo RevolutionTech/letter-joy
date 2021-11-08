@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Game } from "boardgame.io";
 
 import {
+  LETTERS_PER_PLAYER,
   MAX_NUM_PLAYERS,
   NUM_HINTS_LOCKED,
   NUM_HINTS_STARTING_AVAILABLE,
@@ -26,6 +27,9 @@ export const LetterJoy: Game<G> = {
       letters: [],
       activeLetterIndex: 0,
       nextLetterIndex: 0,
+      letterNotes: _.range(LETTERS_PER_PLAYER).map(() =>
+        _.mapValues(LETTER_DISTRIBUTION, (quantity) => quantity > 0)
+      ),
       hintsUsed: 0,
     }));
 

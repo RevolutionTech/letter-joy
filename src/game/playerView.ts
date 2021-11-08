@@ -56,6 +56,7 @@ export const playerView = (
       }),
       {}
     ),
+    letterNotes: playerID == null ? [] : g.players[+playerID].letterNotes,
     proposedClues: proposedClues.map((proposedClue) => {
       const { authorID, spelling, summary, votes } = proposedClue;
       const maybeSpelling = authorID === playerID ? { spelling } : {};
