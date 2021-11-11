@@ -21,6 +21,7 @@ export const PlayerDisplay = (props: Props) => {
     letters,
     activeLetterIndex,
     hintsUsed,
+    playerOutcome,
     playerName,
     teamHintsAvailable,
     containsTokens,
@@ -39,7 +40,7 @@ export const PlayerDisplay = (props: Props) => {
       </DisplayStatus>
       <HandOfCards>
         {letters.map((letter, i) => {
-          const active = i === activeLetterIndex;
+          const active = playerOutcome != null || i === activeLetterIndex;
           const letterDisplayed = active ? letter : null;
           return (
             <PresentedCard
