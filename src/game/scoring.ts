@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { LETTERS_PER_PLAYER, MAX_NUM_PLAYERS } from "./constants";
+import { LETTERS_PER_PLAYER } from "./constants";
 import { PlayerOutcome } from "./types";
 import { numLettersEqual } from "./word";
 
@@ -35,8 +35,8 @@ export const totalScore = (
     )
   );
 
-export const totalStars = (score: number): number =>
+export const totalStars = (score: number, numPlayers: number): number =>
   _.min([
-    _.floor(score / (POINTS_PER_PLAYER_PER_STAR * MAX_NUM_PLAYERS)),
+    _.floor(score / (POINTS_PER_PLAYER_PER_STAR * numPlayers)),
     MAX_NUM_STARS,
   ]) ?? 0;

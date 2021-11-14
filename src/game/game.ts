@@ -3,7 +3,6 @@ import { Game } from "boardgame.io";
 
 import {
   LETTERS_PER_PLAYER,
-  MAX_NUM_PLAYERS,
   NUM_HINTS_LOCKED,
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
@@ -19,7 +18,7 @@ export const LetterJoy: Game<G> = {
   setup: (ctx) => {
     const unshuffledDeck = createDeck(LETTER_DISTRIBUTION);
     const deck = shuffleCards(ctx, unshuffledDeck);
-    const deckCuts = dealCards(deck, MAX_NUM_PLAYERS);
+    const deckCuts = dealCards(deck, ctx.numPlayers);
 
     const playerStates = deckCuts.map((startingLetters, i) => ({
       playerID: i.toString(),
@@ -55,6 +54,6 @@ export const LetterJoy: Game<G> = {
   phases: PHASES,
   playerView,
 
-  minPlayers: MAX_NUM_PLAYERS,
-  maxPlayers: MAX_NUM_PLAYERS,
+  minPlayers: 6,
+  maxPlayers: 6,
 };

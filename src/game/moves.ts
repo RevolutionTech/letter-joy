@@ -20,7 +20,7 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
 
   // Update the letters of the player to the left using the secret word
   // that the active player generated
-  const leftPlayerID = getLeftPlayerID(+activePlayer);
+  const leftPlayerID = getLeftPlayerID(ctx.numPlayers, +activePlayer);
   g.players[leftPlayerID] = {
     ...g.players[leftPlayerID],
     letters: ctx.random!.Shuffle(secretWord),

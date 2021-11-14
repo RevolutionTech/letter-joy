@@ -3,7 +3,6 @@ import { PhaseConfig } from "boardgame.io";
 import { TurnOrder } from "boardgame.io/core";
 
 import { createPreviousClue } from "./clue";
-import { MAX_NUM_PLAYERS } from "./constants";
 import { consumeHint } from "./hints";
 import {
   chooseSecretWord,
@@ -59,10 +58,10 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         },
       },
     },
-    onEnd: (g) => {
+    onEnd: (g, ctx) => {
       const acceptedClue = _.find(
         g.proposedClues,
-        (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
+        (proposedClue) => proposedClue.votes.length === ctx.numPlayers
       );
       if (acceptedClue != null) {
         const activeClue = _.omit(acceptedClue, "votes");
@@ -71,14 +70,14 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       }
       g.proposedClues = [];
     },
-    endIf: (g) =>
-      g.endGameVotes.length === MAX_NUM_PLAYERS ||
+    endIf: (g, ctx) =>
+      g.endGameVotes.length === ctx.numPlayers ||
       _.some(
         g.proposedClues,
-        (proposedClue) => proposedClue.votes.length === MAX_NUM_PLAYERS
+        (proposedClue) => proposedClue.votes.length === ctx.numPlayers
       ),
-    next: (g) =>
-      g.endGameVotes.length === MAX_NUM_PLAYERS
+    next: (g, ctx) =>
+      g.endGameVotes.length === ctx.numPlayers
         ? Phase.REARRANGE_LETTERS
         : Phase.ACTIVE_CLUE,
   },

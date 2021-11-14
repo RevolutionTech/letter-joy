@@ -6,10 +6,11 @@ import starUnfilled from "../../assets/starUnfilled.svg";
 
 interface Props {
   score: number;
+  numPlayers: number;
 }
 
 export const StarRating = (props: Props) => {
-  const numStars = totalStars(props.score);
+  const numStars = totalStars(props.score, props.numPlayers);
   const numStarsText = `${numStars}/${MAX_NUM_STARS} stars`;
 
   return (

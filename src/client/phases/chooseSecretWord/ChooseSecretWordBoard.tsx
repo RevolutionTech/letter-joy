@@ -18,7 +18,7 @@ export const ChooseSecretWordBoard = (props: BoardProps) => {
   const playersActing = useMemo(() => getPlayersActing(props.ctx), [props.ctx]);
 
   if (currentPlayer != null && playersActing.includes(currentPlayer)) {
-    const leftPlayerID = getLeftPlayerID(+currentPlayer);
+    const leftPlayerID = getLeftPlayerID(props.ctx.numPlayers, +currentPlayer);
     const leftPlayerName = playerNameDisplay(playerNames, leftPlayerID);
     return (
       <ChooseSecretWordContent

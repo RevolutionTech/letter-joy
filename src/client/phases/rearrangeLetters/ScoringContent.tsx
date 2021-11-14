@@ -30,9 +30,8 @@ interface Props {
 export const ScoringContent = (props: Props) => {
   const { g, playerNames, currentPlayer, activePlayers, onUpdateNote } = props;
   const teamHintsAvailable = g.teamHints.available;
-  const finishedPlayers = Object.values(g.players).filter(
-    (player) => player.playerOutcome
-  );
+  const playerStates = Object.values(g.players);
+  const finishedPlayers = playerStates.filter((player) => player.playerOutcome);
   const teamScore = totalScore(
     finishedPlayers.map((player) => player.playerOutcome!),
     teamHintsAvailable
@@ -71,7 +70,7 @@ export const ScoringContent = (props: Props) => {
           <p>
             <EmphasisBody>{teamScore} points</EmphasisBody>
           </p>
-          <StarRating score={teamScore} />
+          <StarRating score={teamScore} numPlayers={playerStates.length} />
         </Sidebar>
       }
       footer={<LetterNotes notes={g.letterNotes} onUpdateNote={onUpdateNote} />}

@@ -32,9 +32,12 @@ interface Props {
 export const ActiveTableDisplay = (props: Props) => {
   const { g, playerNames, currentPlayer, spelling, onAddToSpelling } = props;
 
+  const playerStates = Object.values(g.players);
   const rightPlayerID =
-    currentPlayer == null ? 0 : getRightPlayerID(+currentPlayer);
-  const orderedPlayers = cycleArray(Object.values(g.players), rightPlayerID);
+    currentPlayer == null
+      ? 0
+      : getRightPlayerID(playerStates.length, +currentPlayer);
+  const orderedPlayers = cycleArray(playerStates, rightPlayerID);
   const playerDisplays = orderedPlayers.map((playerState) => {
     const playerID = playerState.playerID;
     return (
