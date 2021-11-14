@@ -2,10 +2,14 @@ import { useState } from "react";
 import _ from "lodash";
 import { styled, ToggleButton, Tabs, Tab, Box } from "@mui/material";
 
+import theme from "../theme";
 import { Letter } from "../../game/types";
 import { getOrdinalSuffix } from "../../game/utils";
 
-const LetterNotesFooter = styled("div")({ padding: "24px" });
+const LetterNotesFooter = styled("div")({
+  padding: "24px",
+  backgroundColor: theme.white,
+});
 const LetterNotesTabs = styled(Box)({
   display: "flex",
   borderBottom: 1,
