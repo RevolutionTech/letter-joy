@@ -8,7 +8,7 @@ import { createDeck, shuffleCards, dealCards } from "./deck";
 import { playerHasHintAvailable } from "./hints";
 import { ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
-import { Letter, Spelling, G } from "./types";
+import { Letter, OwnerType, Spelling, G } from "./types";
 import { isWordEqual } from "./word";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
@@ -202,15 +202,15 @@ export const rearrangeLetters = (
   const spelledWord = spelling
     .map(
       (cardLocation) =>
-        (cardLocation.ownerID === "TEAM" ? g.teamLetters : playerState.letters)[
-          cardLocation.letterIndex
-        ]
+        (cardLocation.owner.ownerType === OwnerType.TEAM
+          ? g.teamLetters
+          : playerState.letters)[cardLocation.letterIndex]
     )
     .join("");
 
   // Assign the player outcome
   const teamLettersUsed = spelling
-    .filter((cardLocation) => cardLocation.ownerID === "TEAM")
+    .filter((cardLocation) => cardLocation.owner.ownerType === OwnerType.TEAM)
     .map((cardLocation) => cardLocation.letterIndex);
   const isSpelledWordExpected = isWordEqual(expectedWord, spelledWord);
   g.players[+ctx.currentPlayer] = {

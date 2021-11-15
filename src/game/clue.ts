@@ -1,18 +1,21 @@
 import _ from "lodash";
 
-import { Letter, Spelling, Clue } from "./types";
+import { Letter, OwnerType, Spelling, Clue } from "./types";
 
 export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
   const usesWild = _.some(
     placement,
     (cardLocation) =>
-      cardLocation.ownerID === "TEAM" &&
+      cardLocation.owner.ownerType === OwnerType.TEAM &&
       teamLetters[cardLocation.letterIndex] === Letter.WILD
+  );
+  const playerLocations = placement.filter(
+    (card) => card.owner.ownerType === OwnerType.PLAYER
   );
   return {
     numLetters: placement.length,
     usesWild,
-    numPlayers: Object.keys(_.groupBy(placement, "ownerID")).length - +usesWild,
+    numPlayers: Object.keys(_.groupBy(playerLocations, "playerID")).length,
   };
 };
 
@@ -22,6 +25,8 @@ export const createPreviousClue = (
 ) => ({
   ...activeClue,
   spelling: activeClue.spelling.map((card) =>
-    card.ownerID === "TEAM" ? teamLetters[card.letterIndex] : card
+    card.owner.ownerType === OwnerType.TEAM
+      ? teamLetters[card.letterIndex]
+      : card
   ),
 });

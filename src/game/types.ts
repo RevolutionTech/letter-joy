@@ -23,13 +23,10 @@ export enum Letter {
   WILD = "＊", // full-width asterisk (U+FF0A)
 }
 
-export interface TeamHints {
-  available: number;
-  locked: number;
+export enum OwnerType {
+  TEAM,
+  PLAYER,
 }
-
-export type CardLocation = { ownerID: string; letterIndex: number };
-export type Spelling = CardLocation[];
 
 export interface PlayerOutcome {
   spelledWord: string;
@@ -56,6 +53,17 @@ export interface PlayerViewPlayerState
   > {
   letters: (Letter | null)[];
 }
+
+export interface TeamHints {
+  available: number;
+  locked: number;
+}
+
+export type CardOwner =
+  | { ownerType: OwnerType.TEAM }
+  | { ownerType: OwnerType.PLAYER; playerID: string };
+export type CardLocation = { owner: CardOwner; letterIndex: number };
+export type Spelling = CardLocation[];
 
 export interface Clue {
   authorID: string;

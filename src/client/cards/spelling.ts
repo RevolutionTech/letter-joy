@@ -1,28 +1,28 @@
 import { useState, useCallback } from "react";
 import _ from "lodash";
 
-import { CardLocation, Spelling, PlayerViewG } from "../../game/types";
+import { OwnerType, CardOwner, Spelling, PlayerViewG } from "../../game/types";
 
 export const getCardLocationsAssignedToOwner = (
   spelling: Spelling,
-  ownerID: string
+  owner: CardOwner
 ) =>
   _.range(spelling.length)
-    .filter((i) => spelling[i].ownerID === ownerID)
+    .filter((i) => _.isEqual(spelling[i].owner, owner))
     .map((i) => i + 1);
 
 export const useSpelling = (g: PlayerViewG) => {
   const [spelling, setSpelling] = useState<Spelling>([]);
 
   const addCardLocation = useCallback(
-    (ownerID: string) =>
+    (owner: CardOwner) =>
       setSpelling((cardLocations) => {
         // TODO: Add support for multiple team letters
-        const cardLocation: CardLocation =
-          ownerID === "TEAM"
-            ? { ownerID, letterIndex: 0 }
-            : { ownerID, letterIndex: g.players[+ownerID].activeLetterIndex };
-        return [...cardLocations, cardLocation];
+        const letterIndex =
+          owner.ownerType === OwnerType.TEAM
+            ? 0
+            : g.players[+owner.playerID].activeLetterIndex;
+        return [...cardLocations, { owner, letterIndex }];
       }),
     [g.players]
   );

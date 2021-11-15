@@ -2,7 +2,13 @@ import { useMemo, useState, useCallback } from "react";
 import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
-import { Letter, Spelling, PlayerViewG } from "../../../game/types";
+import {
+  Letter,
+  OwnerType,
+  CardLocation,
+  Spelling,
+  PlayerViewG,
+} from "../../../game/types";
 import { DisplayCell, DisplayStatus } from "../../display/DisplayCell";
 import { LetterNotes } from "../../panels/LetterNotes";
 import { PanelLayout } from "../../panels/PanelLayout";
@@ -39,18 +45,21 @@ export const RearrangeLettersContent = (props: Props) => {
   } = props;
 
   const initialPlayerLetters = g.players[+currentPlayer].letters;
-  const initialPlayerCardLocations = useMemo(
+  const initialPlayerCardLocations: CardLocation[] = useMemo(
     () =>
       initialPlayerLetters.map((_, i) => ({
-        ownerID: currentPlayer,
+        owner: {
+          ownerType: OwnerType.PLAYER,
+          playerID: currentPlayer,
+        },
         letterIndex: i,
       })),
     [currentPlayer, initialPlayerLetters]
   );
-  const initialTeamCardLocations = useMemo(
+  const initialTeamCardLocations: CardLocation[] = useMemo(
     () =>
       g.teamLetters.map((_, i) => ({
-        ownerID: "TEAM",
+        owner: { ownerType: OwnerType.TEAM },
         letterIndex: i,
       })),
     [g.teamLetters]

@@ -31,7 +31,7 @@ export const UnsortedCards = (props: Props) => {
           isPlaceholder={_.some(
             sortedCards,
             (c) =>
-              c.ownerID === cardLocation.ownerID &&
+              _.isEqual(c.owner, cardLocation.owner) &&
               c.letterIndex === cardLocation.letterIndex
           )}
         />

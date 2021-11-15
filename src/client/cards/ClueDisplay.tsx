@@ -1,6 +1,6 @@
 import { Textfit } from "react-textfit";
 
-import { Letter, CardLocation, PlayerViewG } from "../../game/types";
+import { Letter, OwnerType, CardLocation, PlayerViewG } from "../../game/types";
 
 interface Props {
   g: PlayerViewG;
@@ -12,14 +12,15 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
     return <>{card}</>;
   }
 
-  const { ownerID, letterIndex } = card;
   const letters =
-    ownerID === "TEAM" ? g.teamLetters : g.players[+ownerID].letters;
+    card.owner.ownerType === OwnerType.TEAM
+      ? g.teamLetters
+      : g.players[+card.owner.playerID].letters;
   const letter = (
     <>
-      {letters[letterIndex] ?? (
+      {letters[card.letterIndex] ?? (
         <>
-          ?<sub>{letterIndex + 1}</sub>
+          ?<sub>{card.letterIndex + 1}</sub>
         </>
       )}
     </>

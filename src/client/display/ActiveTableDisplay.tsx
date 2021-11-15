@@ -2,7 +2,7 @@ import { styled } from "@mui/material";
 
 import { LETTERS_PER_PLAYER } from "../../game/constants";
 import { getRightPlayerID } from "../../game/players";
-import { Spelling, PlayerViewG } from "../../game/types";
+import { OwnerType, CardOwner, Spelling, PlayerViewG } from "../../game/types";
 import { cycleArray } from "../../game/utils";
 import {
   CARD_WIDTH,
@@ -26,7 +26,7 @@ interface Props {
   playerNames: MaybePlayerNames;
   currentPlayer: string | null;
   spelling?: Spelling;
-  onAddToSpelling?: (ownerID: string) => void;
+  onAddToSpelling?: (owner: CardOwner) => void;
 }
 
 export const ActiveTableDisplay = (props: Props) => {
@@ -47,9 +47,16 @@ export const ActiveTableDisplay = (props: Props) => {
         playerName={playerNameDisplay(playerNames, +playerID)}
         teamHintsAvailable={g.teamHints.available}
         containsTokens={
-          spelling && getCardLocationsAssignedToOwner(spelling, playerID)
+          spelling &&
+          getCardLocationsAssignedToOwner(spelling, {
+            ownerType: OwnerType.PLAYER,
+            playerID,
+          })
         }
-        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(playerID))}
+        onAddToSpelling={
+          onAddToSpelling &&
+          (() => onAddToSpelling({ ownerType: OwnerType.PLAYER, playerID }))
+        }
       />
     );
   });
@@ -60,9 +67,15 @@ export const ActiveTableDisplay = (props: Props) => {
         teamLetters={g.teamLetters}
         teamHints={g.teamHints}
         containsTokens={
-          spelling && getCardLocationsAssignedToOwner(spelling, "TEAM")
+          spelling &&
+          getCardLocationsAssignedToOwner(spelling, {
+            ownerType: OwnerType.TEAM,
+          })
         }
-        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling("TEAM"))}
+        onAddToSpelling={
+          onAddToSpelling &&
+          (() => onAddToSpelling({ ownerType: OwnerType.TEAM }))
+        }
       />
       {playerDisplays}
     </PlayerDisplayGrid>

@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 import { Droppable } from "react-beautiful-dnd";
 
-import { Letter, CardLocation } from "../../../game/types";
+import { Letter, OwnerType, CardLocation } from "../../../game/types";
 import {
   CARD_WIDTH,
   CARD_BORDER_WIDTH,
@@ -26,7 +26,7 @@ export const SingleDroppableCard = (props: Props) => {
   const { isDragDisabled, teamLetters, cardLocation, isPlaceholder } = props;
   const draggableId = getDraggableId(cardLocation);
   const letter =
-    cardLocation.ownerID === "TEAM"
+    cardLocation.owner.ownerType === OwnerType.TEAM
       ? teamLetters[cardLocation.letterIndex]
       : null;
 
