@@ -1,7 +1,5 @@
 import { styled } from "@mui/material";
-import FontDownloadIcon from "@mui/icons-material/FontDownload";
-import GroupIcon from "@mui/icons-material/Group";
-import PersonIcon from "@mui/icons-material/Person";
+import { Chair, FontDownload, Group, Person } from "@mui/icons-material";
 
 import {
   Letter,
@@ -51,7 +49,7 @@ export const ProposedClueRadioButton = (props: Props) => {
   const { g, playerNames, proposedClue, value, disabled } = props;
   const { authorID, spelling, summary } = proposedClue;
   const authorName = playerNameDisplay(playerNames, +authorID);
-  const { numLetters, usesWild, numPlayers } = summary;
+  const { numLetters, usesWild, numNonPlayers, numPlayers } = summary;
 
   return (
     <ClueVoteOption
@@ -62,16 +60,22 @@ export const ProposedClueRadioButton = (props: Props) => {
     >
       <SidebarProposedClueSummary>
         <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
-          <FontDownloadIcon style={{ marginRight: "4px" }} />
+          <FontDownload style={{ marginRight: "4px" }} />
           <div>{numLetters}</div>
           {usesWild && <div>{Letter.WILD}</div>}
         </SidebarProposedClueSummaryDetail>
         <SidebarProposedClueSummaryDetail>
-          <GroupIcon style={{ marginRight: "4px" }} />
+          <Group style={{ marginRight: "4px" }} />
           <div>{numPlayers}</div>
         </SidebarProposedClueSummaryDetail>
+        {g.nonPlayers.length > 0 && (
+          <SidebarProposedClueSummaryDetail>
+            <Chair style={{ marginRight: "4px" }} />
+            <div>{numNonPlayers}</div>
+          </SidebarProposedClueSummaryDetail>
+        )}
         <SidebarProposedClueSummaryDetail>
-          <PersonIcon style={{ marginRight: "4px" }} />
+          <Person style={{ marginRight: "4px" }} />
           <div>{authorName}</div>
         </SidebarProposedClueSummaryDetail>
         {spelling && (
