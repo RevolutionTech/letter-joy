@@ -5,7 +5,6 @@ import { getPlayersActing } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ClueDisplay } from "../../cards/ClueDisplay";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
-import { LetterNotes } from "../../panels/LetterNotes";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { SidebarContent } from "../../panels/sidebar/SidebarContent";
@@ -46,12 +45,6 @@ export const ActiveClueBoard = (props: BoardProps) => {
             )}
           </SidebarContent>
         </Sidebar>
-      }
-      footer={
-        <LetterNotes
-          notes={g.letterNotes}
-          onUpdateNote={props.moves.updateNote}
-        />
       }
     >
       <ActiveTableDisplay

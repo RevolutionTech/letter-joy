@@ -2,19 +2,6 @@ import { styled } from "@mui/material";
 
 import theme from "../theme";
 
-const PanelWrapper = styled("div")({
-  position: "fixed",
-  width: "100%",
-  height: "100%",
-  overflow: "hidden",
-});
-
-const PanelContainer = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  height: "100%",
-});
-
 const TopPanels = styled("div")({
   display: "flex",
   flex: "1 1 0",
@@ -35,13 +22,11 @@ interface Props {
 }
 
 export const PanelLayout = (props: React.PropsWithChildren<Props>) => (
-  <PanelWrapper>
-    <PanelContainer>
-      <TopPanels>
-        <GameTable>{props.children}</GameTable>
-        {props.sidebar}
-      </TopPanels>
-      {props.footer}
-    </PanelContainer>
-  </PanelWrapper>
+  <>
+    <TopPanels>
+      <GameTable>{props.children}</GameTable>
+      {props.sidebar}
+    </TopPanels>
+    {props.footer}
+  </>
 );

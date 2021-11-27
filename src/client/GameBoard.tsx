@@ -1,4 +1,5 @@
 import { BoardProps } from "boardgame.io/react";
+import { styled } from "@mui/material";
 import {
   ThemeProvider,
   StyledEngineProvider,
@@ -7,10 +8,24 @@ import {
 
 import { Phase } from "../game/phases";
 import { assertNever } from "../game/utils";
+import { LetterNotes } from "./panels/LetterNotes";
 import { ChooseClueBoard } from "./phases/chooseClue/ChooseClueBoard";
 import { ChooseSecretWordBoard } from "./phases/chooseSecretWord/ChooseSecretWordBoard";
 import { ActiveClueBoard } from "./phases/activeClue/ActiveClueBoard";
 import { RearrangeLettersBoard } from "./phases/rearrangeLetters/RearrangeLettersBoard";
+
+const PanelWrapper = styled("div")({
+  position: "fixed",
+  width: "100%",
+  height: "100%",
+  overflow: "hidden",
+});
+
+const PanelContainer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+});
 
 const theme = createTheme();
 
@@ -36,7 +51,17 @@ export const GameBoard = (props: BoardProps) => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <Board {...props} />
+        <PanelWrapper>
+          <PanelContainer>
+            <Board {...props} />
+            {phase !== Phase.CHOOSE_SECRET_WORD && (
+              <LetterNotes
+                notes={props.G.letterNotes}
+                onUpdateNote={props.moves.updateNote}
+              />
+            )}
+          </PanelContainer>
+        </PanelWrapper>
       </ThemeProvider>
     </StyledEngineProvider>
   );

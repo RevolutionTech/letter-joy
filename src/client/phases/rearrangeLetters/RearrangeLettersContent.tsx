@@ -3,14 +3,12 @@ import _ from "lodash";
 import { DragDropContext } from "react-beautiful-dnd";
 
 import {
-  Letter,
   OwnerType,
   CardLocation,
   Spelling,
   PlayerViewG,
 } from "../../../game/types";
 import { DisplayCell, DisplayStatus } from "../../display/DisplayCell";
-import { LetterNotes } from "../../panels/LetterNotes";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { getDraggableId } from "./draggableId";
@@ -25,11 +23,6 @@ interface Props {
   g: PlayerViewG;
   currentPlayer: string;
   stage: "rearrangeLettersMain" | "unexpectedWord";
-  onUpdateNote: (
-    letterIndex: number,
-    letter: Letter,
-    isCandidate: boolean
-  ) => void;
   onConfirmExpectedWord: (spelling: Spelling, expectedWord: string) => void;
   onConfirmUnexpectedWord: (isWord: boolean) => void;
 }
@@ -39,7 +32,6 @@ export const RearrangeLettersContent = (props: Props) => {
     g,
     currentPlayer,
     stage,
-    onUpdateNote,
     onConfirmExpectedWord,
     onConfirmUnexpectedWord,
   } = props;
@@ -123,7 +115,6 @@ export const RearrangeLettersContent = (props: Props) => {
           />
         </Sidebar>
       }
-      footer={<LetterNotes notes={g.letterNotes} onUpdateNote={onUpdateNote} />}
     >
       <DragDropContext onDragEnd={onDragEnd}>
         <div style={{ display: "flex", flexDirection: "column" }}>
