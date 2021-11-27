@@ -10,6 +10,7 @@ import { PlayerHints } from "./PlayerHints";
 
 interface Props extends PlayerViewPlayerState {
   playerName: string;
+  numPlayers: number;
   teamHintsAvailable: number;
   containsTokens?: number[];
   onAddToSpelling?: () => void;
@@ -23,6 +24,7 @@ export const PlayerDisplay = (props: Props) => {
     hintsUsed,
     playerOutcome,
     playerName,
+    numPlayers,
     teamHintsAvailable,
     containsTokens,
     onAddToSpelling,
@@ -34,6 +36,7 @@ export const PlayerDisplay = (props: Props) => {
         <PlayerHints
           playerID={playerID}
           playerName={playerName}
+          numPlayers={numPlayers}
           hintsUsed={hintsUsed}
           teamHintsAvailable={teamHintsAvailable}
         />

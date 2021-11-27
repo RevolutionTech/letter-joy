@@ -2,7 +2,7 @@ import _ from "lodash";
 import { styled } from "@mui/material";
 
 import { Letter, Spelling } from "../../../game/types";
-import { CARD_HEIGHT, CARD_BORDER_WIDTH } from "../../cards/Card";
+import { CARD_HEIGHT, CARD_BORDER_WIDTH } from "../../cards/Paper";
 import { HandOfCards } from "../../display/DisplayCell";
 import { SingleDroppableCard } from "./SingleDroppableCard";
 

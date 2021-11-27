@@ -2,6 +2,22 @@ import { useState, useCallback } from "react";
 import _ from "lodash";
 
 import { OwnerType, CardOwner, Spelling, PlayerViewG } from "../../game/types";
+import { assertNever } from "../../game/utils";
+
+const getActiveLetterIndexForOwner = (g: PlayerViewG, owner: CardOwner) => {
+  const ownerType = owner.ownerType;
+  switch (ownerType) {
+    case OwnerType.TEAM:
+      // TODO: Add support for multiple team letters
+      return 0;
+    case OwnerType.NONPLAYER:
+      return g.nonPlayers[owner.nonPlayerIndex].activeLetterIndex;
+    case OwnerType.PLAYER:
+      return g.players[+owner.playerID].activeLetterIndex;
+    default:
+      return assertNever(ownerType);
+  }
+};
 
 export const getCardLocationsAssignedToOwner = (
   spelling: Spelling,
@@ -17,11 +33,7 @@ export const useSpelling = (g: PlayerViewG) => {
   const addCardLocation = useCallback(
     (owner: CardOwner) =>
       setSpelling((cardLocations) => {
-        // TODO: Add support for multiple team letters
-        const letterIndex =
-          owner.ownerType === OwnerType.TEAM
-            ? 0
-            : g.players[+owner.playerID].activeLetterIndex;
+        const letterIndex = getActiveLetterIndexForOwner(g, owner);
         return [...cardLocations, { owner, letterIndex }];
       }),
     [g.players]

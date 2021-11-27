@@ -4,7 +4,7 @@ import { INVALID_MOVE } from "boardgame.io/core";
 
 import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
-import { createDeck, shuffleCards, dealCards } from "./deck";
+import { createDeck, shuffleCards, dealCardsEvenly } from "./deck";
 import { playerHasHintAvailable } from "./hints";
 import { ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
@@ -37,7 +37,7 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
     -1
   );
   const unusedLetters = createDeck(unusedLetterCounts);
-  const deckCuts = dealCards(
+  const deckCuts = dealCardsEvenly(
     shuffleCards(ctx, unusedLetters),
     otherActivePlayers.length
   );

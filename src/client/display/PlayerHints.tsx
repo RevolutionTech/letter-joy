@@ -10,14 +10,16 @@ import { Hint } from "./hint";
 interface Props {
   playerID: string;
   playerName: string;
+  numPlayers: number;
   hintsUsed: number;
   teamHintsAvailable: number;
 }
 
 export const PlayerHints = (props: Props) => {
-  const { playerID, playerName, hintsUsed, teamHintsAvailable } = props;
+  const { playerID, playerName, numPlayers, hintsUsed, teamHintsAvailable } =
+    props;
   const hintsUnused =
-    _.max([NUM_HINTS_STARTING_PER_PLAYER - hintsUsed, 0]) ?? 0;
+    _.max([NUM_HINTS_STARTING_PER_PLAYER[numPlayers] - hintsUsed, 0]) ?? 0;
 
   return (
     <div>

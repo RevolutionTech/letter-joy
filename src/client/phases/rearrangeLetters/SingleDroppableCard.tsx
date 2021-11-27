@@ -6,7 +6,7 @@ import {
   CARD_WIDTH,
   CARD_BORDER_WIDTH,
   CARD_MARGIN_RIGHT,
-} from "../../cards/Card";
+} from "../../cards/Paper";
 import { DraggableCard } from "./DraggableCard";
 import { getDraggableId } from "./draggableId";
 

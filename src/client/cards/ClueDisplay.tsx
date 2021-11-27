@@ -1,21 +1,39 @@
 import { Textfit } from "react-textfit";
 
-import { Letter, OwnerType, CardLocation, PlayerViewG } from "../../game/types";
+import {
+  Letter,
+  OwnerType,
+  CardOwner,
+  CardLocation,
+  PlayerViewG,
+} from "../../game/types";
+import { assertNever } from "../../game/utils";
 
 interface Props {
   g: PlayerViewG;
   spelling: (CardLocation | Letter)[];
 }
 
+const getLettersForOwner = (g: PlayerViewG, owner: CardOwner) => {
+  const ownerType = owner.ownerType;
+  switch (ownerType) {
+    case OwnerType.TEAM:
+      return g.teamLetters;
+    case OwnerType.NONPLAYER:
+      return g.nonPlayers[owner.nonPlayerIndex].letters;
+    case OwnerType.PLAYER:
+      return g.players[+owner.playerID].letters;
+    default:
+      return assertNever(ownerType);
+  }
+};
+
 const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
   if (typeof card === "string") {
     return <>{card}</>;
   }
 
-  const letters =
-    card.owner.ownerType === OwnerType.TEAM
-      ? g.teamLetters
-      : g.players[+card.owner.playerID].letters;
+  const letters = getLettersForOwner(g, card.owner);
   const letter = (
     <>
       {letters[card.letterIndex] ?? (

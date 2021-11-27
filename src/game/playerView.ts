@@ -41,7 +41,7 @@ export const playerView = (
   _ctx: Ctx,
   playerID: string | null
 ): PlayerViewG => {
-  const { players, proposedClues } = g;
+  const { players, nonPlayers, proposedClues } = g;
   return {
     ...g,
     wordConstructionLetters:
@@ -56,6 +56,12 @@ export const playerView = (
       }),
       {}
     ),
+    nonPlayers: nonPlayers.map(({ letters, activeLetterIndex }) => ({
+      letters: letters.map((letter, i) =>
+        activeLetterIndex < i ? null : letter
+      ),
+      activeLetterIndex,
+    })),
     letterNotes: playerID == null ? [] : g.players[+playerID].letterNotes,
     proposedClues: proposedClues.map((proposedClue) => {
       const { authorID, spelling, summary, votes } = proposedClue;

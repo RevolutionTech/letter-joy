@@ -2,7 +2,7 @@ import _ from "lodash";
 import { PhaseConfig } from "boardgame.io";
 import { TurnOrder } from "boardgame.io/core";
 
-import { createPreviousClue } from "./clue";
+import { getUniqueOwners, createPreviousClue } from "./clue";
 import { consumeHint } from "./hints";
 import {
   chooseSecretWord,
@@ -16,7 +16,7 @@ import {
   confirmUnexpectedWord,
 } from "./moves";
 import { isEveryPlayerWaiting } from "./players";
-import { G } from "./types";
+import { OwnerType, G } from "./types";
 
 export enum Phase {
   CHOOSE_SECRET_WORD = "chooseSecretWord",
@@ -66,7 +66,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       if (acceptedClue != null) {
         const activeClue = _.omit(acceptedClue, "votes");
         g.activeClue = activeClue;
-        consumeHint(g, activeClue.authorID);
+        consumeHint(g, ctx, activeClue.authorID);
       }
       g.proposedClues = [];
     },
@@ -96,13 +96,41 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       },
     },
     onEnd: (g) => {
+      // Determine the non-players in the most recent clue
+      const nonPlayersInClue = getUniqueOwners(
+        g.activeClue?.spelling ?? [],
+        OwnerType.NONPLAYER,
+        "nonPlayerIndex"
+      );
+
+      // Update active non-player letters based on those used
+      g.nonPlayers = g.nonPlayers.map((nonPlayerState, i) => {
+        const lastLetterIndex = nonPlayerState.letters.length - 1;
+        const shouldAdvance =
+          nonPlayersInClue.includes(`${i}`) &&
+          nonPlayerState.activeLetterIndex < lastLetterIndex;
+
+        // Add hint when advancing to the last non-player letter
+        if (
+          shouldAdvance &&
+          nonPlayerState.activeLetterIndex + 1 == lastLetterIndex
+        ) {
+          g.teamHints.available += 1;
+        }
+
+        return {
+          ...nonPlayerState,
+          activeLetterIndex: nonPlayerState.activeLetterIndex + +shouldAdvance,
+        };
+      });
+
       // Move the active clue to previous clues
       if (g.activeClue != null) {
         g.previousClues.push(createPreviousClue(g.teamLetters, g.activeClue));
         g.activeClue = null;
       }
 
-      // Update active letters based on which letter
+      // Update active player letters based on which letter
       // the player wants to advance to the next round
       g.players = _.mapValues(g.players, (playerState) => ({
         ...playerState,

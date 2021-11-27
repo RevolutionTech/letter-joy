@@ -9,7 +9,7 @@ import {
   CARD_HEIGHT,
   CARD_BORDER_WIDTH,
   CARD_MARGIN_RIGHT,
-} from "../../cards/Card";
+} from "../../cards/Paper";
 import { HandOfCards } from "../../display/DisplayCell";
 import theme from "../../theme";
 import { DraggableCard } from "./DraggableCard";

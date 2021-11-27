@@ -8,8 +8,9 @@ import {
   CARD_WIDTH,
   CARD_BORDER_WIDTH,
   CARD_MARGIN_RIGHT,
-} from "../cards/Card";
+} from "../cards/Paper";
 import { getCardLocationsAssignedToOwner } from "../cards/spelling";
+import { NonPlayerDisplay } from "./NonPlayerDisplay";
 import { PlayerDisplay } from "./PlayerDisplay";
 import { MaybePlayerNames, playerNameDisplay } from "./playerName";
 import { TeamDisplay } from "./TeamDisplay";
@@ -31,6 +32,30 @@ interface Props {
 
 export const ActiveTableDisplay = (props: Props) => {
   const { g, playerNames, currentPlayer, spelling, onAddToSpelling } = props;
+  const teamOwner: { ownerType: OwnerType.TEAM } = {
+    ownerType: OwnerType.TEAM,
+  };
+
+  const nonPlayerDisplays = g.nonPlayers.map((nonPlayerState, i) => {
+    const owner: {
+      ownerType: OwnerType.NONPLAYER;
+      nonPlayerIndex: number;
+    } = {
+      ownerType: OwnerType.NONPLAYER,
+      nonPlayerIndex: i,
+    };
+    return (
+      <NonPlayerDisplay
+        key={i}
+        {...nonPlayerState}
+        nonPlayerIndex={i}
+        containsTokens={
+          spelling && getCardLocationsAssignedToOwner(spelling, owner)
+        }
+        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(owner))}
+      />
+    );
+  });
 
   const playerStates = Object.values(g.players);
   const rightPlayerID =
@@ -40,23 +65,21 @@ export const ActiveTableDisplay = (props: Props) => {
   const orderedPlayers = cycleArray(playerStates, rightPlayerID);
   const playerDisplays = orderedPlayers.map((playerState) => {
     const playerID = playerState.playerID;
+    const owner: { ownerType: OwnerType.PLAYER; playerID: string } = {
+      ownerType: OwnerType.PLAYER,
+      playerID,
+    };
     return (
       <PlayerDisplay
         key={playerID}
         {...playerState}
         playerName={playerNameDisplay(playerNames, +playerID)}
+        numPlayers={playerStates.length}
         teamHintsAvailable={g.teamHints.available}
         containsTokens={
-          spelling &&
-          getCardLocationsAssignedToOwner(spelling, {
-            ownerType: OwnerType.PLAYER,
-            playerID,
-          })
+          spelling && getCardLocationsAssignedToOwner(spelling, owner)
         }
-        onAddToSpelling={
-          onAddToSpelling &&
-          (() => onAddToSpelling({ ownerType: OwnerType.PLAYER, playerID }))
-        }
+        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(owner))}
       />
     );
   });
@@ -67,16 +90,11 @@ export const ActiveTableDisplay = (props: Props) => {
         teamLetters={g.teamLetters}
         teamHints={g.teamHints}
         containsTokens={
-          spelling &&
-          getCardLocationsAssignedToOwner(spelling, {
-            ownerType: OwnerType.TEAM,
-          })
+          spelling && getCardLocationsAssignedToOwner(spelling, teamOwner)
         }
-        onAddToSpelling={
-          onAddToSpelling &&
-          (() => onAddToSpelling({ ownerType: OwnerType.TEAM }))
-        }
+        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(teamOwner))}
       />
+      {nonPlayerDisplays}
       {playerDisplays}
     </PlayerDisplayGrid>
   );

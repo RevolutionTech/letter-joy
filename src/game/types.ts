@@ -25,6 +25,7 @@ export enum Letter {
 
 export enum OwnerType {
   TEAM,
+  NONPLAYER,
   PLAYER,
 }
 
@@ -54,6 +55,16 @@ export interface PlayerViewPlayerState
   letters: (Letter | null)[];
 }
 
+interface NonPlayerState {
+  letters: Letter[];
+  activeLetterIndex: number;
+}
+
+export interface PlayerViewNonPlayerState
+  extends Omit<NonPlayerState, "letters"> {
+  letters: (Letter | null)[];
+}
+
 export interface TeamHints {
   available: number;
   locked: number;
@@ -61,6 +72,7 @@ export interface TeamHints {
 
 export type CardOwner =
   | { ownerType: OwnerType.TEAM }
+  | { ownerType: OwnerType.NONPLAYER; nonPlayerIndex: number }
   | { ownerType: OwnerType.PLAYER; playerID: string };
 export type CardLocation = { owner: CardOwner; letterIndex: number };
 export type Spelling = CardLocation[];
@@ -73,6 +85,7 @@ export interface Clue {
 interface ClueSummary {
   numLetters: number;
   usesWild: boolean;
+  numNonPlayers: number;
   numPlayers: number;
 }
 
@@ -93,6 +106,7 @@ export interface G {
   // TODO: Perhaps keys in players should be strings
   // so that we don't have to cast in all of the places that have playerIDs as strings
   players: Record<number, PlayerState>;
+  nonPlayers: NonPlayerState[];
   teamLetters: Letter[];
   teamHints: TeamHints;
   activeClue: Clue | null;
@@ -101,9 +115,11 @@ export interface G {
   endGameVotes: string[];
 }
 
-export interface PlayerViewG extends Omit<G, "players" | "proposedClues"> {
+export interface PlayerViewG
+  extends Omit<G, "players" | "nonPlayers" | "proposedClues"> {
   wordConstructionLetters: Record<Letter, number>;
   players: Record<number, PlayerViewPlayerState>;
+  nonPlayers: PlayerViewNonPlayerState[];
   letterNotes: Record<Letter, boolean>[];
   proposedClues: PlayerViewProposedClue[];
 }

@@ -1,18 +1,26 @@
 import _ from "lodash";
+import { Ctx } from "boardgame.io";
 
 import { NUM_HINTS_STARTING_PER_PLAYER } from "./constants";
 import { G, PlayerViewG } from "./types";
 
-export const playerHasHintAvailable = (g: G | PlayerViewG, playerID: string) =>
-  g.players[+playerID].hintsUsed < NUM_HINTS_STARTING_PER_PLAYER ||
-  g.teamHints.available > 0;
+export const playerHasHintAvailable = (
+  g: G | PlayerViewG,
+  playerID: string
+) => {
+  const numPlayers = Object.keys(g.players).length;
+  return (
+    g.players[+playerID].hintsUsed <
+      NUM_HINTS_STARTING_PER_PLAYER[numPlayers] || g.teamHints.available > 0
+  );
+};
 
-export const consumeHint = (g: G, playerID: string) => {
+export const consumeHint = (g: G, ctx: Ctx, playerID: string) => {
   const { players, teamHints } = g;
   const hintPlayer = players[+playerID];
 
   // Consume one of the team hints, if necessary
-  if (hintPlayer.hintsUsed >= NUM_HINTS_STARTING_PER_PLAYER) {
+  if (hintPlayer.hintsUsed >= NUM_HINTS_STARTING_PER_PLAYER[ctx.numPlayers]) {
     teamHints.available -= 1;
   }
 

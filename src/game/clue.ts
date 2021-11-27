@@ -2,6 +2,17 @@ import _ from "lodash";
 
 import { Letter, OwnerType, Spelling, Clue } from "./types";
 
+export const getUniqueOwners = (
+  spelling: Spelling,
+  ownerType: OwnerType,
+  ownerKey: string
+) => {
+  const filteredOwners = spelling
+    .filter((card) => card.owner.ownerType === ownerType)
+    .map((card) => card.owner);
+  return Object.keys(_.groupBy(filteredOwners, ownerKey));
+};
+
 export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
   const usesWild = _.some(
     placement,
@@ -9,13 +20,15 @@ export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
       cardLocation.owner.ownerType === OwnerType.TEAM &&
       teamLetters[cardLocation.letterIndex] === Letter.WILD
   );
-  const playerLocations = placement.filter(
-    (card) => card.owner.ownerType === OwnerType.PLAYER
-  );
   return {
     numLetters: placement.length,
     usesWild,
-    numPlayers: Object.keys(_.groupBy(playerLocations, "playerID")).length,
+    numNonPlayers: getUniqueOwners(
+      placement,
+      OwnerType.NONPLAYER,
+      "nonPlayerIndex"
+    ).length,
+    numPlayers: getUniqueOwners(placement, OwnerType.PLAYER, "playerID").length,
   };
 };
 
