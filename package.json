@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "ISC",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf .cache dist",
     "client:watch": "parcel watch src/index.html -d dist/client",
     "client:build": "parcel build src/index.html -d dist/client",
     "server:start": "nodemon",
