@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { Tooltip } from "@mui/material";
+import { Chair } from "@mui/icons-material";
 
 import { PlayerViewNonPlayerState } from "../../game/types";
 import LockedHint from "../assets/hints/locked.svg";
@@ -11,7 +12,7 @@ import {
   DisplayName,
   HandOfCards,
 } from "./DisplayCell";
-import { Hint } from "./hint";
+import { Hints, Hint } from "./hint";
 
 interface Props extends PlayerViewNonPlayerState {
   nonPlayerIndex: number;
@@ -33,13 +34,14 @@ export const NonPlayerDisplay = (props: Props) => {
     return (
       <DisplayCell>
         <DisplayStatus>
+          <Chair style={{ marginRight: "4px" }} />
           <DisplayName>Non-player {nonPlayerIndex + 1}</DisplayName>
           {numLettersRemaining > 0 && (
-            <div>
+            <Hints>
               <Tooltip title="This hint becomes available once this non-player pile is exhausted.">
                 <Hint src={LockedHint} alt="Locked hint" />
               </Tooltip>
-            </div>
+            </Hints>
           )}
         </DisplayStatus>
         <HandOfCards>

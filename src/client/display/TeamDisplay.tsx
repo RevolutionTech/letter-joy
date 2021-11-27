@@ -6,7 +6,7 @@ import AvailableHint from "../assets/hints/available.svg";
 import LockedHint from "../assets/hints/locked.svg";
 import { PresentedCard } from "../cards/PresentedCard";
 import { DisplayCell, DisplayStatus, DisplayName } from "./DisplayCell";
-import { Hint } from "./hint";
+import { Hints, Hint } from "./hint";
 
 interface Props {
   teamLetters: Letter[];
@@ -21,7 +21,7 @@ export const TeamDisplay = (props: Props) => {
     <DisplayCell>
       <DisplayStatus>
         <DisplayName>Team</DisplayName>
-        <div>
+        <Hints>
           {_.range(teamHints.available).map((_, i) => (
             <Tooltip
               key={`available-${i}`}
@@ -38,7 +38,7 @@ export const TeamDisplay = (props: Props) => {
               <Hint src={LockedHint} alt="Locked hint" />
             </Tooltip>
           ))}
-        </div>
+        </Hints>
       </DisplayStatus>
       {teamLetters.map((letter, i) => (
         <PresentedCard

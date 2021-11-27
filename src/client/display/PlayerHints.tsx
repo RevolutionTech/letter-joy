@@ -5,7 +5,7 @@ import { NUM_HINTS_STARTING_PER_PLAYER } from "../../game/constants";
 import AvailableHint from "../assets/hints/available.svg";
 import UnusedHint from "../assets/hints/unused.svg";
 import UsedHint from "../assets/hints/used.svg";
-import { Hint } from "./hint";
+import { Hints, Hint } from "./hint";
 
 interface Props {
   playerID: string;
@@ -22,7 +22,7 @@ export const PlayerHints = (props: Props) => {
     _.max([NUM_HINTS_STARTING_PER_PLAYER[numPlayers] - hintsUsed, 0]) ?? 0;
 
   return (
-    <div>
+    <Hints>
       {_.range(hintsUsed).map((_, i) => (
         <Tooltip
           key={`${playerID}-used-${i}`}
@@ -46,6 +46,6 @@ export const PlayerHints = (props: Props) => {
           <Hint src={AvailableHint} alt="Available hint" />
         </Tooltip>
       )}
-    </div>
+    </Hints>
   );
 };

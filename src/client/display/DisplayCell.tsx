@@ -12,7 +12,7 @@ export const DisplayCell = styled("div")({
 
 export const DisplayStatus = styled("div")({
   display: "flex",
-  alignItems: "baseline",
+  alignItems: "center",
 });
 
 export const DisplayName = styled("div")({ marginRight: "16px" });
