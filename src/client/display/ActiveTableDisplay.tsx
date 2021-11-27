@@ -20,7 +20,7 @@ const PlayerDisplayGrid = styled("div")({
   width: "100%",
   height: "fit-content",
   gridTemplateColumns: `repeat(auto-fill, calc(${LETTERS_PER_PLAYER} * (${CARD_WIDTH}px + ${CARD_BORDER_WIDTH}px * 2 + ${CARD_MARGIN_RIGHT}px)))`,
-  gridColumnGap: "16px",
+  gridColumnGap: "32px",
 });
 interface Props {
   g: PlayerViewG;
