@@ -15,7 +15,7 @@ import { PlayerDisplay } from "./PlayerDisplay";
 import { MaybePlayerNames, playerNameDisplay } from "./playerName";
 import { TeamDisplay } from "./TeamDisplay";
 
-const PlayerDisplayGrid = styled("div")({
+const HandDisplayGrid = styled("div")({
   display: "grid",
   width: "100%",
   height: "fit-content",
@@ -85,7 +85,7 @@ export const ActiveTableDisplay = (props: Props) => {
   });
 
   return (
-    <PlayerDisplayGrid>
+    <HandDisplayGrid>
       <TeamDisplay
         teamLetters={g.teamLetters}
         teamHints={g.teamHints}
@@ -96,6 +96,6 @@ export const ActiveTableDisplay = (props: Props) => {
       />
       {nonPlayerDisplays}
       {playerDisplays}
-    </PlayerDisplayGrid>
+    </HandDisplayGrid>
   );
 };
