@@ -6,7 +6,7 @@ import { clueSummary } from "./clue";
 import { LETTERS_PER_PLAYER } from "./constants";
 import { createDeck, shuffleCards, dealCardsEvenly } from "./deck";
 import { playerHasHintAvailable } from "./hints";
-import { ZERO_LETTERS, countLetters } from "./letters";
+import { LETTER_DISTRIBUTION, ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
 import { Letter, OwnerType, Spelling, G } from "./types";
 import { isWordEqual } from "./word";
@@ -65,12 +65,21 @@ export const updateNote = (
   ctx: Ctx,
   letterIndex: number,
   letter: Letter,
-  isCandidate: boolean
+  isCandidate: boolean,
+  disableRemaining?: boolean
 ) => {
   // A player must be active to update a note
   const activePlayer = ctx.playerID;
   if (activePlayer == null) {
     return INVALID_MOVE;
+  }
+
+  // Possibly disable all other letters
+  if (disableRemaining) {
+    g.players[+activePlayer].letterNotes[letterIndex] = _.mapValues(
+      LETTER_DISTRIBUTION,
+      () => false
+    );
   }
 
   // Update the note

@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import _ from "lodash";
-import { styled, ToggleButton, Tabs, Tab, Box } from "@mui/material";
+import {
+  styled,
+  ToggleButtonGroup,
+  ToggleButton,
+  Tabs,
+  Tab,
+  Box,
+} from "@mui/material";
 
 import theme from "../theme";
 import { Letter } from "../../game/types";
@@ -17,11 +24,10 @@ const LetterNotesTabs = styled(Box)({
 });
 const Header = styled("div")({ fontSize: "18pt", marginRight: "8px" });
 const LetterTab = styled(Tab)({ paddingTop: 0 });
-const LetterButtons = styled("div")({
+const LetterButtons = styled(ToggleButtonGroup)({
   display: "flex",
-  gap: "4px",
   marginTop: "4px",
-  overflowX: "scroll",
+  overflowX: "auto",
 });
 const LetterButton = styled(ToggleButton)({ flexGrow: 1 });
 
@@ -34,12 +40,29 @@ interface Props {
   onUpdateNote: (
     letterIndex: number,
     letter: Letter,
-    isCandidate: boolean
+    isCandidate: boolean,
+    disableRemaining?: boolean
   ) => void;
 }
 
 export const LetterNotes = (props: Props) => {
   const [letterIndex, setLetterIndex] = useState(0);
+  const activeNotes = useMemo(
+    () => props.notes[letterIndex],
+    [props.notes, letterIndex]
+  );
+  const onUpdateNote = useCallback(
+    (e: React.MouseEvent<HTMLElement>, char: Letter) => {
+      const isDoubleClick = e.detail == 2;
+      props.onUpdateNote(
+        letterIndex,
+        char,
+        isDoubleClick || !activeNotes[char],
+        isDoubleClick
+      );
+    },
+    [props.onUpdateNote, letterIndex, activeNotes]
+  );
 
   return props.notes.length > 0 ? (
     <LetterNotesFooter>
@@ -54,10 +77,10 @@ export const LetterNotes = (props: Props) => {
           ))}
         </Tabs>
       </LetterNotesTabs>
-      <LetterButtons>
+      <LetterButtons onChange={onUpdateNote}>
         {ALPHABET.map((char) => {
           const isCandidate: boolean | undefined = (
-            props.notes[letterIndex] as Record<string, boolean>
+            activeNotes as Record<string, boolean>
           )[char];
           return (
             <LetterButton
@@ -65,9 +88,6 @@ export const LetterNotes = (props: Props) => {
               value={char}
               disabled={isCandidate == null}
               selected={isCandidate}
-              onChange={() =>
-                props.onUpdateNote(letterIndex, char as Letter, !isCandidate)
-              }
             >
               {char}
             </LetterButton>
