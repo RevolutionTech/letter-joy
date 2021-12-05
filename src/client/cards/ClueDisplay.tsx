@@ -49,7 +49,7 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
 export const ClueDisplay = (props: Props) => {
   const { g, spelling } = props;
   return (
-    <Textfit mode="single" max="64">
+    <Textfit mode="single" max={64}>
       {spelling.reduce(
         (display: React.ReactNode, card: CardLocation | Letter) => {
           const letterDisplay = getLetterDisplay(g, card);
