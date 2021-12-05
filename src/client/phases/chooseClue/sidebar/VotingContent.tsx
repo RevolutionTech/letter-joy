@@ -117,22 +117,24 @@ export const VotingContent = (props: Props) => {
             playerNames={playerNames}
             votes={[]}
             value={SpecialVote.RESET_SUPPORT}
+            label={
+              <SidebarNonIdealText>
+                Let&apos;s keep thinking...
+              </SidebarNonIdealText>
+            }
             disabled={currentPlayer == null}
-          >
-            <SidebarNonIdealText>
-              Let&apos;s keep thinking...
-            </SidebarNonIdealText>
-          </VoteOption>
+          />
           <VoteOption
             playerNames={playerNames}
             votes={g.endGameVotes}
             value={SpecialVote.SUPPORT_END}
+            label={
+              <SidebarNonIdealText>
+                Let&apos;s spell our secret words...
+              </SidebarNonIdealText>
+            }
             disabled={currentPlayer == null}
-          >
-            <SidebarNonIdealText>
-              Let&apos;s spell our secret words...
-            </SidebarNonIdealText>
-          </VoteOption>
+          />
         </RadioGroup>
       </FormControl>
     </SidebarContent>

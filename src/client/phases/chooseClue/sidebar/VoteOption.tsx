@@ -9,19 +9,20 @@ interface Props {
   playerNames: MaybePlayerNames;
   votes: string[];
   value: string;
+  label: React.ReactElement;
   disabled?: boolean;
 }
 
-export const VoteOption = (props: React.PropsWithChildren<Props>) => {
-  const { playerNames, votes, value, disabled, children } = props;
+export const VoteOption = (props: Props) => {
+  const { playerNames, votes, value, label, disabled } = props;
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <FormControlLabel
         value={value}
-        disabled={disabled}
         control={<Radio />}
-        label={children}
+        label={label}
+        disabled={disabled}
         style={{ marginTop: "16px" }}
       />
       <div>
