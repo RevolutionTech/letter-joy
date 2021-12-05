@@ -56,34 +56,35 @@ export const ProposedClueRadioButton = (props: Props) => {
       playerNames={playerNames}
       votes={proposedClue.votes}
       value={value}
-      disabled={disabled}
-    >
-      <SidebarProposedClueSummary>
-        <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
-          <FontDownload style={{ marginRight: "4px" }} />
-          <div>{numLetters}</div>
-          {usesWild && <div>{Letter.WILD}</div>}
-        </SidebarProposedClueSummaryDetail>
-        <SidebarProposedClueSummaryDetail>
-          <Group style={{ marginRight: "4px" }} />
-          <div>{numPlayers}</div>
-        </SidebarProposedClueSummaryDetail>
-        {g.nonPlayers.length > 0 && (
-          <SidebarProposedClueSummaryDetail>
-            <Chair style={{ marginRight: "4px" }} />
-            <div>{numNonPlayers}</div>
+      label={
+        <SidebarProposedClueSummary>
+          <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
+            <FontDownload style={{ marginRight: "4px" }} />
+            <div>{numLetters}</div>
+            {usesWild && <div>{Letter.WILD}</div>}
           </SidebarProposedClueSummaryDetail>
-        )}
-        <SidebarProposedClueSummaryDetail>
-          <Person style={{ marginRight: "4px" }} />
-          <div>{authorName}</div>
-        </SidebarProposedClueSummaryDetail>
-        {spelling && (
-          <SidebarProposedClueDisplay>
-            (<ClueDisplay g={g} spelling={spelling} />)
-          </SidebarProposedClueDisplay>
-        )}
-      </SidebarProposedClueSummary>
-    </ClueVoteOption>
+          <SidebarProposedClueSummaryDetail>
+            <Group style={{ marginRight: "4px" }} />
+            <div>{numPlayers}</div>
+          </SidebarProposedClueSummaryDetail>
+          {g.nonPlayers.length > 0 && (
+            <SidebarProposedClueSummaryDetail>
+              <Chair style={{ marginRight: "4px" }} />
+              <div>{numNonPlayers}</div>
+            </SidebarProposedClueSummaryDetail>
+          )}
+          <SidebarProposedClueSummaryDetail>
+            <Person style={{ marginRight: "4px" }} />
+            <div>{authorName}</div>
+          </SidebarProposedClueSummaryDetail>
+          {spelling && (
+            <SidebarProposedClueDisplay>
+              (<ClueDisplay g={g} spelling={spelling} />)
+            </SidebarProposedClueDisplay>
+          )}
+        </SidebarProposedClueSummary>
+      }
+      disabled={disabled}
+    />
   );
 };
