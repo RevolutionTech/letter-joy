@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { styled, FormControl, RadioGroup } from "@mui/material";
+import { styled, RadioGroup } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 import { playerHasHintAvailable } from "../../../../game/hints";
@@ -80,63 +80,60 @@ export const VotingContent = (props: Props) => {
             ]
       }
     >
-      <FormControl component="fieldset">
-        <RadioGroup
-          aria-label="Vote on proposed clues"
-          name="proposed-clues"
-          value={voteValue(g, currentPlayer)}
-          onChange={(_, value) => {
-            switch (value) {
-              case SpecialVote.RESET_SUPPORT:
-                onResetSupport();
-                break;
-              case SpecialVote.SUPPORT_END:
-                onSupportEnd();
-                break;
-              default:
-                onSupportClue(+value);
-            }
-          }}
-        >
-          {proposedClues.length === 0 ? (
-            <SidebarNonIdealText>No clues proposed yet.</SidebarNonIdealText>
-          ) : (
-            proposedClues.map((proposedClue, i) => (
-              <ProposedClueRadioButton
-                key={i}
-                g={g}
-                playerNames={playerNames}
-                proposedClue={proposedClue}
-                value={`${i}`}
-                disabled={currentPlayer == null}
-              />
-            ))
-          )}
-          {/* TODO: Construct implicit votes of players doing nothing */}
-          <VoteOption
-            playerNames={playerNames}
-            votes={[]}
-            value={SpecialVote.RESET_SUPPORT}
-            label={
-              <SidebarNonIdealText>
-                Let&apos;s keep thinking...
-              </SidebarNonIdealText>
-            }
-            disabled={currentPlayer == null}
-          />
-          <VoteOption
-            playerNames={playerNames}
-            votes={g.endGameVotes}
-            value={SpecialVote.SUPPORT_END}
-            label={
-              <SidebarNonIdealText>
-                Let&apos;s spell our secret words...
-              </SidebarNonIdealText>
-            }
-            disabled={currentPlayer == null}
-          />
-        </RadioGroup>
-      </FormControl>
+      <RadioGroup
+        aria-label="Vote on proposed clues"
+        name="proposed-clues"
+        value={voteValue(g, currentPlayer)}
+        onChange={(_, value) => {
+          switch (value) {
+            case SpecialVote.RESET_SUPPORT:
+              onResetSupport();
+              break;
+            case SpecialVote.SUPPORT_END:
+              onSupportEnd();
+              break;
+            default:
+              onSupportClue(+value);
+          }
+        }}
+      >
+        {proposedClues.length === 0 ? (
+          <SidebarNonIdealText>No clues proposed yet.</SidebarNonIdealText>
+        ) : (
+          proposedClues.map((proposedClue, i) => (
+            <ProposedClueRadioButton
+              key={i}
+              g={g}
+              playerNames={playerNames}
+              proposedClue={proposedClue}
+              value={`${i}`}
+              disabled={currentPlayer == null}
+            />
+          ))
+        )}
+        <VoteOption
+          playerNames={playerNames}
+          votes={[]}
+          value={SpecialVote.RESET_SUPPORT}
+          label={
+            <SidebarNonIdealText>
+              Let&apos;s keep thinking...
+            </SidebarNonIdealText>
+          }
+          disabled={currentPlayer == null}
+        />
+        <VoteOption
+          playerNames={playerNames}
+          votes={g.endGameVotes}
+          value={SpecialVote.SUPPORT_END}
+          label={
+            <SidebarNonIdealText>
+              Let&apos;s spell our secret words...
+            </SidebarNonIdealText>
+          }
+          disabled={currentPlayer == null}
+        />
+      </RadioGroup>
     </SidebarContent>
   );
 };
