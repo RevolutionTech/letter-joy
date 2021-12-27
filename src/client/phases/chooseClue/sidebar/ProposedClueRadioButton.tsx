@@ -1,5 +1,8 @@
 import { styled } from "@mui/material";
-import { Chair, FontDownload, Group, Person } from "@mui/icons-material";
+import ChairIcon from "@mui/icons-material/Chair";
+import FontDownloadIcon from "@mui/icons-material/FontDownload";
+import GroupIcon from "@mui/icons-material/Group";
+import PersonIcon from "@mui/icons-material/Person";
 
 import {
   Letter,
@@ -59,22 +62,22 @@ export const ProposedClueRadioButton = (props: Props) => {
       label={
         <SidebarProposedClueSummary>
           <SidebarProposedClueSummaryDetail style={{ minWidth: "80px" }}>
-            <FontDownload style={{ marginRight: "4px" }} />
+            <FontDownloadIcon style={{ marginRight: "4px" }} />
             <div>{numLetters}</div>
             {usesWild && <div>{Letter.WILD}</div>}
           </SidebarProposedClueSummaryDetail>
           <SidebarProposedClueSummaryDetail>
-            <Group style={{ marginRight: "4px" }} />
+            <GroupIcon style={{ marginRight: "4px" }} />
             <div>{numPlayers}</div>
           </SidebarProposedClueSummaryDetail>
           {g.nonPlayers.length > 0 && (
             <SidebarProposedClueSummaryDetail>
-              <Chair style={{ marginRight: "4px" }} />
+              <ChairIcon style={{ marginRight: "4px" }} />
               <div>{numNonPlayers}</div>
             </SidebarProposedClueSummaryDetail>
           )}
           <SidebarProposedClueSummaryDetail>
-            <Person style={{ marginRight: "4px" }} />
+            <PersonIcon style={{ marginRight: "4px" }} />
             <div>{authorName}</div>
           </SidebarProposedClueSummaryDetail>
           {spelling && (

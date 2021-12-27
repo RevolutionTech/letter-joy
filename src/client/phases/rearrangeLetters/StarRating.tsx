@@ -1,5 +1,6 @@
 import _ from "lodash";
-import { Star, StarBorder } from "@mui/icons-material";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 import { MAX_NUM_STARS, totalStars } from "../../../game/scoring";
 
@@ -13,10 +14,10 @@ export const StarRating = (props: Props) => {
   return (
     <>
       {_.range(numStars).map((i) => (
-        <Star key={i} />
+        <StarIcon key={i} />
       ))}
       {_.range(MAX_NUM_STARS - numStars).map((i) => (
-        <StarBorder key={i} />
+        <StarBorderIcon key={i} />
       ))}
     </>
   );

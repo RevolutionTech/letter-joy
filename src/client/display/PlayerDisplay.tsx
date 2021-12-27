@@ -1,4 +1,4 @@
-import { Person } from "@mui/icons-material";
+import PersonIcon from "@mui/icons-material/Person";
 
 import { PlayerViewPlayerState } from "../../game/types";
 import { PresentedCard } from "../cards/PresentedCard";
@@ -34,7 +34,7 @@ export const PlayerDisplay = (props: Props) => {
   return letters.length > 0 ? (
     <DisplayCell>
       <DisplayStatus>
-        <Person style={{ marginRight: "4px" }} />
+        <PersonIcon style={{ marginRight: "4px" }} />
         <DisplayName>{playerName}</DisplayName>
         <PlayerHints
           playerID={playerID}

@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { Tooltip } from "@mui/material";
-import { Chair } from "@mui/icons-material";
+import ChairIcon from "@mui/icons-material/Chair";
 
 import { PlayerViewNonPlayerState } from "../../game/types";
 import LockedHint from "../assets/hints/locked.svg";
@@ -34,7 +34,7 @@ export const NonPlayerDisplay = (props: Props) => {
     return (
       <DisplayCell>
         <DisplayStatus>
-          <Chair style={{ marginRight: "4px" }} />
+          <ChairIcon style={{ marginRight: "4px" }} />
           <DisplayName>Non-player {nonPlayerIndex + 1}</DisplayName>
           {numLettersRemaining > 0 && (
             <Hints>
