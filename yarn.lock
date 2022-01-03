@@ -2121,10 +2121,10 @@ bn.js@^5.0.0, bn.js@^5.1.1:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.1.3.tgz#beca005408f642ebebea80b042b4d18d2ac0ee6b"
   integrity sha512-GkTiFpjFtUzU9CbMeJ5iazkCzGL3jrhzerzZIuqLABjbwRaFt33I9tUdSNryIptM+RxDet6OKm2WnLXzW51KsQ==
 
-boardgame.io@^0.49.6:
-  version "0.49.6"
-  resolved "https://registry.yarnpkg.com/boardgame.io/-/boardgame.io-0.49.6.tgz#0c45e44f7c6061fabc2da22ee6f8e75ec69ef819"
-  integrity sha512-U0k9/2vv/VwKIJjxrq4FKRg12qsBAv1AVkO/cJF4oex7YodYIJeJi9kauPq8S4tAIzvFZdvkWXKjvI/rASmqAw==
+boardgame.io@^0.49.8:
+  version "0.49.8"
+  resolved "https://registry.yarnpkg.com/boardgame.io/-/boardgame.io-0.49.8.tgz#e833cbc7ec70034a94e27e4d657e96cacdbcc4fe"
+  integrity sha512-+HiFigVAuOCRkBDAxG9D19vXcTImd8qkI0/9qqeU57tZbqn0E6Qe1oY9rJrxXJG1OwzdFqwmdH7Rp4kHj6Ubxw==
   dependencies:
     "@koa/cors" "^3.1.0"
     "@koa/router" "^10.1.1"
@@ -2141,7 +2141,7 @@ boardgame.io@^0.49.6:
     prop-types "^15.5.10"
     react-cookies "^0.1.0"
     redux "^4.1.0"
-    rfc6902 "^4.0.2"
+    rfc6902 "^5.0.0"
     setimmediate "^1.0.5"
     socket.io "^4.1.3"
     socket.io-client "^4.1.3"
@@ -7009,10 +7009,10 @@ reusify@^1.0.4:
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rfc6902@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/rfc6902/-/rfc6902-4.0.2.tgz#ce99d3562b9e3287d403462e6bcc81eead8fcea0"
-  integrity sha512-MJOC4iDSv3Qn5/QvhPbrNoRongti6moXSShcRmtbNqOk0WPxlviEdMV4bb9PaULhSxLUXzWd4AjAMKQ3j3y54w==
+rfc6902@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/rfc6902/-/rfc6902-5.0.0.tgz#cb53ac1cb8a700edc1ddc6c19afbb93422f9e385"
+  integrity sha512-6d0Q7DgN+RWHhvY/jb7QWG6ol+XreFqQn4NzvHB8CSALA70fRLRmbJaMvxlFf/JIzfkiNWq0lQF0l5yWb4yuLA==
 
 rgb-regex@^1.0.1:
   version "1.0.1"
