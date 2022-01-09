@@ -9,7 +9,7 @@ const FixedSidebar = styled("div")({
   width: "400px",
   padding: "24px",
   zIndex: 10000, // higher z-index than draggables
-  overflowY: "scroll",
+  overflowY: "auto",
 
   backgroundColor: theme.white,
 });

@@ -5,13 +5,13 @@ import theme from "../theme";
 const TopPanels = styled("div")({
   display: "flex",
   flex: "1 1 0",
-  overflowY: "scroll",
+  overflowY: "auto",
 });
 
 const GameTable = styled("div")({
   display: "flex",
   flex: "1 1 0",
-  overflow: "scroll",
+  overflow: "auto",
   backgroundColor: theme.silver,
   padding: "16px",
 });
