@@ -40,8 +40,7 @@ interface Props {
   onUpdateNote: (
     letterIndex: number,
     letter: Letter,
-    isCandidate: boolean,
-    disableRemaining?: boolean
+    isCandidate: boolean
   ) => void;
 }
 
@@ -53,13 +52,7 @@ export const LetterNotes = (props: Props) => {
   );
   const onUpdateNote = useCallback(
     (e: React.MouseEvent<HTMLElement>, char: Letter) => {
-      const isDoubleClick = e.detail == 2;
-      props.onUpdateNote(
-        letterIndex,
-        char,
-        isDoubleClick || !activeNotes[char],
-        isDoubleClick
-      );
+      props.onUpdateNote(letterIndex, char, !activeNotes[char]);
     },
     [props.onUpdateNote, letterIndex, activeNotes]
   );

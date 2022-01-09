@@ -37,7 +37,7 @@ export const LetterJoy: Game<G> = {
       activeLetterIndex: 0,
       nextLetterIndex: 0,
       letterNotes: _.range(LETTERS_PER_PLAYER).map(() =>
-        _.mapValues(LETTER_DISTRIBUTION, (quantity) => quantity > 0)
+        _.mapValues(LETTER_DISTRIBUTION, () => false)
       ),
       hintsUsed: 0,
     }));
