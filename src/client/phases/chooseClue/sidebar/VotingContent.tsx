@@ -44,6 +44,7 @@ interface Props {
   playerNames: MaybePlayerNames;
   currentPlayer: string | null;
   onStartProposing: () => void;
+  onRemoveClue: (clueIndex: number) => void;
   onResetSupport: () => void;
   onSupportClue: (clueIndex: number) => void;
   onSupportEnd: () => void;
@@ -55,6 +56,7 @@ export const VotingContent = (props: Props) => {
     playerNames,
     currentPlayer,
     onStartProposing,
+    onRemoveClue,
     onResetSupport,
     onSupportClue,
     onSupportEnd,
@@ -100,16 +102,25 @@ export const VotingContent = (props: Props) => {
         {proposedClues.length === 0 ? (
           <SidebarNonIdealText>No clues proposed yet.</SidebarNonIdealText>
         ) : (
-          proposedClues.map((proposedClue, i) => (
-            <ProposedClueRadioButton
-              key={i}
-              g={g}
-              playerNames={playerNames}
-              proposedClue={proposedClue}
-              value={`${i}`}
-              disabled={currentPlayer == null}
-            />
-          ))
+          proposedClues.map(
+            (proposedClue, i) =>
+              proposedClue.active && (
+                <ProposedClueRadioButton
+                  key={i}
+                  g={g}
+                  playerNames={playerNames}
+                  proposedClue={proposedClue}
+                  value={`${i}`}
+                  disabled={currentPlayer == null}
+                  onRemoveClue={
+                    currentPlayer != null &&
+                    currentPlayer === proposedClue.authorID
+                      ? () => onRemoveClue(i)
+                      : undefined
+                  }
+                />
+              )
+          )
         )}
         <VoteOption
           playerNames={playerNames}

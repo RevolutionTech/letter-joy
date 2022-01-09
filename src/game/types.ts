@@ -91,6 +91,7 @@ interface ClueSummary {
 
 interface ProposedClue extends Clue {
   summary: ClueSummary;
+  active: boolean;
   votes: string[];
 }
 

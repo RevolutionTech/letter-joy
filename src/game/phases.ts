@@ -8,6 +8,7 @@ import {
   chooseSecretWord,
   updateNote,
   proposeClue,
+  removeClue,
   resetSupport,
   supportClue,
   supportEnd,
@@ -51,6 +52,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
           moves: {
             updateNote: { move: updateNote, client: false },
             proposeClue,
+            removeClue,
             resetSupport,
             supportClue,
             supportEnd,

@@ -88,8 +88,26 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
     authorID: ctx.playerID,
     spelling,
     summary: clueSummary(g.teamLetters, spelling),
+    active: true,
     votes: [],
   });
+  return;
+};
+
+export const removeClue = (g: G, ctx: Ctx, clueIndex: number) => {
+  // The clue must be one of the ones displayed to be removed
+  if (clueIndex < 0 || clueIndex >= g.proposedClues.length) {
+    return INVALID_MOVE;
+  }
+
+  // A player must be active and the clue must belong to them
+  const proposedClue = g.proposedClues[clueIndex];
+  if (ctx.playerID == null || proposedClue.authorID !== ctx.playerID) {
+    return INVALID_MOVE;
+  }
+
+  // Remove the clue and any support
+  g.proposedClues[clueIndex] = { ...proposedClue, active: false, votes: [] };
   return;
 };
 
@@ -135,17 +153,20 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
     return INVALID_MOVE;
   }
 
+  // The clue must be active to be supported
+  const proposedClue = g.proposedClues[clueIndex];
+  if (!proposedClue.active) {
+    return INVALID_MOVE;
+  }
+
   // Clear the player's vote from all of the other proposed clues
   resetSupport(g, ctx, true, clueIndex);
 
   // Add the player's vote to the provided clue
-  if (clueIndex != null) {
-    const proposedClue = g.proposedClues[clueIndex];
-    g.proposedClues[clueIndex] = {
-      ...proposedClue,
-      votes: _.union(proposedClue.votes, [activePlayer]),
-    };
-  }
+  g.proposedClues[clueIndex] = {
+    ...proposedClue,
+    votes: _.union(proposedClue.votes, [activePlayer]),
+  };
   return;
 };
 

@@ -44,6 +44,7 @@ export const ChooseClueBoard = (props: BoardProps) => {
               playerNames={playerNames}
               currentPlayer={props.playerID}
               onStartProposing={() => setIsProposing(true)}
+              onRemoveClue={props.moves.removeClue}
               onResetSupport={() => props.moves.resetSupport(true)}
               onSupportClue={props.moves.supportClue}
               onSupportEnd={props.moves.supportEnd}
