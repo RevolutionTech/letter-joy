@@ -50,6 +50,22 @@ export const LetterNotes = (props: Props) => {
     () => props.notes[letterIndex],
     [props.notes, letterIndex]
   );
+  const getLetterTabLabel = useCallback(
+    (i: number) => {
+      const notes = props.notes[i];
+      const candidates = _.keys(_.pickBy(notes, (value) => value));
+      let candidatesLabel = "";
+      if (candidates.length > 3) {
+        const [firstCandidate, secondCandidate] = candidates;
+        candidatesLabel = ` (${firstCandidate}, ${secondCandidate}, ...)`;
+      } else if (candidates.length > 0) {
+        candidatesLabel = ` (${candidates.join(", ")})`;
+      }
+
+      return `${getOrdinalSuffix(i + 1)} Letter${candidatesLabel}`;
+    },
+    [props.notes]
+  );
   const onUpdateNote = useCallback(
     (e: React.MouseEvent<HTMLElement>, char: Letter) => {
       props.onUpdateNote(letterIndex, char, !activeNotes[char]);
@@ -66,7 +82,7 @@ export const LetterNotes = (props: Props) => {
           onChange={(_, newTab) => setLetterIndex(newTab)}
         >
           {props.notes.map((_, i) => (
-            <LetterTab key={i} label={`${getOrdinalSuffix(i + 1)} Letter`} />
+            <LetterTab key={i} label={getLetterTabLabel(i)} />
           ))}
         </Tabs>
       </LetterNotesTabs>
