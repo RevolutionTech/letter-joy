@@ -36,7 +36,10 @@ export const CardPile = (props: Props) => {
       <Pile>
         <CardOnPile letter={null} />
       </Pile>
-      <Tooltip title={`There are ${numCards} cards in this pile.`}>
+      <Tooltip
+        title={`There are ${numCards} cards in this pile.`}
+        PopperProps={{ disablePortal: true }}
+      >
         <CardQuantity>
           <img src={cardQuantity} alt={`Pile of ${numCards} cards`} />
           <CardQuantityNumber>{numCards}</CardQuantityNumber>

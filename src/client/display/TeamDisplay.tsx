@@ -26,6 +26,7 @@ export const TeamDisplay = (props: Props) => {
             <Tooltip
               key={`available-${i}`}
               title="This hint is available to players that have used all of their own hints."
+              PopperProps={{ disablePortal: true }}
             >
               <Hint src={AvailableHint} alt="Available hint" />
             </Tooltip>
@@ -34,6 +35,7 @@ export const TeamDisplay = (props: Props) => {
             <Tooltip
               key={`locked-${i}`}
               title="This hint becomes available once every player uses all of their own hints."
+              PopperProps={{ disablePortal: true }}
             >
               <Hint src={LockedHint} alt="Locked hint" />
             </Tooltip>

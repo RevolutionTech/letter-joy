@@ -27,6 +27,7 @@ export const PlayerHints = (props: Props) => {
         <Tooltip
           key={`${playerID}-used-${i}`}
           title={`This hint was used by ${playerName}.`}
+          PopperProps={{ disablePortal: true }}
         >
           <Hint src={UsedHint} alt="Used hint" />
         </Tooltip>
@@ -35,6 +36,7 @@ export const PlayerHints = (props: Props) => {
         <Tooltip
           key={`${playerID}-unused-${i}`}
           title={`This hint is available only to ${playerName}.`}
+          PopperProps={{ disablePortal: true }}
         >
           <Hint src={UnusedHint} alt="Unused hint" />
         </Tooltip>
@@ -42,6 +44,7 @@ export const PlayerHints = (props: Props) => {
       {hintsUnused === 0 && teamHintsAvailable > 0 && (
         <Tooltip
           title={`${playerName} can still give a clue by using one of the team's shared hints.`}
+          PopperProps={{ disablePortal: true }}
         >
           <Hint src={AvailableHint} alt="Available hint" />
         </Tooltip>

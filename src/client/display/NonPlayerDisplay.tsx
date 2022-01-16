@@ -38,7 +38,10 @@ export const NonPlayerDisplay = (props: Props) => {
           <DisplayName>Non-player {nonPlayerIndex + 1}</DisplayName>
           {numLettersRemaining > 0 && (
             <Hints>
-              <Tooltip title="This hint becomes available once this non-player pile is exhausted.">
+              <Tooltip
+                title="This hint becomes available once this non-player pile is exhausted."
+                PopperProps={{ disablePortal: true }}
+              >
                 <Hint src={LockedHint} alt="Locked hint" />
               </Tooltip>
             </Hints>
