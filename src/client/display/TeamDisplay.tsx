@@ -2,8 +2,8 @@ import _ from "lodash";
 import { Tooltip } from "@mui/material";
 
 import { Letter, TeamHints } from "../../game/types";
-import AvailableHint from "../assets/hints/available.svg";
 import LockedHint from "../assets/hints/locked.svg";
+import UnusedHint from "../assets/hints/unused.svg";
 import { PresentedCard } from "../cards/PresentedCard";
 import { DisplayCell, DisplayStatus, DisplayName } from "./DisplayCell";
 import { Hints, Hint } from "./hint";
@@ -24,11 +24,11 @@ export const TeamDisplay = (props: Props) => {
         <Hints>
           {_.range(teamHints.available).map((_, i) => (
             <Tooltip
-              key={`available-${i}`}
+              key={`unused-${i}`}
               title="This hint is available to players that have used all of their own hints."
               PopperProps={{ disablePortal: true }}
             >
-              <Hint src={AvailableHint} alt="Available hint" />
+              <Hint src={UnusedHint} alt="Unused hint" />
             </Tooltip>
           ))}
           {_.range(teamHints.locked).map((_, i) => (
