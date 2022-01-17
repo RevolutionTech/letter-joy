@@ -24,7 +24,7 @@ export const LetterJoy: Game<G> = {
   setup: (ctx) => {
     const unshuffledDeck = createDeck(LETTER_DISTRIBUTION);
     const deck = shuffleCards(ctx, unshuffledDeck);
-    const [nonPlayerDeckCuts, remainingDeck] = dealNonPlayerCards(
+    const [nonPlayers, remainingDeck] = dealNonPlayerCards(
       deck,
       ctx.numPlayers
     );
@@ -44,10 +44,7 @@ export const LetterJoy: Game<G> = {
 
     return {
       players: _.assign({}, playerStates),
-      nonPlayers: nonPlayerDeckCuts.map((letters) => ({
-        letters,
-        activeLetterIndex: 0,
-      })),
+      nonPlayers,
       teamLetters: [Letter.WILD],
       teamHints: {
         available: NUM_HINTS_STARTING_AVAILABLE[ctx.numPlayers],

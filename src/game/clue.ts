@@ -34,12 +34,18 @@ export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
 
 export const createPreviousClue = (
   teamLetters: Letter[],
+  nonPlayers: Letter[][],
   activeClue: Clue
 ) => ({
   ...activeClue,
-  spelling: activeClue.spelling.map((card) =>
-    card.owner.ownerType === OwnerType.TEAM
-      ? teamLetters[card.letterIndex]
-      : card
-  ),
+  spelling: activeClue.spelling.map((card) => {
+    switch (card.owner.ownerType) {
+      case OwnerType.TEAM:
+        return teamLetters[card.letterIndex];
+      case OwnerType.NONPLAYER:
+        return nonPlayers[card.owner.nonPlayerIndex][card.letterIndex];
+      default:
+        return card;
+    }
+  }),
 });

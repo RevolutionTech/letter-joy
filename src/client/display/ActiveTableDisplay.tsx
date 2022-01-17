@@ -36,7 +36,7 @@ export const ActiveTableDisplay = (props: Props) => {
     ownerType: OwnerType.TEAM,
   };
 
-  const nonPlayerDisplays = g.nonPlayers.map((nonPlayerState, i) => {
+  const nonPlayerDisplays = g.nonPlayers.map((nonPlayerLetters, i) => {
     const owner: {
       ownerType: OwnerType.NONPLAYER;
       nonPlayerIndex: number;
@@ -47,7 +47,7 @@ export const ActiveTableDisplay = (props: Props) => {
     return (
       <NonPlayerDisplay
         key={i}
-        {...nonPlayerState}
+        letters={nonPlayerLetters}
         nonPlayerIndex={i}
         containsTokens={
           spelling && getCardLocationsAssignedToOwner(spelling, owner)

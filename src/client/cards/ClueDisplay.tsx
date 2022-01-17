@@ -20,7 +20,7 @@ const getLettersForOwner = (g: PlayerViewG, owner: CardOwner) => {
     case OwnerType.TEAM:
       return g.teamLetters;
     case OwnerType.NONPLAYER:
-      return g.nonPlayers[owner.nonPlayerIndex].letters;
+      return g.nonPlayers[owner.nonPlayerIndex];
     case OwnerType.PLAYER:
       return g.players[+owner.playerID].letters;
     default:

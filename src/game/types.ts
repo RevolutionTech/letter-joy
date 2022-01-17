@@ -55,16 +55,6 @@ export interface PlayerViewPlayerState
   letters: (Letter | null)[];
 }
 
-interface NonPlayerState {
-  letters: Letter[];
-  activeLetterIndex: number;
-}
-
-export interface PlayerViewNonPlayerState
-  extends Omit<NonPlayerState, "letters"> {
-  letters: (Letter | null)[];
-}
-
 export interface TeamHints {
   available: number;
   locked: number;
@@ -107,7 +97,7 @@ export interface G {
   // TODO: Perhaps keys in players should be strings
   // so that we don't have to cast in all of the places that have playerIDs as strings
   players: Record<number, PlayerState>;
-  nonPlayers: NonPlayerState[];
+  nonPlayers: Letter[][];
   teamLetters: Letter[];
   teamHints: TeamHints;
   activeClue: Clue | null;
@@ -120,7 +110,7 @@ export interface PlayerViewG
   extends Omit<G, "players" | "nonPlayers" | "proposedClues"> {
   wordConstructionLetters: Record<Letter, number>;
   players: Record<number, PlayerViewPlayerState>;
-  nonPlayers: PlayerViewNonPlayerState[];
+  nonPlayers: (Letter | null)[][];
   letterNotes: Record<Letter, boolean>[];
   proposedClues: PlayerViewProposedClue[];
 }

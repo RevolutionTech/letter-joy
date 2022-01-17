@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Tooltip } from "@mui/material";
 import ChairIcon from "@mui/icons-material/Chair";
 
-import { PlayerViewNonPlayerState } from "../../game/types";
+import { Letter } from "../../game/types";
 import LockedHint from "../assets/hints/locked.svg";
 import { CardPile } from "../cards/CardPile";
 import { PresentedCard } from "../cards/PresentedCard";
@@ -14,23 +14,17 @@ import {
 } from "./DisplayCell";
 import { Hints, Hint } from "./hint";
 
-interface Props extends PlayerViewNonPlayerState {
+interface Props {
+  letters: (Letter | null)[];
   nonPlayerIndex: number;
   containsTokens?: number[];
   onAddToSpelling?: () => void;
 }
 
 export const NonPlayerDisplay = (props: Props) => {
-  const {
-    letters,
-    activeLetterIndex,
-    nonPlayerIndex,
-    containsTokens,
-    onAddToSpelling,
-  } = props;
-  const numLetters = letters.length;
-  if (numLetters > 0) {
-    const numLettersRemaining = letters.length - activeLetterIndex - 1;
+  const { letters, nonPlayerIndex, containsTokens, onAddToSpelling } = props;
+  if (letters.length > 0) {
+    const numLettersRemaining = letters.length - 1;
     return (
       <DisplayCell>
         <DisplayStatus>
@@ -49,7 +43,7 @@ export const NonPlayerDisplay = (props: Props) => {
         </DisplayStatus>
         <HandOfCards>
           <PresentedCard
-            letter={letters[activeLetterIndex]}
+            letter={letters[0]}
             active
             containsTokens={containsTokens}
             onClick={onAddToSpelling}
@@ -57,12 +51,9 @@ export const NonPlayerDisplay = (props: Props) => {
           {numLettersRemaining > 3 ? (
             <CardPile numCards={numLettersRemaining} />
           ) : (
-            _.slice(letters, activeLetterIndex + 1).map((_, i) => {
+            _.range(numLettersRemaining).map((i) => {
               return (
-                <PresentedCard
-                  key={`${nonPlayerIndex}-${activeLetterIndex + i}`}
-                  letter={null}
-                />
+                <PresentedCard key={`${nonPlayerIndex}-${i}`} letter={null} />
               );
             })
           )}

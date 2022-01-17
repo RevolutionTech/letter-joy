@@ -7,11 +7,9 @@ import { assertNever } from "../../game/utils";
 const getActiveLetterIndexForOwner = (g: PlayerViewG, owner: CardOwner) => {
   const ownerType = owner.ownerType;
   switch (ownerType) {
-    case OwnerType.TEAM:
-      // TODO: Add support for multiple team letters
-      return 0;
+    case OwnerType.TEAM: // TODO: Add support for multiple team letters
     case OwnerType.NONPLAYER:
-      return g.nonPlayers[owner.nonPlayerIndex].activeLetterIndex;
+      return 0;
     case OwnerType.PLAYER:
       return g.players[+owner.playerID].activeLetterIndex;
     default:

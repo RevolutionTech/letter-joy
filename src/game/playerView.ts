@@ -56,12 +56,7 @@ export const playerView = (
       }),
       {}
     ),
-    nonPlayers: nonPlayers.map(({ letters, activeLetterIndex }) => ({
-      letters: letters.map((letter, i) =>
-        activeLetterIndex < i ? null : letter
-      ),
-      activeLetterIndex,
-    })),
+    nonPlayers: nonPlayers.map((letters) => _.fill(letters, null, 1)),
     letterNotes: playerID == null ? [] : g.players[+playerID].letterNotes,
     proposedClues: proposedClues.map((proposedClue) => {
       const { authorID, spelling, summary, active, votes } = proposedClue;

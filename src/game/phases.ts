@@ -105,32 +105,27 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         "nonPlayerIndex"
       );
 
-      // Update active non-player letters based on those used
-      g.nonPlayers = g.nonPlayers.map((nonPlayerState, i) => {
-        const lastLetterIndex = nonPlayerState.letters.length - 1;
-        const shouldAdvance =
-          nonPlayersInClue.includes(`${i}`) &&
-          nonPlayerState.activeLetterIndex < lastLetterIndex;
-
-        // Add hint when advancing to the last non-player letter
-        if (
-          shouldAdvance &&
-          nonPlayerState.activeLetterIndex + 1 == lastLetterIndex
-        ) {
-          g.teamHints.available += 1;
-        }
-
-        return {
-          ...nonPlayerState,
-          activeLetterIndex: nonPlayerState.activeLetterIndex + +shouldAdvance,
-        };
-      });
-
       // Move the active clue to previous clues
       if (g.activeClue != null) {
-        g.previousClues.push(createPreviousClue(g.teamLetters, g.activeClue));
+        g.previousClues.push(
+          createPreviousClue(g.teamLetters, g.nonPlayers, g.activeClue)
+        );
         g.activeClue = null;
       }
+
+      // Update active non-player letters based on those used
+      g.nonPlayers = g.nonPlayers.map((nonPlayerLetters, i) => {
+        if (nonPlayersInClue.includes(`${i}`) && nonPlayerLetters.length > 1) {
+          // Add hint when advancing to the last non-player letter
+          if (nonPlayerLetters.length === 2) {
+            g.teamHints.available += 1;
+          }
+
+          return _.tail(nonPlayerLetters);
+        } else {
+          return nonPlayerLetters;
+        }
+      });
 
       // Update active player letters based on which letter
       // the player wants to advance to the next round
