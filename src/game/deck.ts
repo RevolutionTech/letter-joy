@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Ctx } from "boardgame.io";
 
 import { MAX_NUM_PLAYERS, MIN_NUM_LETTERS_NON_PLAYER } from "./constants";
-import { Letter } from "./types";
+import { G, Letter } from "./types";
 
 export const createDeck = (distribution: Record<Letter, number>): Letter[] =>
   _.reduce(
@@ -16,6 +16,12 @@ export const createDeck = (distribution: Record<Letter, number>): Letter[] =>
 
 export const shuffleCards = (ctx: Ctx, deck: Letter[]) =>
   ctx.random!.Shuffle(deck);
+
+export const drawCard = (deck: Letter[]) => {
+  const card = deck[0];
+  const remainingDeck = _.slice(deck, 1);
+  return [card, remainingDeck] as const;
+};
 
 export const dealNonPlayerCards = (
   deck: Letter[],
@@ -63,4 +69,20 @@ export const dealCardsEvenly = (deck: Letter[], numPlayers: number) => {
     ..._.chunk(deckMoreCardsPerPlayer, maxNumCardsPerPlayer),
     ..._.chunk(deckFewerCardsPerPlayer, minNumCardsPerPlayer),
   ];
+};
+
+export const drawFromDeck = (g: G, ctx: Ctx) => {
+  let drawPile = g.drawPile;
+
+  // Reshuffle the discard if the draw pile is empty
+  if (drawPile.length === 0) {
+    drawPile = shuffleCards(ctx, g.discardPile);
+    g.discardPile = [];
+  }
+
+  // Draw a card from the draw pile, updating it
+  const [card, newDraw] = drawCard(drawPile);
+  g.drawPile = newDraw;
+
+  return card;
 };

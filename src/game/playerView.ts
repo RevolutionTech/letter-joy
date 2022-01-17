@@ -43,7 +43,7 @@ export const playerView = (
 ): PlayerViewG => {
   const { players, nonPlayers, proposedClues } = g;
   return {
-    ...g,
+    ..._.omit(g, "drawPile"),
     wordConstructionLetters:
       playerID == null
         ? ZERO_LETTERS

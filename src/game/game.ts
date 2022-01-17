@@ -50,6 +50,8 @@ export const LetterJoy: Game<G> = {
         available: NUM_HINTS_STARTING_AVAILABLE[ctx.numPlayers],
         locked: NUM_HINTS_LOCKED[ctx.numPlayers],
       },
+      drawPile: [],
+      discardPile: [],
       activeClue: null,
       previousClues: [],
       proposedClues: [],

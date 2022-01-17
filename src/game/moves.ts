@@ -29,28 +29,35 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   // Move the active player into the waiting stage
   ctx.events?.endStage?.();
 
-  // Distribute unused letters to the remaining players
-  const otherActivePlayers = _.without(getPlayersActing(ctx), activePlayer);
+  // Collect unused letters
   const unusedLetterCounts = countLetters(
     secretWord,
     g.players[+activePlayer].wordConstructionLetters,
     -1
   );
   const unusedLetters = createDeck(unusedLetterCounts);
-  const deckCuts = dealCardsEvenly(
-    shuffleCards(ctx, unusedLetters),
-    otherActivePlayers.length
-  );
-  otherActivePlayers.forEach((playerID, i) => {
-    const wordConstructionLetters = countLetters(
-      deckCuts[i],
-      g.players[+playerID].wordConstructionLetters
+
+  const otherActivePlayers = _.without(getPlayersActing(ctx), activePlayer);
+  if (otherActivePlayers.length > 0) {
+    // Distribute unused letters to the remaining players
+    const deckCuts = dealCardsEvenly(
+      shuffleCards(ctx, unusedLetters),
+      otherActivePlayers.length
     );
-    g.players[+playerID] = {
-      ...g.players[+playerID],
-      wordConstructionLetters,
-    };
-  });
+    otherActivePlayers.forEach((playerID, i) => {
+      const wordConstructionLetters = countLetters(
+        deckCuts[i],
+        g.players[+playerID].wordConstructionLetters
+      );
+      g.players[+playerID] = {
+        ...g.players[+playerID],
+        wordConstructionLetters,
+      };
+    });
+  } else {
+    // Send unused letters to the discard pile
+    g.discardPile = _.concat(g.discardPile, unusedLetters);
+  }
 
   // Reset the active player's letters available to create secret words
   g.players[+activePlayer] = {

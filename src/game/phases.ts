@@ -3,6 +3,7 @@ import { PhaseConfig } from "boardgame.io";
 import { TurnOrder } from "boardgame.io/core";
 
 import { getUniqueOwners, createPreviousClue } from "./clue";
+import { drawCard, drawFromDeck } from "./deck";
 import { consumeHint } from "./hints";
 import {
   chooseSecretWord,
@@ -97,7 +98,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         waiting: { moves: { updateNote: { move: updateNote, client: false } } },
       },
     },
-    onEnd: (g) => {
+    onEnd: (g, ctx) => {
       // Determine the non-players in the most recent clue
       const nonPlayersInClue = getUniqueOwners(
         g.activeClue?.spelling ?? [],
@@ -115,13 +116,21 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
 
       // Update active non-player letters based on those used
       g.nonPlayers = g.nonPlayers.map((nonPlayerLetters, i) => {
-        if (nonPlayersInClue.includes(`${i}`) && nonPlayerLetters.length > 1) {
-          // Add hint when advancing to the last non-player letter
-          if (nonPlayerLetters.length === 2) {
+        if (nonPlayersInClue.includes(`${i}`)) {
+          // Add previous letter to the discard
+          const [previousLetter, newLetters] = drawCard(nonPlayerLetters);
+          g.discardPile.push(previousLetter);
+
+          if (newLetters.length === 0) {
+            // Pull a new letter for this non-player from the deck
+            const newLetter = drawFromDeck(g, ctx);
+            return [newLetter];
+          } else if (newLetters.length === 1) {
+            // Add hint when we've advanced to the last non-player letter
             g.teamHints.available += 1;
           }
 
-          return _.tail(nonPlayerLetters);
+          return newLetters;
         } else {
           return nonPlayerLetters;
         }

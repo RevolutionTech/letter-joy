@@ -100,6 +100,8 @@ export interface G {
   nonPlayers: Letter[][];
   teamLetters: Letter[];
   teamHints: TeamHints;
+  drawPile: Letter[];
+  discardPile: Letter[];
   activeClue: Clue | null;
   previousClues: PreviousClue[];
   proposedClues: ProposedClue[];
@@ -107,7 +109,7 @@ export interface G {
 }
 
 export interface PlayerViewG
-  extends Omit<G, "players" | "nonPlayers" | "proposedClues"> {
+  extends Omit<G, "players" | "nonPlayers" | "drawPile" | "proposedClues"> {
   wordConstructionLetters: Record<Letter, number>;
   players: Record<number, PlayerViewPlayerState>;
   nonPlayers: (Letter | null)[][];
