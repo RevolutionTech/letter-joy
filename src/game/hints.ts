@@ -18,9 +18,10 @@ export const playerHasHintAvailable = (
 export const consumeHint = (g: G, ctx: Ctx, playerID: string) => {
   const { players, teamHints } = g;
   const hintPlayer = players[+playerID];
+  const numStartingHints = NUM_HINTS_STARTING_PER_PLAYER[ctx.numPlayers];
 
   // Consume one of the team hints, if necessary
-  if (hintPlayer.hintsUsed >= NUM_HINTS_STARTING_PER_PLAYER[ctx.numPlayers]) {
+  if (hintPlayer.hintsUsed >= numStartingHints) {
     teamHints.available -= 1;
   }
 
@@ -30,7 +31,10 @@ export const consumeHint = (g: G, ctx: Ctx, playerID: string) => {
   // Potentially unlock new hints
   if (
     teamHints.locked > 0 &&
-    _.every(g.players, (playerState) => playerState.hintsUsed > 0)
+    _.every(
+      g.players,
+      (playerState) => playerState.hintsUsed >= numStartingHints
+    )
   ) {
     teamHints.available += teamHints.locked;
     teamHints.locked = 0;
