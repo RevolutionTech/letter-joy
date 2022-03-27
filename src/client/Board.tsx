@@ -1,20 +1,37 @@
+import React, { useState } from "react";
 import { BoardProps } from "boardgame.io/react";
-import { FullScreen, useFullScreenHandle } from "react-full-screen";
-import { styled } from "@mui/material";
+import { Button, Dialog, Slide } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
 
 import { GameBoard } from "./GameBoard";
 
-const ScrollableFullScreen = styled(FullScreen)({ overflow: "auto" });
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & { children: React.ReactElement },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export const LetterJoyBoard = (props: BoardProps) => {
-  const fshandle = useFullScreenHandle();
+  const [isGameOpen, setIsGameOpen] = useState<boolean>(false);
 
   return (
     <>
-      <button onClick={fshandle.enter}>Return to game (fullscreen)</button>
-      <ScrollableFullScreen handle={fshandle}>
-        {fshandle.active && <GameBoard {...props} />}
-      </ScrollableFullScreen>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setIsGameOpen(true)}
+      >
+        Open game
+      </Button>
+      <Dialog
+        fullScreen
+        open={isGameOpen}
+        onClose={() => setIsGameOpen(false)}
+        TransitionComponent={Transition}
+      >
+        <GameBoard {...props} />
+      </Dialog>
     </>
   );
 };
