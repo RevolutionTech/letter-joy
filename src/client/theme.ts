@@ -1,4 +1,6 @@
 const theme = {
+  mediaLg: "@media (min-width:1200px)",
+
   fontFamily: '"Quicksand", "Helvetica Neue", sans-serif',
 
   white: "#FFFFFF",
