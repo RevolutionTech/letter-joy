@@ -10,7 +10,7 @@ const Title = styled("img")({
 const Tagline = styled("p")({ margin: "44px 0" });
 
 export const Home = () => (
-  <LobbyPage>
+  <LobbyPage showLogo={false}>
     <Title src={title} alt="Letter Joy" />
     <Tagline>A cooperative word deduction game.</Tagline>
     <MenuButton to="/lobby" variant="contained" color="primary">

@@ -1,6 +1,7 @@
 import { styled } from "@mui/material";
 import React from "react";
 
+import logo from "../assets/lobby/logo.svg";
 import theme from "../theme";
 
 const LobbyBack = styled("div")({
@@ -13,6 +14,7 @@ const LobbyBack = styled("div")({
   },
 });
 const LobbyMenu = styled("div")({
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -21,10 +23,24 @@ const LobbyMenu = styled("div")({
   padding: "40px",
   backgroundColor: theme.white,
 });
+const LogoAnchor = styled("a")({
+  position: "absolute",
+  alignSelf: "flex-start",
+});
 
-// TODO: Add optional nav link back to home page
-export const LobbyPage = ({ children }: { children?: React.ReactNode }) => (
+interface Props {
+  showLogo?: boolean;
+}
+
+export const LobbyPage = (props: React.PropsWithChildren<Props>) => (
   <LobbyBack>
-    <LobbyMenu>{children}</LobbyMenu>
+    <LobbyMenu>
+      {(props.showLogo ?? true) && (
+        <LogoAnchor href="/">
+          <img src={logo} alt="Home" />
+        </LogoAnchor>
+      )}
+      {props.children}
+    </LobbyMenu>
   </LobbyBack>
 );
