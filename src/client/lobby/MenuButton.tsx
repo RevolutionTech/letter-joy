@@ -1,21 +1,11 @@
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Button, ButtonProps } from "@mui/material";
 
-// TODO: Inherit from MUI ButtonProps
-interface Props {
+interface Props extends ButtonProps<"a"> {
   to: string;
-  color?:
-    | "inherit"
-    | "primary"
-    | "secondary"
-    | "success"
-    | "error"
-    | "info"
-    | "warning";
-  variant?: "text" | "outlined" | "contained";
 }
 
-export const MenuButton = (props: React.PropsWithChildren<Props>) => (
+export const MenuButton = (props: Props) => (
   <Button
     component={Link}
     size="large"
