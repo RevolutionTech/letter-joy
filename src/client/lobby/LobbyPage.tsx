@@ -9,18 +9,21 @@ const LobbyBack = styled("div")({
   justifyContent: "center",
   width: "100vw",
   height: "100vh",
-  [theme.mediaLg]: {
-    backgroundColor: theme.silver,
-  },
+  backgroundColor: theme.silver,
 });
 const LobbyMenu = styled("div")({
   position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  minWidth: "50%",
-  height: "calc(100% - 2 * 40px)",
-  padding: "40px",
+  width: "100%",
+  height: "calc(100% - 2 * 20px)",
+  padding: "20px",
+  [theme.mediaLg]: {
+    width: "50%",
+    height: "calc(100% - 2 * 40px)",
+    padding: "40px",
+  },
   backgroundColor: theme.white,
 });
 const LogoAnchor = styled("a")({

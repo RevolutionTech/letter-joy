@@ -6,6 +6,7 @@ import { MenuButton } from "./MenuButton";
 
 const Title = styled("img")({
   maxWidth: "136px",
+  marginTop: "20px",
 });
 const Tagline = styled("p")({ margin: "44px 0" });
 
