@@ -2,7 +2,9 @@ import _ from "lodash";
 import { Game } from "boardgame.io";
 
 import {
+  LETTER_JOY,
   LETTERS_PER_PLAYER,
+  MIN_NUM_PLAYERS,
   MAX_NUM_PLAYERS,
   NUM_HINTS_LOCKED,
   NUM_HINTS_STARTING_AVAILABLE,
@@ -20,7 +22,7 @@ import { playerView } from "./playerView";
 import { Letter, G } from "./types";
 
 export const LetterJoy: Game<G> = {
-  name: "letter-joy",
+  name: LETTER_JOY,
   setup: (ctx) => {
     const unshuffledDeck = createDeck(LETTER_DISTRIBUTION);
     const deck = shuffleCards(ctx, unshuffledDeck);
@@ -67,6 +69,6 @@ export const LetterJoy: Game<G> = {
   phases: PHASES,
   playerView,
 
-  minPlayers: 2,
+  minPlayers: MIN_NUM_PLAYERS,
   maxPlayers: MAX_NUM_PLAYERS,
 };

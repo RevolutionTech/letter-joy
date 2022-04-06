@@ -1,5 +1,7 @@
 // Static constants
+export const LETTER_JOY = "letter-joy";
 export const LETTERS_PER_PLAYER = 5;
+export const MIN_NUM_PLAYERS = 2;
 export const MAX_NUM_PLAYERS = 6;
 export const MIN_NUM_LETTERS_NON_PLAYER = 7;
 

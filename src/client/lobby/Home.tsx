@@ -14,8 +14,8 @@ export const Home = () => (
   <LobbyPage showLogo={false}>
     <Title src={title} alt="Letter Joy" />
     <Tagline>A cooperative word deduction game.</Tagline>
-    <MenuButton to="/lobby" variant="contained" color="primary">
-      Play game
+    <MenuButton to="/room/new" variant="contained" color="primary">
+      New game
     </MenuButton>
   </LobbyPage>
 );

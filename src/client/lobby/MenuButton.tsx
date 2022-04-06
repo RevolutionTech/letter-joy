@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button, ButtonProps } from "@mui/material";
 
+import { LARGE_BUTTON_STYLES } from "./largeButton";
+
 interface Props extends ButtonProps<"a"> {
   to: string;
 }
@@ -8,8 +10,7 @@ interface Props extends ButtonProps<"a"> {
 export const MenuButton = (props: Props) => (
   <Button
     component={Link}
-    size="large"
-    style={{ width: "296px", height: "72px", marginBottom: "16px" }}
+    style={LARGE_BUTTON_STYLES} // Cannot provide styles to styled() because TS complains
     {...props}
   />
 );
