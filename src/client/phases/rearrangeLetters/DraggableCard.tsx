@@ -1,4 +1,4 @@
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable } from "@react-forked/dnd";
 
 import { Letter } from "../../../game/types";
 import { Card } from "../../cards/Card";

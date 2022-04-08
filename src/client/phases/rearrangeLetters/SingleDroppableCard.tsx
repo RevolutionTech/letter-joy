@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { Droppable } from "react-beautiful-dnd";
+import { Droppable } from "@react-forked/dnd";
 
 import { Letter, OwnerType, CardLocation } from "../../../game/types";
 import {

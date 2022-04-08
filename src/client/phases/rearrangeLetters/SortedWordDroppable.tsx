@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { styled } from "@mui/material";
-import { Droppable } from "react-beautiful-dnd";
+import { Droppable } from "@react-forked/dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter, OwnerType, Spelling } from "../../../game/types";

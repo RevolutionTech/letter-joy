@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 import _ from "lodash";
-import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "@react-forked/dnd";
 
 import {
   OwnerType,
