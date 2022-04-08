@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 import _ from "lodash";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
 import {
   OwnerType,
@@ -62,7 +62,7 @@ export const RearrangeLettersContent = (props: Props) => {
   const [sortedCards, setSortedCards] = useState<Spelling>([]);
 
   const onDragEnd = useCallback(
-    (result) => {
+    (result: DropResult) => {
       const { draggableId, source, destination } = result;
 
       // Do nothing unless the draggable
