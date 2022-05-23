@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { SocketIO } from "boardgame.io/multiplayer";
 import { Client } from "boardgame.io/react";
 
