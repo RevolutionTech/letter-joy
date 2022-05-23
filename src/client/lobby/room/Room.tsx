@@ -7,7 +7,7 @@ import { GameBoard } from "../../GameBoard";
 import { SERVER_HOST } from "../../host";
 import { NotFound } from "../NotFound";
 import { SetPlayerName } from "./SetPlayerName";
-import { useRoomPlayerInfo } from "./useRoomPlayerInfo";
+import { isRoomOpen, useRoomPlayerInfo } from "./useRoomPlayerInfo";
 import { WaitingRoom } from "./WaitingRoom";
 
 export const Room = () => {
@@ -23,18 +23,13 @@ export const Room = () => {
 
   if (!matchID) {
     return <NotFound />;
-  } else if (isEditingName || playerName == null || playerInfo == null) {
-    return (
+  } else if (isRoomOpen(players)) {
+    return isEditingName || playerName == null || playerInfo == null ? (
       <SetPlayerName
         initialPlayerName={playerName}
         onUpdatePlayerName={updatePlayerName}
       />
-    );
-  } else if (
-    players.length === 0 ||
-    _.some(players, (player) => player.name == null)
-  ) {
-    return (
+    ) : (
       <WaitingRoom
         playerID={playerInfo.playerID}
         onEditName={() => setIsEditingName(true)}
@@ -52,8 +47,8 @@ export const Room = () => {
   return (
     <Game
       matchID={matchID}
-      playerID={playerInfo.playerID}
-      credentials={playerInfo.playerCredentials}
+      playerID={playerInfo?.playerID}
+      credentials={playerInfo?.playerCredentials}
     />
   );
 };

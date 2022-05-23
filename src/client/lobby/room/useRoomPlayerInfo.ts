@@ -8,6 +8,9 @@ import { LETTER_JOY } from "../../../game/constants";
 import { SERVER_HOST } from "../../host";
 import { Player } from "./types";
 
+export const isRoomOpen = (players: Player[]) =>
+  players.length === 0 || _.some(players, (player) => player.name == null);
+
 export const useRoomPlayerInfo = () => {
   const params = useParams();
   const { matchID } = params;
@@ -27,6 +30,7 @@ export const useRoomPlayerInfo = () => {
     | undefined
   >(cookies.letterjoyPlayerInfo);
   const [players, setPlayers] = useState<Player[]>([]);
+  const isThisRoomOpen = isRoomOpen(players);
   const [updatePlayersTimer, setUpdatePlayersTimer] =
     useState<NodeJS.Timer | null>(null);
 
@@ -34,6 +38,22 @@ export const useRoomPlayerInfo = () => {
     () => new LobbyClient({ server: SERVER_HOST }),
     [SERVER_HOST]
   );
+  const fetchMatch = useCallback(async () => {
+    if (matchID == null) {
+      return;
+    }
+
+    try {
+      const match = await lobbyClient.getMatch(LETTER_JOY, matchID);
+      setPlayers(match.players);
+      return match;
+    } catch {
+      // User attempts to fetch match that no longer exists
+      // TODO: Mark the match ID as invalid so that 404 can be shown
+      setPlayers([]);
+      return;
+    }
+  }, [matchID, lobbyClient, setPlayers]);
   const updatePlayerName = useCallback(
     async (newName: string) => {
       if (newName !== playerName) {
@@ -78,46 +98,37 @@ export const useRoomPlayerInfo = () => {
     [window.location.pathname, lobbyClient, setPlayerInfo, setCookie]
   );
   const updatePlayers = useCallback(async () => {
-    if (matchID == null || playerName == null || playerInfo == null) {
+    const match = await fetchMatch();
+    if (match == null) {
       return;
     }
 
-    // TODO: Handle case where user attempts to fetch match that no longer exists
-    const match = await lobbyClient.getMatch(LETTER_JOY, matchID);
-    setPlayers(match.players);
-
     // Set another timer if still waiting on players
     // TODO: Fix infinite recursion when tab is left open
-    if (
-      match.players.length === 0 ||
-      _.some(match.players, (player) => player.name == null)
-    ) {
+    if (isRoomOpen(match.players)) {
       setTimeout(updatePlayers, 5000);
     }
-  }, [
-    matchID,
-    playerName,
-    playerInfo,
-    lobbyClient,
-    updatePlayersTimer,
-    setPlayers,
-    setUpdatePlayersTimer,
-  ]);
+  }, [lobbyClient, updatePlayersTimer, setPlayers, setUpdatePlayersTimer]);
 
   useEffect(() => {
-    if (!matchID || playerName == null || playerInfo != null) {
+    if (
+      !matchID ||
+      !isThisRoomOpen ||
+      playerName == null ||
+      playerInfo != null
+    ) {
       return;
     }
 
     joinRoom(matchID, playerName);
-  }, [matchID, playerName, playerInfo]);
+  }, [matchID, isThisRoomOpen, playerName, playerInfo]);
 
   useEffect(() => {
     if (playerInfo == null) {
-      return;
+      fetchMatch();
+    } else {
+      updatePlayers();
     }
-
-    updatePlayers();
   }, [playerInfo == null]);
 
   return [
