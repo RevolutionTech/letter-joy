@@ -1,3 +1,4 @@
+import { styled } from "@mui/material";
 import { Textfit } from "react-textfit";
 
 import {
@@ -8,6 +9,8 @@ import {
   PlayerViewG,
 } from "../../game/types";
 import { assertNever } from "../../game/utils";
+
+const Subscript = styled("sub")({ fontSize: "60%" });
 
 interface Props {
   g: PlayerViewG;
@@ -38,7 +41,7 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
     <>
       {letters[card.letterIndex] ?? (
         <>
-          ?<sub>{card.letterIndex + 1}</sub>
+          ?<Subscript>{card.letterIndex + 1}</Subscript>
         </>
       )}
     </>
