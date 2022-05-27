@@ -1,6 +1,6 @@
 import PersonIcon from "@mui/icons-material/Person";
 
-import { PlayerViewPlayerState } from "../../game/types";
+import { Letter, PlayerViewPlayerState } from "../../game/types";
 import { PresentedCard } from "../cards/PresentedCard";
 import {
   DisplayCell,
@@ -31,7 +31,11 @@ export const PlayerDisplay = (props: Props) => {
     containsTokens,
     onAddToSpelling,
   } = props;
-  return letters.length > 0 ? (
+  const displayLetters =
+    playerOutcome?.spelledWord == null
+      ? letters
+      : (Array.from(playerOutcome.spelledWord) as Letter[]);
+  return displayLetters.length > 0 ? (
     <DisplayCell>
       <DisplayStatus>
         <PersonIcon style={{ marginRight: "4px" }} />
@@ -45,7 +49,7 @@ export const PlayerDisplay = (props: Props) => {
         />
       </DisplayStatus>
       <HandOfCards>
-        {letters.map((letter, i) => {
+        {displayLetters.map((letter, i) => {
           const active = playerOutcome != null || i === activeLetterIndex;
           const letterDisplayed = active ? letter : null;
           return (
