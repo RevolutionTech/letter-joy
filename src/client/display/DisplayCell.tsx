@@ -3,10 +3,7 @@ import { styled } from "@mui/material";
 export const DisplayCell = styled("div")({
   display: "flex",
   flexDirection: "column",
-  marginTop: "8px",
-  marginLeft: "16px",
-  marginRight: "16px",
-  marginBottom: "16px",
+  margin: "8px 16px",
   fontSize: "20pt",
 });
 
@@ -19,7 +16,7 @@ export const DisplayName = styled("div")({ marginRight: "16px" });
 
 export const HandOfCards = styled("div")({
   display: "flex",
-  marginTop: "16px",
+  margin: "16px 0",
   justifyContent: "flex-start",
   alignItems: "center",
 });
