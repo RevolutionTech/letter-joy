@@ -11,10 +11,7 @@ import {
   PlayerViewProposedClue,
 } from "../../../../game/types";
 import { ClueDisplay } from "../../../cards/ClueDisplay";
-import {
-  MaybePlayerNames,
-  playerNameDisplay,
-} from "../../../display/playerName";
+import { MaybePlayerNames, playerNameDisplay } from "../../../display/players";
 import theme from "../../../theme";
 import { VoteOption } from "./VoteOption";
 

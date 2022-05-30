@@ -32,6 +32,8 @@ export const ChooseClueBoard = (props: BoardProps) => {
           {isProposing ? (
             <ProposingContent
               g={g}
+              playerNames={playerNames}
+              currentPlayer={props.playerID}
               clueProposingPlacement={spelling}
               onConfirmProposing={
                 spelling.length > 0 ? onConfirmProposing : undefined

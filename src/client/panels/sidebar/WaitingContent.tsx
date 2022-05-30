@@ -1,4 +1,4 @@
-import { MaybePlayerNames, playerNameDisplay } from "../../display/playerName";
+import { MaybePlayerNames, playerNameDisplay } from "../../display/players";
 import { SidebarList } from "./SidebarList";
 
 interface Props {

@@ -12,11 +12,6 @@ import { assertNever } from "../../game/utils";
 
 const Subscript = styled("sub")({ fontSize: "60%" });
 
-interface Props {
-  g: PlayerViewG;
-  spelling: (CardLocation | Letter)[];
-}
-
 const getLettersForOwner = (g: PlayerViewG, owner: CardOwner) => {
   const ownerType = owner.ownerType;
   switch (ownerType) {
@@ -49,23 +44,26 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
   return letter;
 };
 
-export const ClueDisplay = (props: Props) => {
-  const { g, spelling } = props;
-  return (
-    <Textfit mode="single" max={64}>
-      {spelling.reduce(
-        (display: React.ReactNode, card: CardLocation | Letter) => {
-          const letterDisplay = getLetterDisplay(g, card);
-          return display == null ? (
-            letterDisplay
-          ) : (
-            <>
-              {display} {letterDisplay}
-            </>
-          );
-        },
-        null
-      )}
-    </Textfit>
-  );
-};
+interface Props {
+  g: PlayerViewG;
+  spelling: (CardLocation | Letter)[];
+  maxFontSize?: number;
+}
+
+export const ClueDisplay = ({ g, spelling, maxFontSize = 64 }: Props) => (
+  <Textfit mode="single" max={maxFontSize}>
+    {spelling.reduce(
+      (display: React.ReactNode, card: CardLocation | Letter) => {
+        const letterDisplay = getLetterDisplay(g, card);
+        return display == null ? (
+          letterDisplay
+        ) : (
+          <>
+            {display} {letterDisplay}
+          </>
+        );
+      },
+      null
+    )}
+  </Textfit>
+);

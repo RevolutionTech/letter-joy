@@ -1,9 +1,6 @@
 import { Radio, FormControlLabel, Chip } from "@mui/material";
 
-import {
-  MaybePlayerNames,
-  playerNameDisplay,
-} from "../../../display/playerName";
+import { MaybePlayerNames, playerNameDisplay } from "../../../display/players";
 
 interface Props {
   playerNames: MaybePlayerNames;

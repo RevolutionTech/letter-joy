@@ -4,7 +4,7 @@ import { BoardProps } from "boardgame.io/react";
 import { getLeftPlayerID, getPlayersActing } from "../../../game/players";
 import { PlayerViewG } from "../../../game/types";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
-import { playerNameDisplay } from "../../display/playerName";
+import { playerNameDisplay } from "../../display/players";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { WaitingContent } from "../../panels/sidebar/WaitingContent";

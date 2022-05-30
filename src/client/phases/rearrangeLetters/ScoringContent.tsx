@@ -6,7 +6,7 @@ import { playerScore, totalScore } from "../../../game/scoring";
 import { PlayerViewG } from "../../../game/types";
 import { displayWord } from "../../../game/word";
 import { ActiveTableDisplay } from "../../display/ActiveTableDisplay";
-import { MaybePlayerNames, playerNameDisplay } from "../../display/playerName";
+import { MaybePlayerNames, playerNameDisplay } from "../../display/players";
 import { PanelLayout } from "../../panels/PanelLayout";
 import { Sidebar } from "../../panels/sidebar/Sidebar";
 import { StarRating } from "./StarRating";

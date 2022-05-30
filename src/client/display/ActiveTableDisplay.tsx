@@ -1,12 +1,14 @@
 import { styled } from "@mui/material";
 
-import { getRightPlayerID } from "../../game/players";
 import { OwnerType, CardOwner, Spelling, PlayerViewG } from "../../game/types";
-import { cycleArray } from "../../game/utils";
 import { getCardLocationsAssignedToOwner } from "../cards/spelling";
 import { NonPlayerDisplay } from "./NonPlayerDisplay";
 import { PlayerDisplay } from "./PlayerDisplay";
-import { MaybePlayerNames, playerNameDisplay } from "./playerName";
+import {
+  getOrderedPlayers,
+  MaybePlayerNames,
+  playerNameDisplay,
+} from "./players";
 import { TeamDisplay } from "./TeamDisplay";
 
 const HandDisplayGrid = styled("div")({
@@ -49,12 +51,7 @@ export const ActiveTableDisplay = (props: Props) => {
     );
   });
 
-  const playerStates = Object.values(g.players);
-  const rightPlayerID =
-    currentPlayer == null
-      ? 0
-      : getRightPlayerID(playerStates.length, +currentPlayer);
-  const orderedPlayers = cycleArray(playerStates, rightPlayerID);
+  const orderedPlayers = getOrderedPlayers(g, currentPlayer);
   const playerDisplays = orderedPlayers.map((playerState) => {
     const playerID = playerState.playerID;
     const owner: { ownerType: OwnerType.PLAYER; playerID: string } = {
@@ -66,7 +63,7 @@ export const ActiveTableDisplay = (props: Props) => {
         key={playerID}
         {...playerState}
         playerName={playerNameDisplay(playerNames, +playerID)}
-        numPlayers={playerStates.length}
+        numPlayers={Object.keys(g.players).length}
         teamHintsAvailable={g.teamHints.available}
         containsTokens={
           spelling && getCardLocationsAssignedToOwner(spelling, owner)
