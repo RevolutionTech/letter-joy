@@ -42,7 +42,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
     "eslint": "^8.17.0",
-    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react": "^7.30.0",
     "nodemon": "^2.0.16",
     "parcel-bundler": "^1.12.5",
     "prettier": "^2.6.2",
