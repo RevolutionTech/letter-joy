@@ -11,12 +11,13 @@ export const playerHasHintAvailable = (
   const numPlayers = Object.keys(g.players).length;
   return (
     g.players[+playerID].hintsUsed <
-      NUM_HINTS_STARTING_PER_PLAYER[numPlayers] || g.teamHints.available > 0
+      NUM_HINTS_STARTING_PER_PLAYER[numPlayers] || g.team.hints.available > 0
   );
 };
 
 export const consumeHint = (g: G, ctx: Ctx, playerID: string) => {
-  const { players, teamHints } = g;
+  const { players, team } = g;
+  const teamHints = team.hints;
   const hintPlayer = players[+playerID];
   const numStartingHints = NUM_HINTS_STARTING_PER_PLAYER[ctx.numPlayers];
 
@@ -41,5 +42,5 @@ export const consumeHint = (g: G, ctx: Ctx, playerID: string) => {
   }
 
   // Apply updates to g
-  g = { ...g, players, teamHints };
+  g = { ...g, players, team: { ...team, hints: teamHints } };
 };

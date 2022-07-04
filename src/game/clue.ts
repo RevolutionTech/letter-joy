@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { Letter, OwnerType, Spelling, Clue } from "./types";
+import { Letter, OwnerType, CardStack, Spelling, Clue } from "./types";
 
 export const getUniqueOwners = (
   spelling: Spelling,
@@ -13,12 +13,12 @@ export const getUniqueOwners = (
   return Object.keys(_.groupBy(filteredOwners, ownerKey));
 };
 
-export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
+export const clueSummary = (placement: Spelling) => {
   const usesWild = _.some(
     placement,
     (cardLocation) =>
       cardLocation.owner.ownerType === OwnerType.TEAM &&
-      teamLetters[cardLocation.letterIndex] === Letter.WILD
+      cardLocation.stack === CardStack.SINGLE
   );
   return {
     numLetters: placement.length,
@@ -33,7 +33,7 @@ export const clueSummary = (teamLetters: Letter[], placement: Spelling) => {
 };
 
 export const createPreviousClue = (
-  teamLetters: Letter[],
+  bonusLetters: Letter[],
   nonPlayers: Letter[][],
   activeClue: Clue
 ) => ({
@@ -41,9 +41,13 @@ export const createPreviousClue = (
   spelling: activeClue.spelling.map((card) => {
     switch (card.owner.ownerType) {
       case OwnerType.TEAM:
-        return teamLetters[card.letterIndex];
+        return card.stack === CardStack.SINGLE
+          ? Letter.WILD
+          : bonusLetters[card.letterIndex];
       case OwnerType.NONPLAYER:
-        return nonPlayers[card.owner.nonPlayerIndex][card.letterIndex];
+        return nonPlayers[card.owner.nonPlayerIndex][
+          card.stack === CardStack.SINGLE ? 0 : card.letterIndex
+        ];
       default:
         return card;
     }

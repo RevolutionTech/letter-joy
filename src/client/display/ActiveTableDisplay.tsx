@@ -64,7 +64,7 @@ export const ActiveTableDisplay = (props: Props) => {
         {...playerState}
         playerName={playerNameDisplay(playerNames, +playerID)}
         numPlayers={Object.keys(g.players).length}
-        teamHintsAvailable={g.teamHints.available}
+        teamHintsAvailable={g.team.hints.available}
         containsTokens={
           spelling && getCardLocationsAssignedToOwner(spelling, owner)
         }
@@ -76,8 +76,7 @@ export const ActiveTableDisplay = (props: Props) => {
   return (
     <HandDisplayGrid>
       <TeamDisplay
-        teamLetters={g.teamLetters}
-        teamHints={g.teamHints}
+        team={g.team}
         containsTokens={
           spelling && getCardLocationsAssignedToOwner(spelling, teamOwner)
         }

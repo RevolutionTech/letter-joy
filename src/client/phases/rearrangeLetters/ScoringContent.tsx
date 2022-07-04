@@ -23,7 +23,7 @@ interface Props {
 
 export const ScoringContent = (props: Props) => {
   const { g, playerNames, currentPlayer, activePlayers } = props;
-  const teamHintsAvailable = g.teamHints.available;
+  const teamHintsAvailable = g.team.hints.available;
   const playerStates = Object.values(g.players);
   const finishedPlayers = playerStates.filter((player) => player.playerOutcome);
   const teamScore = totalScore(

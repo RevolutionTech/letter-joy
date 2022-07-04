@@ -8,7 +8,14 @@ import { createDeck, shuffleCards, dealCardsEvenly } from "./deck";
 import { playerHasHintAvailable } from "./hints";
 import { ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
-import { Letter, OwnerType, Spelling, G } from "./types";
+import {
+  Letter,
+  OwnerType,
+  CardStack,
+  OwnerCardLocation,
+  Spelling,
+  G,
+} from "./types";
 import { isWordEqual } from "./word";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
@@ -94,7 +101,7 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   g.proposedClues.push({
     authorID: ctx.playerID,
     spelling,
-    summary: clueSummary(g.teamLetters, spelling),
+    summary: clueSummary(spelling),
     active: true,
     votes: [],
   });
@@ -214,6 +221,22 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
   return;
 };
 
+const removeTeamLettersUsed = (g: G, teamLettersUsed: OwnerCardLocation[]) => {
+  // Remove bonus letters
+  const bonusLetters = teamLettersUsed.filter(
+    (cardLocation) => cardLocation.stack === CardStack.ARRAY
+  ) as { stack: CardStack.ARRAY; letterIndex: number }[];
+  _.pullAt(
+    g.team.bonus,
+    bonusLetters.map((cardLocation) => cardLocation.letterIndex)
+  );
+
+  // Remove wild once used
+  if (bonusLetters.length < teamLettersUsed.length) {
+    g.team.wild = null;
+  }
+};
+
 export const rearrangeLetters = (
   g: G,
   ctx: Ctx,
@@ -228,18 +251,28 @@ export const rearrangeLetters = (
   // Determine the word the user spelled
   const playerState = g.players[+ctx.currentPlayer];
   const spelledWord = spelling
-    .map(
-      (cardLocation) =>
-        (cardLocation.owner.ownerType === OwnerType.TEAM
-          ? g.teamLetters
-          : playerState.letters)[cardLocation.letterIndex]
-    )
+    .map((cardLocation) => {
+      if (cardLocation.stack === CardStack.SINGLE) {
+        return Letter.WILD;
+      } else {
+        const letters =
+          cardLocation.owner.ownerType === OwnerType.TEAM
+            ? g.team.bonus
+            : playerState.letters;
+        return letters[cardLocation.letterIndex];
+      }
+    })
     .join("");
 
   // Assign the player outcome
   const teamLettersUsed = spelling
     .filter((cardLocation) => cardLocation.owner.ownerType === OwnerType.TEAM)
-    .map((cardLocation) => cardLocation.letterIndex);
+    .map((cardLocation) => ({
+      stack: cardLocation.stack,
+      ...(cardLocation.stack === CardStack.ARRAY
+        ? { letterIndex: cardLocation.letterIndex }
+        : {}),
+    })) as OwnerCardLocation[];
   const isSpelledWordExpected = isWordEqual(expectedWord, spelledWord);
   g.players[+ctx.currentPlayer] = {
     ...playerState,
@@ -257,7 +290,7 @@ export const rearrangeLetters = (
   // whether they spelled what they meant to or not
   if (isSpelledWordExpected) {
     // Remove any team letters that were used
-    _.pullAt(g.teamLetters, teamLettersUsed);
+    removeTeamLettersUsed(g, teamLettersUsed);
 
     // End turn and advance to scoring
     ctx.events?.setStage?.("scoring");
@@ -288,7 +321,7 @@ export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
   };
 
   // Remove any team letters that were used
-  _.pullAt(g.teamLetters, playerState.playerOutcome.teamLettersUsed);
+  removeTeamLettersUsed(g, playerState.playerOutcome.teamLettersUsed);
 
   // Move the active player into the scoring stage and end the turn
   ctx.events?.endStage?.();

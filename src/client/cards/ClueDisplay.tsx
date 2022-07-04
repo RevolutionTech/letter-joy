@@ -5,6 +5,7 @@ import {
   Letter,
   OwnerType,
   CardOwner,
+  CardStack,
   CardLocation,
   PlayerViewG,
 } from "../../game/types";
@@ -16,7 +17,7 @@ const getLettersForOwner = (g: PlayerViewG, owner: CardOwner) => {
   const ownerType = owner.ownerType;
   switch (ownerType) {
     case OwnerType.TEAM:
-      return g.teamLetters;
+      return g.team.bonus;
     case OwnerType.NONPLAYER:
       return g.nonPlayers[owner.nonPlayerIndex];
     case OwnerType.PLAYER:
@@ -31,12 +32,20 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
     return <>{card}</>;
   }
 
+  if (
+    card.owner.ownerType === OwnerType.TEAM &&
+    card.stack === CardStack.SINGLE
+  ) {
+    return Letter.WILD;
+  }
+
   const letters = getLettersForOwner(g, card.owner);
+  const letterIndex = card.stack === CardStack.SINGLE ? 0 : card.letterIndex;
   const letter = (
     <>
-      {letters[card.letterIndex] ?? (
+      {letters[letterIndex] ?? (
         <>
-          ?<Subscript>{card.letterIndex + 1}</Subscript>
+          ?<Subscript>{letterIndex + 1}</Subscript>
         </>
       )}
     </>

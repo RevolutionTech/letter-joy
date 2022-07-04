@@ -1,7 +1,12 @@
 import { styled } from "@mui/material";
 import { Droppable } from "@react-forked/dnd";
 
-import { Letter, OwnerType, CardLocation } from "../../../game/types";
+import {
+  Letter,
+  OwnerType,
+  CardLocation,
+  CardStack,
+} from "../../../game/types";
 import {
   CARD_WIDTH,
   CARD_BORDER_WIDTH,
@@ -15,6 +20,19 @@ const CardPlaceholder = styled("div")({
   marginRight: `${CARD_MARGIN_RIGHT}px`,
 });
 
+const letterFromCardLocation = (
+  teamLetters: Letter[],
+  cardLocation: CardLocation
+) => {
+  if (cardLocation.owner.ownerType === OwnerType.TEAM) {
+    return cardLocation.stack === CardStack.SINGLE
+      ? Letter.WILD
+      : teamLetters[cardLocation.letterIndex];
+  } else {
+    return null;
+  }
+};
+
 interface Props {
   isDragDisabled: boolean;
   teamLetters: Letter[];
@@ -25,10 +43,7 @@ interface Props {
 export const SingleDroppableCard = (props: Props) => {
   const { isDragDisabled, teamLetters, cardLocation, isPlaceholder } = props;
   const draggableId = getDraggableId(cardLocation);
-  const letter =
-    cardLocation.owner.ownerType === OwnerType.TEAM
-      ? teamLetters[cardLocation.letterIndex]
-      : null;
+  const letter = letterFromCardLocation(teamLetters, cardLocation);
 
   return (
     <Droppable droppableId={draggableId} isDropDisabled>

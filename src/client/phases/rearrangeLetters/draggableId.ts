@@ -1,4 +1,9 @@
-import { CardOwner, CardLocation, OwnerType } from "../../../game/types";
+import {
+  CardOwner,
+  CardLocation,
+  OwnerType,
+  CardStack,
+} from "../../../game/types";
 import { assertNever } from "../../../game/utils";
 
 const getOwnerId = (owner: CardOwner) => {
@@ -15,5 +20,9 @@ const getOwnerId = (owner: CardOwner) => {
   }
 };
 
-export const getDraggableId = (location: CardLocation) =>
-  `${getOwnerId(location.owner)}-card-${location.letterIndex}`;
+export const getDraggableId = (location: CardLocation) => {
+  const ownerId = getOwnerId(location.owner);
+  const letterIndex =
+    location.stack === CardStack.ARRAY ? `-${location.letterIndex}` : "";
+  return `${ownerId}-card-${location.stack}${letterIndex}`;
+};

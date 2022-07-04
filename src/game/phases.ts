@@ -109,7 +109,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       // Move the active clue to previous clues
       if (g.activeClue != null) {
         g.previousClues.push(
-          createPreviousClue(g.teamLetters, g.nonPlayers, g.activeClue)
+          createPreviousClue(g.team.bonus, g.nonPlayers, g.activeClue)
         );
         g.activeClue = null;
       }
@@ -127,7 +127,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
             return [newLetter];
           } else if (newLetters.length === 1) {
             // Add hint when we've advanced to the last non-player letter
-            g.teamHints.available += 1;
+            g.team.hints.available += 1;
           }
 
           return newLetters;

@@ -47,10 +47,13 @@ export const LetterJoy: Game<G> = {
     return {
       players: _.assign({}, playerStates),
       nonPlayers,
-      teamLetters: [Letter.WILD],
-      teamHints: {
-        available: NUM_HINTS_STARTING_AVAILABLE[ctx.numPlayers],
-        locked: NUM_HINTS_LOCKED[ctx.numPlayers],
+      team: {
+        wild: Letter.WILD,
+        bonus: [],
+        hints: {
+          available: NUM_HINTS_STARTING_AVAILABLE[ctx.numPlayers],
+          locked: NUM_HINTS_LOCKED[ctx.numPlayers],
+        },
       },
       drawPile: [],
       discardPile: [],

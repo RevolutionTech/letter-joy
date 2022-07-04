@@ -28,12 +28,7 @@ export const UnsortedCards = (props: Props) => {
           isDragDisabled={isDragDisabled}
           teamLetters={teamLetters}
           cardLocation={cardLocation}
-          isPlaceholder={_.some(
-            sortedCards,
-            (c) =>
-              _.isEqual(c.owner, cardLocation.owner) &&
-              c.letterIndex === cardLocation.letterIndex
-          )}
+          isPlaceholder={_.some(sortedCards, (c) => _.isEqual(c, cardLocation))}
         />
       ))}
     </UnsortedHandOfCards>

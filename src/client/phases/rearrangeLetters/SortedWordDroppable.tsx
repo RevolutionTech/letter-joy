@@ -3,7 +3,7 @@ import { styled } from "@mui/material";
 import { Droppable } from "@react-forked/dnd";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { Letter, OwnerType, Spelling } from "../../../game/types";
+import { Letter, OwnerType, CardStack, Spelling } from "../../../game/types";
 import {
   CARD_WIDTH,
   CARD_HEIGHT,
@@ -61,10 +61,14 @@ export const SortedWordDroppable = (props: Props) => {
           >
             {sortedCards.map((card, i) => {
               const draggableId = getDraggableId(card);
-              const letter =
+              const letters =
                 card.owner.ownerType === OwnerType.TEAM
-                  ? teamLetters[card.letterIndex]
-                  : playerLetters[card.letterIndex];
+                  ? teamLetters
+                  : playerLetters;
+              const letter =
+                card.stack === CardStack.SINGLE
+                  ? Letter.WILD
+                  : letters[card.letterIndex];
               return (
                 <DraggableCard
                   key={draggableId}

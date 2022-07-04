@@ -28,11 +28,18 @@ export enum OwnerType {
   NONPLAYER,
   PLAYER,
 }
+export enum CardStack {
+  SINGLE,
+  ARRAY,
+}
+export type OwnerCardLocation =
+  | { stack: CardStack.SINGLE }
+  | { stack: CardStack.ARRAY; letterIndex: number };
 
 export interface PlayerOutcome {
   spelledWord: string;
   expectedWord: string;
-  teamLettersUsed: number[];
+  teamLettersUsed: OwnerCardLocation[];
   isWord?: boolean;
 }
 
@@ -64,7 +71,7 @@ export type CardOwner =
   | { ownerType: OwnerType.TEAM }
   | { ownerType: OwnerType.NONPLAYER; nonPlayerIndex: number }
   | { ownerType: OwnerType.PLAYER; playerID: string };
-export type CardLocation = { owner: CardOwner; letterIndex: number };
+export type CardLocation = { owner: CardOwner } & OwnerCardLocation;
 export type Spelling = CardLocation[];
 
 export interface Clue {
@@ -93,13 +100,18 @@ interface PreviousClue extends Omit<Clue, "spelling"> {
   spelling: (CardLocation | Letter)[];
 }
 
+export interface Team {
+  wild: Letter.WILD | null;
+  bonus: Letter[];
+  hints: TeamHints;
+}
+
 export interface G {
   // TODO: Perhaps keys in players should be strings
   // so that we don't have to cast in all of the places that have playerIDs as strings
   players: Record<number, PlayerState>;
   nonPlayers: Letter[][];
-  teamLetters: Letter[];
-  teamHints: TeamHints;
+  team: Team;
   drawPile: Letter[];
   discardPile: Letter[];
   activeClue: Clue | null;

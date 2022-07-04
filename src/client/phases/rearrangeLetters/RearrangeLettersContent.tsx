@@ -4,6 +4,7 @@ import { DragDropContext, DropResult } from "@react-forked/dnd";
 
 import {
   OwnerType,
+  CardStack,
   CardLocation,
   Spelling,
   PlayerViewG,
@@ -44,18 +45,24 @@ export const RearrangeLettersContent = (props: Props) => {
           ownerType: OwnerType.PLAYER,
           playerID: currentPlayer,
         },
+        stack: CardStack.ARRAY,
         letterIndex: i,
       })),
     [currentPlayer, initialPlayerLetters]
   );
-  const initialTeamCardLocations: CardLocation[] = useMemo(
-    () =>
-      g.teamLetters.map((_, i) => ({
+  const initialTeamCardLocations = useMemo(
+    () => [
+      ...(g.team.wild == null
+        ? []
+        : [{ owner: { ownerType: OwnerType.TEAM }, stack: CardStack.SINGLE }]),
+      ...g.team.bonus.map((_, i) => ({
         owner: { ownerType: OwnerType.TEAM },
+        stack: CardStack.ARRAY,
         letterIndex: i,
       })),
-    [g.teamLetters]
-  );
+    ],
+    [g.team.wild, g.team.bonus]
+  ) as CardLocation[];
 
   const [isRearrangingLetters, setIsRearrangingLetters] =
     useState<boolean>(true);
@@ -122,17 +129,17 @@ export const RearrangeLettersContent = (props: Props) => {
             <DisplayStatus>Your letters</DisplayStatus>
             <UnsortedCards
               isDragDisabled={!isRearrangingLetters}
-              teamLetters={g.teamLetters}
+              teamLetters={g.team.bonus}
               initialCardLocations={initialPlayerCardLocations}
               sortedCards={sortedCards}
             />
           </DisplayCell>
-          {g.teamLetters.length > 0 && (
+          {(g.team.wild != null || g.team.bonus.length > 0) && (
             <DisplayCell>
               <DisplayStatus>Bonus letters</DisplayStatus>
               <UnsortedCards
                 isDragDisabled={!isRearrangingLetters}
-                teamLetters={g.teamLetters}
+                teamLetters={g.team.bonus}
                 initialCardLocations={initialTeamCardLocations}
                 sortedCards={sortedCards}
               />
@@ -143,7 +150,7 @@ export const RearrangeLettersContent = (props: Props) => {
             <SortedWordDroppable
               isDragDisabled={!isRearrangingLetters}
               playerLetters={initialPlayerLetters}
-              teamLetters={g.teamLetters}
+              teamLetters={g.team.bonus}
               sortedCards={sortedCards}
             />
           </DisplayCell>
