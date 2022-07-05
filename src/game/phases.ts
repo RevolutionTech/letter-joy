@@ -138,10 +138,17 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
 
       // Update active player letters based on which letter
       // the player wants to advance to the next round
-      g.players = _.mapValues(g.players, (playerState) => ({
-        ...playerState,
-        activeLetterIndex: playerState.nextLetterIndex,
-      }));
+      g.players = _.mapValues(g.players, (playerState) => {
+        if (playerState.requestAdvanceLetter) {
+          return {
+            ...playerState,
+            activeLetterIndex: playerState.activeLetterIndex + 1,
+            requestAdvanceLetter: false,
+          };
+        } else {
+          return playerState;
+        }
+      });
     },
     endIf: (_, ctx) => isEveryPlayerWaiting(ctx),
     next: Phase.CHOOSE_CLUE,

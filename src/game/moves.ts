@@ -213,10 +213,10 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
     return INVALID_MOVE;
   }
 
-  // Update the letter that the player will have active next round
+  // Add the player's request to advance next round
   g.players[+activePlayer] = {
     ...playerState,
-    nextLetterIndex,
+    requestAdvanceLetter: true,
   };
   return;
 };

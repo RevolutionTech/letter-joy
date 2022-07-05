@@ -48,7 +48,7 @@ export interface PlayerState {
   wordConstructionLetters: Record<Letter, number>;
   letters: Letter[];
   activeLetterIndex: number;
-  nextLetterIndex: number;
+  requestAdvanceLetter: boolean;
   letterNotes: Record<Letter, boolean>[];
   hintsUsed: number;
   playerOutcome?: PlayerOutcome;

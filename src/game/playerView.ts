@@ -12,7 +12,7 @@ const playerStatePlayerView = (
     playerID,
     letters,
     activeLetterIndex,
-    nextLetterIndex,
+    requestAdvanceLetter,
     hintsUsed,
     playerOutcome,
   } = playerState;
@@ -30,7 +30,7 @@ const playerStatePlayerView = (
     playerID,
     letters: lettersPlayerView,
     activeLetterIndex,
-    nextLetterIndex,
+    requestAdvanceLetter,
     hintsUsed,
     playerOutcome,
   };

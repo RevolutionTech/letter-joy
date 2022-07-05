@@ -37,7 +37,7 @@ export const LetterJoy: Game<G> = {
       wordConstructionLetters: countLetters(startingLetters),
       letters: [],
       activeLetterIndex: 0,
-      nextLetterIndex: 0,
+      requestAdvanceLetter: false,
       letterNotes: _.range(LETTERS_PER_PLAYER).map(() =>
         _.mapValues(LETTER_DISTRIBUTION, () => false)
       ),
