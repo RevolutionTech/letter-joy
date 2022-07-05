@@ -18,7 +18,7 @@ import {
   confirmUnexpectedWord,
 } from "./moves";
 import { isEveryPlayerWaiting } from "./players";
-import { OwnerType, G } from "./types";
+import { OwnerType, CardStack, G } from "./types";
 
 export enum Phase {
   CHOOSE_SECRET_WORD = "chooseSecretWord",
@@ -139,10 +139,17 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       // Update active player letters based on which letter
       // the player wants to advance to the next round
       g.players = _.mapValues(g.players, (playerState) => {
-        if (playerState.requestAdvanceLetter) {
+        if (
+          playerState.requestAdvanceLetter &&
+          playerState.activeLetter.stack === CardStack.ARRAY
+        ) {
+          const activeLetter = {
+            stack: CardStack.ARRAY,
+            letterIndex: playerState.activeLetter.letterIndex + 1,
+          };
           return {
             ...playerState,
-            activeLetterIndex: playerState.activeLetterIndex + 1,
+            activeLetter,
             requestAdvanceLetter: false,
           };
         } else {

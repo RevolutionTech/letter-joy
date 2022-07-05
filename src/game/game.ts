@@ -19,7 +19,7 @@ import { LETTER_DISTRIBUTION, countLetters } from "./letters";
 import { PHASES } from "./phases";
 import { isEveryPlayerWaiting } from "./players";
 import { playerView } from "./playerView";
-import { Letter, G } from "./types";
+import { Letter, CardStack, G } from "./types";
 
 export const LetterJoy: Game<G> = {
   name: LETTER_JOY,
@@ -36,7 +36,7 @@ export const LetterJoy: Game<G> = {
       playerID: i.toString(),
       wordConstructionLetters: countLetters(startingLetters),
       letters: [],
-      activeLetterIndex: 0,
+      activeLetter: { stack: CardStack.ARRAY, letterIndex: 0 },
       requestAdvanceLetter: false,
       letterNotes: _.range(LETTERS_PER_PLAYER).map(() =>
         _.mapValues(LETTER_DISTRIBUTION, () => false)

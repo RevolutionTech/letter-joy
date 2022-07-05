@@ -208,8 +208,11 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
 
   // A player cannot advance beyond their final letter
   const playerState = g.players[+activePlayer];
-  const nextLetterIndex = playerState.activeLetterIndex + 1;
-  if (nextLetterIndex >= LETTERS_PER_PLAYER) {
+  const activeLetter = playerState.activeLetter;
+  if (
+    activeLetter.stack === CardStack.ARRAY &&
+    activeLetter.letterIndex + 1 >= LETTERS_PER_PLAYER
+  ) {
     return INVALID_MOVE;
   }
 

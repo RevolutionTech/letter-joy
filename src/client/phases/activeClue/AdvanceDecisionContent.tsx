@@ -1,5 +1,6 @@
 import { styled } from "@mui/material";
 
+import { CardStack, OwnerCardLocation } from "../../../game/types";
 import { getOrdinalSuffix } from "../../../game/utils";
 import { Button } from "../../panels/Button";
 
@@ -19,19 +20,28 @@ const AdvanceDecisionButtonHelpText = styled("div")({
   marginBottom: "8px",
 });
 
+const advanceLetterCopy = (activeLetter: OwnerCardLocation) => {
+  if (activeLetter.stack === CardStack.SINGLE) {
+    return "I know my bonus letter!";
+  } else {
+    const suffix = getOrdinalSuffix(activeLetter.letterIndex + 1);
+    return `I know my ${suffix} letter!`;
+  }
+};
+
 interface Props {
-  activeLetterIndex: number;
+  activeLetter: OwnerCardLocation;
   onAdvanceLetter: () => void;
   onConfirmActiveLetter: () => void;
 }
 
 export const AdvanceDecisionContent = (props: Props) => {
-  const { activeLetterIndex, onAdvanceLetter, onConfirmActiveLetter } = props;
+  const { activeLetter, onAdvanceLetter, onConfirmActiveLetter } = props;
   return (
     <AdvanceDecisionButtons>
       <AdvanceDecisionButton>
         <AdvanceDecisionButtonHelpText>
-          I know my {getOrdinalSuffix(activeLetterIndex + 1)} letter!
+          {advanceLetterCopy(activeLetter)}
         </AdvanceDecisionButtonHelpText>
         <Button
           variant="outlined"

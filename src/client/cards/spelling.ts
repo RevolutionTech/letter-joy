@@ -9,18 +9,18 @@ import {
   Spelling,
   PlayerViewG,
 } from "../../game/types";
-import { assertNever } from "../../game/utils";
 
 const getActiveLetterIndexForOwner = (g: PlayerViewG, owner: CardOwner) => {
-  const ownerType = owner.ownerType;
-  switch (ownerType) {
-    case OwnerType.TEAM: // TODO: Add support for team bonus letters
-    case OwnerType.NONPLAYER:
+  if (owner.ownerType === OwnerType.PLAYER) {
+    const activeLetter = g.players[+owner.playerID].activeLetter;
+    if (activeLetter.stack === CardStack.SINGLE) {
       return 0;
-    case OwnerType.PLAYER:
-      return g.players[+owner.playerID].activeLetterIndex;
-    default:
-      return assertNever(ownerType);
+    } else {
+      return activeLetter.letterIndex;
+    }
+  } else {
+    // TODO: Add support for team bonus letters
+    return 0;
   }
 };
 

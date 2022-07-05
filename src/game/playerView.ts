@@ -2,7 +2,13 @@ import _ from "lodash";
 import { Ctx } from "boardgame.io";
 
 import { ZERO_LETTERS } from "./letters";
-import { G, PlayerViewG, PlayerState, PlayerViewPlayerState } from "./types";
+import {
+  G,
+  PlayerViewG,
+  PlayerState,
+  PlayerViewPlayerState,
+  CardStack,
+} from "./types";
 
 const playerStatePlayerView = (
   playerState: PlayerState,
@@ -11,7 +17,7 @@ const playerStatePlayerView = (
   const {
     playerID,
     letters,
-    activeLetterIndex,
+    activeLetter,
     requestAdvanceLetter,
     hintsUsed,
     playerOutcome,
@@ -21,7 +27,8 @@ const playerStatePlayerView = (
   // or it is the end of the game where the player has flipped over their cards
   const lettersPlayerView = letters.map((letter, i) =>
     playerOutcome == null &&
-    (playerViewPlayerID === playerID || activeLetterIndex < i)
+    (playerViewPlayerID === playerID ||
+      (activeLetter.stack === CardStack.ARRAY && activeLetter.letterIndex < i))
       ? null
       : letter
   );
@@ -29,7 +36,7 @@ const playerStatePlayerView = (
   return {
     playerID,
     letters: lettersPlayerView,
-    activeLetterIndex,
+    activeLetter,
     requestAdvanceLetter,
     hintsUsed,
     playerOutcome,

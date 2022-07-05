@@ -32,7 +32,7 @@ export const ActiveClueBoard = (props: BoardProps) => {
             </div>
             {currentPlayer != null && playersActing.includes(currentPlayer) ? (
               <AdvanceDecisionContent
-                activeLetterIndex={g.players[+currentPlayer].activeLetterIndex}
+                activeLetter={g.players[+currentPlayer].activeLetter}
                 onAdvanceLetter={props.moves.advanceLetter}
                 onConfirmActiveLetter={() => props.events.endStage?.()}
               />

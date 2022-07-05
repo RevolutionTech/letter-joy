@@ -1,6 +1,6 @@
 import PersonIcon from "@mui/icons-material/Person";
 
-import { Letter, PlayerViewPlayerState } from "../../game/types";
+import { Letter, CardStack, PlayerViewPlayerState } from "../../game/types";
 import { PresentedCard } from "../cards/PresentedCard";
 import {
   DisplayCell,
@@ -22,7 +22,7 @@ export const PlayerDisplay = (props: Props) => {
   const {
     playerID,
     letters,
-    activeLetterIndex,
+    activeLetter,
     hintsUsed,
     playerOutcome,
     playerName,
@@ -50,7 +50,10 @@ export const PlayerDisplay = (props: Props) => {
       </DisplayStatus>
       <HandOfCards>
         {displayLetters.map((letter, i) => {
-          const active = playerOutcome != null || i === activeLetterIndex;
+          const active =
+            playerOutcome != null ||
+            (activeLetter.stack === CardStack.ARRAY &&
+              i === activeLetter.letterIndex);
           const letterDisplayed = active ? letter : null;
           return (
             <PresentedCard
