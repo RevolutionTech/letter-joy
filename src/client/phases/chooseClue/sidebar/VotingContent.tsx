@@ -5,7 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { playerHasHintAvailable } from "../../../../game/hints";
 import { PlayerViewG } from "../../../../game/types";
 import { MaybePlayerNames } from "../../../display/players";
-import { Button } from "../../../panels/Button";
+import { Button } from "../../../panels/MUI";
 import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
 import theme from "../../../theme";
 import { ProposedClueRadioButton } from "./ProposedClueRadioButton";

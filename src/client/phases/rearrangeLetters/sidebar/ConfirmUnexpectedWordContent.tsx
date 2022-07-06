@@ -1,5 +1,5 @@
 import { displayWord } from "../../../../game/word";
-import { Button } from "../../../panels/Button";
+import { Button } from "../../../panels/MUI";
 
 interface Props {
   spelledWord: string;

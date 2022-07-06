@@ -5,7 +5,7 @@ import { styled } from "@mui/material";
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
 import { Letter } from "../../../game/types";
 import { PresentedCard } from "../../cards/PresentedCard";
-import { Button } from "../../panels/Button";
+import { Button } from "../../panels/MUI";
 import { Footer } from "../../panels/Footer";
 import { PanelLayout } from "../../panels/PanelLayout";
 

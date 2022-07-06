@@ -9,7 +9,7 @@ import {
   MaybePlayerNames,
   playerNameDisplay,
 } from "../../../display/players";
-import { Button } from "../../../panels/Button";
+import { Button } from "../../../panels/MUI";
 import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
 import theme from "../../../theme";
 

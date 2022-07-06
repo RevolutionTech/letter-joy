@@ -15,7 +15,7 @@ export const ChooseClueBoard = (props: BoardProps) => {
   const playerNames = props.matchData;
 
   const [isProposing, setIsProposing] = useState(false);
-  const [spelling, addCardLocation, clearSpelling] = useSpelling(g);
+  const [spelling, addCardLocation, clearSpelling] = useSpelling();
   const onCloseProposing = useCallback(() => {
     setIsProposing(false);
     clearSpelling();

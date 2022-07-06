@@ -1,16 +1,8 @@
 import { useState } from "react";
 import _ from "lodash";
-import { styled, TextField } from "@mui/material";
 
-import { Button } from "../../../panels/Button";
+import { Button, TextField } from "../../../panels/MUI";
 import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
-
-const StyledTextField = styled(TextField)({
-  width: "100%",
-  marginTop: "16px",
-
-  "& input.MuiInputBase-input": { padding: "16px" },
-});
 
 interface Props {
   numSortedCards: number;
@@ -52,7 +44,7 @@ export const ConfirmExpectedWordContent = (props: Props) => {
         <div style={{ fontSize: "16pt" }}>
           What do you believe you&apos;ve spelled?
         </div>
-        <StyledTextField
+        <TextField
           id="expected-word"
           variant="filled"
           value={expectedWord}

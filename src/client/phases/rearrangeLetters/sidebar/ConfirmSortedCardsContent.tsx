@@ -1,5 +1,5 @@
 import { LETTERS_PER_PLAYER } from "../../../../game/constants";
-import { Button } from "../../../panels/Button";
+import { Button } from "../../../panels/MUI";
 import { SidebarContent } from "../../../panels/sidebar/SidebarContent";
 
 interface Props {

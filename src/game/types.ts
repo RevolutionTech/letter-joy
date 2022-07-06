@@ -49,7 +49,7 @@ export interface PlayerState {
   letters: Letter[];
   bonusLetter: Letter | null;
   activeLetter: OwnerCardLocation;
-  requestAdvanceLetter: boolean;
+  requestAdvanceLetter: boolean | Letter;
   letterNotes: Record<Letter, boolean>[];
   hintsUsed: number;
   playerOutcome?: PlayerOutcome;

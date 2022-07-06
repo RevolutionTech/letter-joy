@@ -2,6 +2,7 @@ import { Ctx } from "boardgame.io";
 
 import { LETTERS_PER_PLAYER } from "./constants";
 import { drawFromDeck } from "./deck";
+import { isLetter } from "./letters";
 import {
   Letter,
   OwnerType,
@@ -12,9 +13,8 @@ import {
   G,
 } from "./types";
 
-const isCardLocation = (card: CardLocation | Letter): card is CardLocation => {
-  return (card as CardLocation).owner != null;
-};
+const isCardLocation = (card: CardLocation | Letter): card is CardLocation =>
+  (card as CardLocation).owner != null;
 
 export const bonusLettersReplacedInPreviousClues = (g: G) =>
   g.previousClues.map((clue) => ({
@@ -61,15 +61,23 @@ export const maybeDrawNewBonusLetter = (
   ctx: Ctx,
   playerState: PlayerState
 ) => {
+  const { bonusLetter, requestAdvanceLetter } = playerState;
   if (
-    playerState.requestAdvanceLetter &&
+    requestAdvanceLetter &&
     playerState.activeLetter.stack === CardStack.SINGLE
   ) {
-    const bonusLetter = drawFromDeck(g, ctx);
-    if (playerState.bonusLetter != null) {
-      g.discardPile.push(playerState.bonusLetter);
+    const newBonusLetter = drawFromDeck(g, ctx);
+    if (bonusLetter != null) {
+      if (
+        isLetter(requestAdvanceLetter) &&
+        requestAdvanceLetter === bonusLetter
+      ) {
+        g.team.bonus.push(bonusLetter);
+      } else {
+        g.discardPile.push(bonusLetter);
+      }
     }
-    return { ...playerState, bonusLetter };
+    return { ...playerState, bonusLetter: newBonusLetter };
   } else {
     return playerState;
   }

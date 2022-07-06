@@ -35,6 +35,9 @@ export const ZERO_LETTERS: Record<Letter, 0> = _.reduce(
   {}
 ) as Record<Letter, 0>;
 
+export const isLetter = (x: boolean | string): x is Letter =>
+  typeof x === "string" && Object.values(Letter).includes(x as Letter);
+
 export const countLetters = (
   letters: Letter[],
   startingCount?: Record<Letter, number>,

@@ -1,7 +1,13 @@
 import { styled } from "@mui/material";
 
-import { OwnerType, CardOwner, Spelling, PlayerViewG } from "../../game/types";
-import { getCardLocationsAssignedToOwner } from "../cards/spelling";
+import {
+  OwnerType,
+  CardLocation,
+  Spelling,
+  PlayerViewG,
+  CardStack,
+} from "../../game/types";
+import { getTokensAtLocation } from "../cards/spelling";
 import { NonPlayerDisplay } from "./NonPlayerDisplay";
 import { PlayerDisplay } from "./PlayerDisplay";
 import {
@@ -21,14 +27,11 @@ interface Props {
   playerNames: MaybePlayerNames;
   currentPlayer: string | null;
   spelling?: Spelling;
-  onAddToSpelling?: (owner: CardOwner) => void;
+  onAddToSpelling?: (cardLocation: CardLocation) => void;
 }
 
 export const ActiveTableDisplay = (props: Props) => {
   const { g, playerNames, currentPlayer, spelling, onAddToSpelling } = props;
-  const teamOwner: { ownerType: OwnerType.TEAM } = {
-    ownerType: OwnerType.TEAM,
-  };
 
   const nonPlayerDisplays = g.nonPlayers.map((nonPlayerLetters, i) => {
     const owner: {
@@ -38,15 +41,16 @@ export const ActiveTableDisplay = (props: Props) => {
       ownerType: OwnerType.NONPLAYER,
       nonPlayerIndex: i,
     };
+    const cardLocation = { owner, stack: CardStack.ARRAY, letterIndex: 0 };
     return (
       <NonPlayerDisplay
         key={i}
         letters={nonPlayerLetters}
         nonPlayerIndex={i}
-        containsTokens={
-          spelling && getCardLocationsAssignedToOwner(spelling, owner)
+        containsTokens={spelling && getTokensAtLocation(spelling, cardLocation)}
+        onAddToSpelling={
+          onAddToSpelling && (() => onAddToSpelling(cardLocation))
         }
-        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(owner))}
       />
     );
   });
@@ -58,6 +62,7 @@ export const ActiveTableDisplay = (props: Props) => {
       ownerType: OwnerType.PLAYER,
       playerID,
     };
+    const cardLocation = { owner, ...playerState.activeLetter };
     return (
       <PlayerDisplay
         key={playerID}
@@ -65,10 +70,10 @@ export const ActiveTableDisplay = (props: Props) => {
         playerName={playerNameDisplay(playerNames, +playerID)}
         numPlayers={Object.keys(g.players).length}
         teamHintsAvailable={g.team.hints.available}
-        containsTokens={
-          spelling && getCardLocationsAssignedToOwner(spelling, owner)
+        containsTokens={spelling && getTokensAtLocation(spelling, cardLocation)}
+        onAddToSpelling={
+          onAddToSpelling && (() => onAddToSpelling(cardLocation))
         }
-        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(owner))}
       />
     );
   });
@@ -77,10 +82,8 @@ export const ActiveTableDisplay = (props: Props) => {
     <HandDisplayGrid>
       <TeamDisplay
         team={g.team}
-        containsTokens={
-          spelling && getCardLocationsAssignedToOwner(spelling, teamOwner)
-        }
-        onAddToSpelling={onAddToSpelling && (() => onAddToSpelling(teamOwner))}
+        spelling={spelling}
+        onAddToSpelling={onAddToSpelling}
       />
       {nonPlayerDisplays}
       {playerDisplays}

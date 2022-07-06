@@ -1,22 +1,40 @@
 import _ from "lodash";
 import { Tooltip } from "@mui/material";
 
-import { Letter, Team } from "../../game/types";
+import {
+  Letter,
+  CardLocation,
+  Spelling,
+  Team,
+  OwnerType,
+  CardStack,
+} from "../../game/types";
 import LockedHint from "../assets/hints/locked.svg";
 import UnusedHint from "../assets/hints/unused.svg";
 import { PresentedCard } from "../cards/PresentedCard";
-import { DisplayCell, DisplayStatus, DisplayName } from "./DisplayCell";
+import {
+  DisplayCell,
+  DisplayStatus,
+  DisplayName,
+  HandOfCards,
+} from "./DisplayCell";
 import { Hints, Hint } from "./hint";
+import { getTokensAtLocation } from "../cards/spelling";
 
 interface Props {
   team: Team;
-  containsTokens?: number[]; // TODO: Add support for team bonus letters
-  onAddToSpelling?: () => void; // TODO: Add support for team bonus letters
+  spelling?: Spelling;
+  onAddToSpelling?: (cardLocation: CardLocation) => void;
 }
 
 export const TeamDisplay = (props: Props) => {
-  const { team, containsTokens, onAddToSpelling } = props;
+  const { team, spelling, onAddToSpelling } = props;
   const { wild, bonus, hints } = team;
+  const wildLocation = {
+    owner: { ownerType: OwnerType.TEAM },
+    stack: CardStack.SINGLE,
+  } as CardLocation;
+
   return wild != null || bonus.length > 0 ? (
     <DisplayCell>
       <DisplayStatus>
@@ -42,21 +60,34 @@ export const TeamDisplay = (props: Props) => {
           ))}
         </Hints>
       </DisplayStatus>
-      {wild != null && (
-        <PresentedCard
-          letter={Letter.WILD}
-          containsTokens={containsTokens}
-          onClick={onAddToSpelling}
-        />
-      )}
-      {bonus.map((letter, i) => (
-        <PresentedCard
-          key={i}
-          letter={letter}
-          containsTokens={containsTokens}
-          onClick={onAddToSpelling}
-        />
-      ))}
+      <HandOfCards>
+        {wild != null && (
+          <PresentedCard
+            letter={Letter.WILD}
+            containsTokens={
+              spelling && getTokensAtLocation(spelling, wildLocation)
+            }
+            onClick={onAddToSpelling && (() => onAddToSpelling(wildLocation))}
+          />
+        )}
+        {bonus.map((letter, i) => {
+          const cardLocation = {
+            owner: { ownerType: OwnerType.TEAM },
+            stack: CardStack.ARRAY,
+            letterIndex: i,
+          } as CardLocation;
+          return (
+            <PresentedCard
+              key={i}
+              letter={letter}
+              containsTokens={
+                spelling && getTokensAtLocation(spelling, cardLocation)
+              }
+              onClick={onAddToSpelling && (() => onAddToSpelling(cardLocation))}
+            />
+          );
+        })}
+      </HandOfCards>
     </DisplayCell>
   ) : null;
 };

@@ -198,7 +198,7 @@ export const supportEnd = (g: G, ctx: Ctx) => {
   return;
 };
 
-export const advanceLetter = (g: G, ctx: Ctx) => {
+export const advanceLetter = (g: G, ctx: Ctx, letterGuess?: Letter) => {
   // A player must be active to advance
   const activePlayer = ctx.playerID;
   if (activePlayer == null) {
@@ -208,7 +208,7 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
   // Add the player's request to advance next round
   g.players[+activePlayer] = {
     ...g.players[+activePlayer],
-    requestAdvanceLetter: true,
+    requestAdvanceLetter: letterGuess ?? true,
   };
   return;
 };
