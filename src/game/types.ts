@@ -47,6 +47,7 @@ export interface PlayerState {
   playerID: string;
   wordConstructionLetters: Record<Letter, number>;
   letters: Letter[];
+  bonusLetter: Letter | null;
   activeLetter: OwnerCardLocation;
   requestAdvanceLetter: boolean;
   letterNotes: Record<Letter, boolean>[];

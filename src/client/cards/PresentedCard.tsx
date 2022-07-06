@@ -23,15 +23,19 @@ interface Props {
   active?: boolean;
   containsTokens?: number[];
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
 export const PresentedCard = (props: Props) => {
-  const { letter, active, containsTokens, onClick } = props;
+  const { letter, active, containsTokens, onClick, style } = props;
   const numTokensContained = containsTokens?.length ?? 0;
   const spaceForToken = TOKEN_SLOT_WIDTH / (numTokensContained + 1);
 
   return (
-    <CardWrapper onClick={onClick} style={{ top: active ? "-8px" : "0" }}>
+    <CardWrapper
+      onClick={onClick}
+      style={{ ...style, top: active ? "-8px" : "0" }}
+    >
       <Card letter={letter} isClickable={onClick != null} />
       {containsTokens?.map((tokenValue, i) => {
         const offset = spaceForToken * (i + 1);

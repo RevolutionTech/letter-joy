@@ -17,6 +17,7 @@ const playerStatePlayerView = (
   const {
     playerID,
     letters,
+    bonusLetter,
     activeLetter,
     requestAdvanceLetter,
     hintsUsed,
@@ -37,6 +38,7 @@ const playerStatePlayerView = (
     playerID,
     letters: lettersPlayerView,
     activeLetter,
+    bonusLetter: playerViewPlayerID === playerID ? null : bonusLetter,
     requestAdvanceLetter,
     hintsUsed,
     playerOutcome,

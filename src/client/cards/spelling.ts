@@ -10,6 +10,16 @@ import {
   PlayerViewG,
 } from "../../game/types";
 
+const getActiveStackForOwner = (g: PlayerViewG, owner: CardOwner) => {
+  if (owner.ownerType === OwnerType.TEAM) {
+    return CardStack.SINGLE;
+  } else if (owner.ownerType === OwnerType.NONPLAYER) {
+    return CardStack.ARRAY;
+  } else {
+    return g.players[+owner.playerID].activeLetter.stack;
+  }
+};
+
 const getActiveLetterIndexForOwner = (g: PlayerViewG, owner: CardOwner) => {
   if (owner.ownerType === OwnerType.PLAYER) {
     const activeLetter = g.players[+owner.playerID].activeLetter;
@@ -38,10 +48,7 @@ export const useSpelling = (g: PlayerViewG) => {
   const addCardLocation = useCallback(
     (owner: CardOwner) =>
       setSpelling((cardLocations) => {
-        const stack =
-          owner.ownerType === OwnerType.TEAM
-            ? CardStack.SINGLE
-            : CardStack.ARRAY;
+        const stack = getActiveStackForOwner(g, owner);
         const newLocation = {
           owner,
           stack,

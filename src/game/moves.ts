@@ -3,7 +3,6 @@ import { Ctx } from "boardgame.io";
 import { INVALID_MOVE } from "boardgame.io/core";
 
 import { clueSummary } from "./clue";
-import { LETTERS_PER_PLAYER } from "./constants";
 import { createDeck, shuffleCards, dealCardsEvenly } from "./deck";
 import { playerHasHintAvailable } from "./hints";
 import { ZERO_LETTERS, countLetters } from "./letters";
@@ -206,19 +205,9 @@ export const advanceLetter = (g: G, ctx: Ctx) => {
     return INVALID_MOVE;
   }
 
-  // A player cannot advance beyond their final letter
-  const playerState = g.players[+activePlayer];
-  const activeLetter = playerState.activeLetter;
-  if (
-    activeLetter.stack === CardStack.ARRAY &&
-    activeLetter.letterIndex + 1 >= LETTERS_PER_PLAYER
-  ) {
-    return INVALID_MOVE;
-  }
-
   // Add the player's request to advance next round
   g.players[+activePlayer] = {
-    ...playerState,
+    ...g.players[+activePlayer],
     requestAdvanceLetter: true,
   };
   return;

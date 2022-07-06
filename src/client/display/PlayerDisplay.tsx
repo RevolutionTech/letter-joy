@@ -22,6 +22,7 @@ export const PlayerDisplay = (props: Props) => {
   const {
     playerID,
     letters,
+    bonusLetter,
     activeLetter,
     hintsUsed,
     playerOutcome,
@@ -65,6 +66,15 @@ export const PlayerDisplay = (props: Props) => {
             />
           );
         })}
+        {playerOutcome == null && activeLetter.stack === CardStack.SINGLE && (
+          <PresentedCard
+            letter={bonusLetter}
+            active
+            containsTokens={containsTokens}
+            onClick={onAddToSpelling}
+            style={{ marginLeft: "8px" }}
+          />
+        )}
       </HandOfCards>
     </DisplayCell>
   ) : null;

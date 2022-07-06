@@ -13,7 +13,16 @@ import { assertNever } from "../../game/utils";
 
 const Subscript = styled("sub")({ fontSize: "60%" });
 
-const getLettersForOwner = (g: PlayerViewG, owner: CardOwner) => {
+const getSingleLetterForOwner = (g: PlayerViewG, owner: CardOwner) => {
+  const ownerType = owner.ownerType;
+  if (ownerType === OwnerType.PLAYER) {
+    return g.players[+owner.playerID].bonusLetter;
+  } else {
+    return Letter.WILD;
+  }
+};
+
+const getLetterArrayForOwner = (g: PlayerViewG, owner: CardOwner) => {
   const ownerType = owner.ownerType;
   switch (ownerType) {
     case OwnerType.TEAM:
@@ -32,25 +41,27 @@ const getLetterDisplay = (g: PlayerViewG, card: CardLocation | Letter) => {
     return <>{card}</>;
   }
 
-  if (
-    card.owner.ownerType === OwnerType.TEAM &&
-    card.stack === CardStack.SINGLE
-  ) {
-    return Letter.WILD;
-  }
-
-  const letters = getLettersForOwner(g, card.owner);
-  const letterIndex = card.stack === CardStack.SINGLE ? 0 : card.letterIndex;
-  const letter = (
-    <>
-      {letters[letterIndex] ?? (
+  if (card.stack === CardStack.SINGLE) {
+    return (
+      getSingleLetterForOwner(g, card.owner) ?? (
         <>
-          ?<Subscript>{letterIndex + 1}</Subscript>
+          ?<Subscript>B</Subscript>
         </>
-      )}
-    </>
-  );
-  return letter;
+      )
+    );
+  } else {
+    const letters = getLetterArrayForOwner(g, card.owner);
+    const letter = (
+      <>
+        {letters[card.letterIndex] ?? (
+          <>
+            ?<Subscript>{card.letterIndex + 1}</Subscript>
+          </>
+        )}
+      </>
+    );
+    return letter;
+  }
 };
 
 interface Props {

@@ -2,6 +2,11 @@ import _ from "lodash";
 import { PhaseConfig } from "boardgame.io";
 import { TurnOrder } from "boardgame.io/core";
 
+import {
+  bonusLettersReplacedInPreviousClues,
+  maybeAdvanceLetter,
+  maybeDrawNewBonusLetter,
+} from "./advance";
 import { getUniqueOwners, createPreviousClue } from "./clue";
 import { drawCard, drawFromDeck } from "./deck";
 import { consumeHint } from "./hints";
@@ -18,7 +23,7 @@ import {
   confirmUnexpectedWord,
 } from "./moves";
 import { isEveryPlayerWaiting } from "./players";
-import { OwnerType, CardStack, G } from "./types";
+import { OwnerType, G, CardStack } from "./types";
 
 export enum Phase {
   CHOOSE_SECRET_WORD = "chooseSecretWord",
@@ -114,6 +119,9 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         g.activeClue = null;
       }
 
+      // Replace bonus letters in previous clues
+      g.previousClues = bonusLettersReplacedInPreviousClues(g);
+
       // Update active non-player letters based on those used
       g.nonPlayers = g.nonPlayers.map((nonPlayerLetters, i) => {
         if (nonPlayersInClue.includes(`${i}`)) {
@@ -136,25 +144,15 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         }
       });
 
-      // Update active player letters based on which letter
-      // the player wants to advance to the next round
+      // Update active player letters based on advance requests
       g.players = _.mapValues(g.players, (playerState) => {
-        if (
-          playerState.requestAdvanceLetter &&
-          playerState.activeLetter.stack === CardStack.ARRAY
-        ) {
-          const activeLetter = {
-            stack: CardStack.ARRAY,
-            letterIndex: playerState.activeLetter.letterIndex + 1,
-          };
-          return {
-            ...playerState,
-            activeLetter,
-            requestAdvanceLetter: false,
-          };
-        } else {
-          return playerState;
-        }
+        const advancedPlayerState = maybeAdvanceLetter(playerState);
+        const newBonusPlayerState = maybeDrawNewBonusLetter(
+          g,
+          ctx,
+          advancedPlayerState
+        );
+        return { ...newBonusPlayerState, requestAdvanceLetter: false };
       });
     },
     endIf: (_, ctx) => isEveryPlayerWaiting(ctx),
