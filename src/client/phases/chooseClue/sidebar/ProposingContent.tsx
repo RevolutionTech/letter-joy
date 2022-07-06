@@ -79,6 +79,7 @@ export const ProposingContent = (props: Props) => {
                 [+player.playerID]: {
                   ...g.players[+player.playerID],
                   letters: g.players[+player.playerID].letters.map(() => null),
+                  bonusLetter: null,
                 },
               },
             };
