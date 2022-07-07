@@ -7,7 +7,7 @@ import {
   maybeAdvanceLetter,
   maybeDrawNewBonusLetter,
 } from "./advance";
-import { getUniqueOwners, createPreviousClue } from "./clue";
+import { getUniqueBonus, getUniqueOwners, createPreviousClue } from "./clue";
 import { drawCard, drawFromDeck } from "./deck";
 import { consumeHint } from "./hints";
 import {
@@ -23,7 +23,7 @@ import {
   confirmUnexpectedWord,
 } from "./moves";
 import { isEveryPlayerWaiting } from "./players";
-import { OwnerType, G, CardStack } from "./types";
+import { OwnerType, G } from "./types";
 
 export enum Phase {
   CHOOSE_SECRET_WORD = "chooseSecretWord",
@@ -104,9 +104,11 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       },
     },
     onEnd: (g, ctx) => {
-      // Determine the non-players in the most recent clue
+      // Determine the bonus letters and non-players in the most recent clue
+      const spelling = g.activeClue?.spelling ?? [];
+      const bonusInClue = getUniqueBonus(spelling);
       const nonPlayersInClue = getUniqueOwners(
-        g.activeClue?.spelling ?? [],
+        spelling,
         OwnerType.NONPLAYER,
         "nonPlayerIndex"
       );
@@ -121,6 +123,9 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
 
       // Replace bonus letters in previous clues
       g.previousClues = bonusLettersReplacedInPreviousClues(g);
+
+      // Discard team bonus letters used in the most recent clue
+      g.discardPile.push(..._.pullAt(g.team.bonus, bonusInClue));
 
       // Update active non-player letters based on those used
       g.nonPlayers = g.nonPlayers.map((nonPlayerLetters, i) => {

@@ -2,7 +2,7 @@ import _ from "lodash";
 
 import { Letter, OwnerType, CardStack, Spelling, Clue } from "./types";
 
-const getUniqueBonus = (spelling: Spelling) => {
+export const getUniqueBonus = (spelling: Spelling) => {
   const bonusCards = spelling.filter(
     (card) =>
       card.owner.ownerType === OwnerType.TEAM && card.stack === CardStack.ARRAY
@@ -12,7 +12,7 @@ const getUniqueBonus = (spelling: Spelling) => {
     letterIndex: number;
   }[];
   const bonusIds = bonusCards.map((card) => card.letterIndex);
-  return _.uniq(bonusIds).length;
+  return _.uniq(bonusIds);
 };
 
 export const getUniqueOwners = (
@@ -36,7 +36,7 @@ export const clueSummary = (placement: Spelling) => {
   return {
     numLetters: placement.length,
     usesWild,
-    numBonus: getUniqueBonus(placement),
+    numBonus: getUniqueBonus(placement).length,
     numNonPlayers: getUniqueOwners(
       placement,
       OwnerType.NONPLAYER,
