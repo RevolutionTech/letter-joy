@@ -2,6 +2,19 @@ import _ from "lodash";
 
 import { Letter, OwnerType, CardStack, Spelling, Clue } from "./types";
 
+const getUniqueBonus = (spelling: Spelling) => {
+  const bonusCards = spelling.filter(
+    (card) =>
+      card.owner.ownerType === OwnerType.TEAM && card.stack === CardStack.ARRAY
+  ) as {
+    owner: { ownerType: OwnerType.TEAM };
+    stack: CardStack.ARRAY;
+    letterIndex: number;
+  }[];
+  const bonusIds = bonusCards.map((card) => card.letterIndex);
+  return _.uniq(bonusIds).length;
+};
+
 export const getUniqueOwners = (
   spelling: Spelling,
   ownerType: OwnerType,
@@ -23,6 +36,7 @@ export const clueSummary = (placement: Spelling) => {
   return {
     numLetters: placement.length,
     usesWild,
+    numBonus: getUniqueBonus(placement),
     numNonPlayers: getUniqueOwners(
       placement,
       OwnerType.NONPLAYER,

@@ -83,6 +83,7 @@ export interface Clue {
 interface ClueSummary {
   numLetters: number;
   usesWild: boolean;
+  numBonus: number;
   numNonPlayers: number;
   numPlayers: number;
 }
