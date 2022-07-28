@@ -8,8 +8,8 @@ import theme from "../theme";
 const LobbyBack = styled("div")({
   display: "flex",
   justifyContent: "center",
-  width: "100vw",
-  height: "100vh",
+  width: "100%",
+  minHeight: "100vh",
   backgroundColor: theme.silver,
 });
 const LobbyMenu = styled("div")({
@@ -18,11 +18,11 @@ const LobbyMenu = styled("div")({
   flexDirection: "column",
   alignItems: "center",
   width: "100%",
-  height: "calc(100% - 2 * 20px)",
+  minHeight: "calc(100% - 2 * 20px)",
   padding: "20px",
   [theme.mediaLg]: {
     width: "50%",
-    height: "calc(100% - 2 * 40px)",
+    minHeight: "calc(100% - 2 * 40px)",
     padding: "40px",
   },
   backgroundColor: theme.white,
