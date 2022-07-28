@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { Tooltip } from "@mui/material";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 import {
   Letter,
@@ -38,6 +39,7 @@ export const TeamDisplay = (props: Props) => {
   return wild != null || bonus.length > 0 ? (
     <DisplayCell>
       <DisplayStatus>
+        <EmojiEventsIcon style={{ marginRight: "4px" }} />
         <DisplayName>Team</DisplayName>
         <Hints>
           {_.range(hints.available).map((_, i) => (
