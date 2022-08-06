@@ -29,7 +29,9 @@ export const PlayerHints = (props: Props) => {
           title={`This hint was used by ${playerName}.`}
           PopperProps={{ disablePortal: true }}
         >
-          <UsedHint style={HINT_STYLES} />
+          <span>
+            <UsedHint style={HINT_STYLES} />
+          </span>
         </Tooltip>
       ))}
       {_.range(hintsUnused).map((_, i) => (
@@ -38,7 +40,9 @@ export const PlayerHints = (props: Props) => {
           title={`This hint is available only to ${playerName}.`}
           PopperProps={{ disablePortal: true }}
         >
-          <UnusedHint style={HINT_STYLES} />
+          <span>
+            <UnusedHint style={HINT_STYLES} />
+          </span>
         </Tooltip>
       ))}
       {hintsUnused === 0 && teamHintsAvailable > 0 && (
@@ -46,7 +50,9 @@ export const PlayerHints = (props: Props) => {
           title={`${playerName} can still give a clue by using one of the team's shared hints.`}
           PopperProps={{ disablePortal: true }}
         >
-          <AvailableHint style={HINT_STYLES} />
+          <span>
+            <AvailableHint style={HINT_STYLES} />
+          </span>
         </Tooltip>
       )}
     </Hints>

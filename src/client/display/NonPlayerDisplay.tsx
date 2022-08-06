@@ -36,7 +36,9 @@ export const NonPlayerDisplay = (props: Props) => {
                 title="This hint becomes available once this non-player pile is exhausted."
                 PopperProps={{ disablePortal: true }}
               >
-                <LockedHint style={HINT_STYLES} />
+                <span>
+                  <LockedHint style={HINT_STYLES} />
+                </span>
               </Tooltip>
             </Hints>
           )}

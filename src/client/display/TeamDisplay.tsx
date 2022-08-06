@@ -48,7 +48,9 @@ export const TeamDisplay = (props: Props) => {
               title="This hint is available to players that have used all of their own hints."
               PopperProps={{ disablePortal: true }}
             >
-              <UnusedHint style={HINT_STYLES} />
+              <span>
+                <UnusedHint style={HINT_STYLES} />
+              </span>
             </Tooltip>
           ))}
           {_.range(hints.locked).map((_, i) => (
@@ -57,7 +59,9 @@ export const TeamDisplay = (props: Props) => {
               title="This hint becomes available once every player uses all of their own hints."
               PopperProps={{ disablePortal: true }}
             >
-              <LockedHint style={HINT_STYLES} />
+              <span>
+                <LockedHint style={HINT_STYLES} />
+              </span>
             </Tooltip>
           ))}
         </Hints>
