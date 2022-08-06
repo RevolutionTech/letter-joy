@@ -1,3 +1,4 @@
+import { styled } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 
 import {
@@ -6,7 +7,9 @@ import {
   CardStack,
   PlayerViewPlayerState,
 } from "../../game/types";
+import { CARD_HEIGHT } from "../cards/Paper";
 import { PresentedCard } from "../cards/PresentedCard";
+import theme from "../theme";
 import {
   DisplayCell,
   DisplayStatus,
@@ -14,6 +17,12 @@ import {
   HandOfCards,
 } from "./DisplayCell";
 import { PlayerHints } from "./PlayerHints";
+
+const BonusLetterSeparator = styled("div")({
+  height: `${CARD_HEIGHT / 2}px`,
+  marginRight: "8px",
+  borderRight: `2px dashed ${theme.black}`,
+});
 
 interface Props extends PlayerViewPlayerState {
   playerName: string;
@@ -73,14 +82,16 @@ export const PlayerDisplay = (props: Props) => {
           );
         })}
         {playerOutcome == null && activeLetter.stack === CardStack.SINGLE && (
-          <PresentedCard
-            letter={bonusLetter}
-            destinedOwner={OwnerType.TEAM}
-            active
-            containsTokens={containsTokens}
-            onClick={onAddToSpelling}
-            style={{ marginLeft: "8px" }}
-          />
+          <>
+            <BonusLetterSeparator />
+            <PresentedCard
+              letter={bonusLetter}
+              destinedOwner={OwnerType.TEAM}
+              active
+              containsTokens={containsTokens}
+              onClick={onAddToSpelling}
+            />
+          </>
         )}
       </HandOfCards>
     </DisplayCell>
