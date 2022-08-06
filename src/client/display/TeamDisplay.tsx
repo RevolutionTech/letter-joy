@@ -66,6 +66,7 @@ export const TeamDisplay = (props: Props) => {
         {wild != null && (
           <PresentedCard
             letter={Letter.WILD}
+            destinedOwner={OwnerType.TEAM}
             containsTokens={
               spelling && getTokensAtLocation(spelling, wildLocation)
             }
@@ -82,6 +83,7 @@ export const TeamDisplay = (props: Props) => {
             <PresentedCard
               key={i}
               letter={letter}
+              destinedOwner={OwnerType.TEAM}
               containsTokens={
                 spelling && getTokensAtLocation(spelling, cardLocation)
               }

@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Tooltip } from "@mui/material";
 import ChairIcon from "@mui/icons-material/Chair";
 
-import { Letter } from "../../game/types";
+import { Letter, OwnerType } from "../../game/types";
 import LockedHint from "../assets/hints/locked.svg";
 import { CardPile } from "../cards/CardPile";
 import { PresentedCard } from "../cards/PresentedCard";
@@ -44,16 +44,24 @@ export const NonPlayerDisplay = (props: Props) => {
         <HandOfCards>
           <PresentedCard
             letter={letters[0]}
+            destinedOwner={OwnerType.NONPLAYER}
             active
             containsTokens={containsTokens}
             onClick={onAddToSpelling}
           />
           {numLettersRemaining > 3 ? (
-            <CardPile numCards={numLettersRemaining} />
+            <CardPile
+              numCards={numLettersRemaining}
+              destinedOwner={OwnerType.NONPLAYER}
+            />
           ) : (
             _.range(numLettersRemaining).map((i) => {
               return (
-                <PresentedCard key={`${nonPlayerIndex}-${i}`} letter={null} />
+                <PresentedCard
+                  key={`${nonPlayerIndex}-${i}`}
+                  letter={null}
+                  destinedOwner={OwnerType.NONPLAYER}
+                />
               );
             })
           )}

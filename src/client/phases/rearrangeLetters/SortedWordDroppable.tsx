@@ -75,6 +75,7 @@ export const SortedWordDroppable = (props: Props) => {
                   draggableId={draggableId}
                   index={i}
                   letter={letter}
+                  destinedOwner={card.owner.ownerType}
                   isDragDisabled={isDragDisabled}
                 />
               );

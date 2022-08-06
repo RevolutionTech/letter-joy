@@ -59,6 +59,7 @@ export const SingleDroppableCard = (props: Props) => {
               draggableId={draggableId}
               index={0}
               letter={letter}
+              destinedOwner={cardLocation.owner.ownerType}
               isDragDisabled={isDragDisabled}
             />
           )}

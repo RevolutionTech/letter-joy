@@ -3,7 +3,7 @@ import _ from "lodash";
 import { styled } from "@mui/material";
 
 import { LETTERS_PER_PLAYER } from "../../../game/constants";
-import { Letter } from "../../../game/types";
+import { Letter, OwnerType } from "../../../game/types";
 import { PresentedCard } from "../../cards/PresentedCard";
 import { Button } from "../../panels/MUI";
 import { Footer } from "../../panels/Footer";
@@ -55,6 +55,7 @@ export const ChooseSecretWordContent = (props: Props) => {
         <PresentedCard
           key={`${letter}-${i}`}
           letter={letter}
+          destinedOwner={OwnerType.PLAYER}
           containsTokens={containsToken}
           onClick={
             letterSelectedAtIndex === -1

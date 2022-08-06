@@ -1,6 +1,11 @@
 import PersonIcon from "@mui/icons-material/Person";
 
-import { Letter, CardStack, PlayerViewPlayerState } from "../../game/types";
+import {
+  Letter,
+  OwnerType,
+  CardStack,
+  PlayerViewPlayerState,
+} from "../../game/types";
 import { PresentedCard } from "../cards/PresentedCard";
 import {
   DisplayCell,
@@ -60,6 +65,7 @@ export const PlayerDisplay = (props: Props) => {
             <PresentedCard
               key={`${playerID}-${i}`}
               letter={letterDisplayed}
+              destinedOwner={OwnerType.PLAYER}
               active={active}
               containsTokens={active ? containsTokens : undefined}
               onClick={letterDisplayed == null ? undefined : onAddToSpelling}
@@ -69,6 +75,7 @@ export const PlayerDisplay = (props: Props) => {
         {playerOutcome == null && activeLetter.stack === CardStack.SINGLE && (
           <PresentedCard
             letter={bonusLetter}
+            destinedOwner={OwnerType.TEAM}
             active
             containsTokens={containsTokens}
             onClick={onAddToSpelling}

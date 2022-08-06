@@ -1,5 +1,6 @@
 import { styled, Tooltip } from "@mui/material";
 
+import { OwnerType } from "../../game/types";
 import CardQuantity from "../assets/cardQuantity.svg";
 import { Card } from "./Card";
 import { Paper } from "./Paper";
@@ -25,16 +26,17 @@ const CardQuantityNumber = styled("div")({
 
 interface Props {
   numCards: number;
+  destinedOwner: OwnerType;
 }
 
 export const CardPile = (props: Props) => {
-  const { numCards } = props;
+  const { numCards, destinedOwner } = props;
   return (
     <Pile>
       <CardInPile style={{ left: 8, top: 8 }} />
       <CardInPile style={{ left: 4, top: 4 }} />
       <Pile>
-        <CardOnPile letter={null} />
+        <CardOnPile letter={null} destinedOwner={destinedOwner} />
       </Pile>
       <Tooltip
         title={`There are ${numCards} cards in this pile.`}
