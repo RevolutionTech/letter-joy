@@ -12,7 +12,7 @@ import {
   DisplayName,
   HandOfCards,
 } from "./DisplayCell";
-import { Hints, Hint } from "./hint";
+import { Hints, HINT_STYLES } from "./hint";
 
 interface Props {
   letters: (Letter | null)[];
@@ -36,7 +36,7 @@ export const NonPlayerDisplay = (props: Props) => {
                 title="This hint becomes available once this non-player pile is exhausted."
                 PopperProps={{ disablePortal: true }}
               >
-                <Hint src={LockedHint} alt="Locked hint" />
+                <LockedHint style={HINT_STYLES} />
               </Tooltip>
             </Hints>
           )}

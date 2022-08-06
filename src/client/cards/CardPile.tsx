@@ -1,13 +1,13 @@
 import { styled, Tooltip } from "@mui/material";
 
-import cardQuantity from "../assets/cardQuantity.svg";
+import CardQuantity from "../assets/cardQuantity.svg";
 import { Card } from "./Card";
 import { Paper } from "./Paper";
 
 const Pile = styled("div")({ position: "relative" });
 const CardOnPile = styled(Card)({ position: "absolute", left: 0, top: 0 });
 const CardInPile = styled(Paper)({ position: "absolute" });
-const CardQuantity = styled("div")({
+const CardQuantityBox = styled("div")({
   position: "absolute",
   right: 0,
   top: -9,
@@ -40,10 +40,10 @@ export const CardPile = (props: Props) => {
         title={`There are ${numCards} cards in this pile.`}
         PopperProps={{ disablePortal: true }}
       >
-        <CardQuantity>
-          <img src={cardQuantity} alt={`Pile of ${numCards} cards`} />
+        <CardQuantityBox>
+          <CardQuantity />
           <CardQuantityNumber>{numCards}</CardQuantityNumber>
-        </CardQuantity>
+        </CardQuantityBox>
       </Tooltip>
     </Pile>
   );

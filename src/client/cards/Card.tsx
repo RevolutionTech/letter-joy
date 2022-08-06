@@ -10,6 +10,7 @@ type Props = PaperProps & {
 
 export const Card = (props: Props) => {
   const { letter, isClickable } = props;
+  const Text = letter == null ? cardBack : LETTER_SVG[letter];
 
   return (
     <Paper
@@ -18,11 +19,7 @@ export const Card = (props: Props) => {
         backgroundColor: letter === Letter.WILD ? theme.grey : theme.white,
       }}
     >
-      {letter == null ? (
-        <img src={cardBack} alt="Letter Joy" style={{ marginTop: "16px" }} />
-      ) : (
-        <img src={LETTER_SVG[letter]} alt={letter} />
-      )}
+      <Text style={{ marginTop: letter == null ? "16px" : null }} />
     </Paper>
   );
 };

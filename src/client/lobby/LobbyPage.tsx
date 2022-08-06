@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
 
-import logo from "../assets/lobby/logo.svg";
+import Logo from "../assets/lobby/logo.svg";
 import theme from "../theme";
 
 const LobbyBack = styled("div")({
@@ -41,7 +41,7 @@ export const LobbyPage = (props: React.PropsWithChildren<Props>) => (
     <LobbyMenu>
       {(props.showLogo ?? true) && (
         <LogoAnchor to="/">
-          <img src={logo} alt="Home" />
+          <Logo />
         </LogoAnchor>
       )}
       {props.children}

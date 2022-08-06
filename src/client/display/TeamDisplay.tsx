@@ -19,7 +19,7 @@ import {
   DisplayName,
   HandOfCards,
 } from "./DisplayCell";
-import { Hints, Hint } from "./hint";
+import { Hints, HINT_STYLES } from "./hint";
 import { getTokensAtLocation } from "../cards/spelling";
 
 interface Props {
@@ -48,7 +48,7 @@ export const TeamDisplay = (props: Props) => {
               title="This hint is available to players that have used all of their own hints."
               PopperProps={{ disablePortal: true }}
             >
-              <Hint src={UnusedHint} alt="Unused hint" />
+              <UnusedHint style={HINT_STYLES} />
             </Tooltip>
           ))}
           {_.range(hints.locked).map((_, i) => (
@@ -57,7 +57,7 @@ export const TeamDisplay = (props: Props) => {
               title="This hint becomes available once every player uses all of their own hints."
               PopperProps={{ disablePortal: true }}
             >
-              <Hint src={LockedHint} alt="Locked hint" />
+              <LockedHint style={HINT_STYLES} />
             </Tooltip>
           ))}
         </Hints>

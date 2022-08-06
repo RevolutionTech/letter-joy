@@ -1,10 +1,10 @@
 import { styled } from "@mui/material";
 
-import title from "../assets/lobby/title.svg";
+import Title from "../assets/lobby/title.svg";
 import { LobbyPage } from "./LobbyPage";
 import { MenuButton } from "./MenuButton";
 
-const Title = styled("img")({
+const StyledTitle = styled(Title)({
   maxWidth: "136px",
   marginTop: "20px",
 });
@@ -12,7 +12,7 @@ const Tagline = styled("p")({ margin: "44px 0" });
 
 export const Home = () => (
   <LobbyPage showLogo={false}>
-    <Title src={title} alt="Letter Joy" />
+    <StyledTitle />
     <Tagline>A cooperative word deduction game.</Tagline>
     <MenuButton to="/room/new" variant="contained" color="primary">
       New game

@@ -5,7 +5,7 @@ import { NUM_HINTS_STARTING_PER_PLAYER } from "../../game/constants";
 import AvailableHint from "../assets/hints/available.svg";
 import UnusedHint from "../assets/hints/unused.svg";
 import UsedHint from "../assets/hints/used.svg";
-import { Hints, Hint } from "./hint";
+import { Hints, HINT_STYLES } from "./hint";
 
 interface Props {
   playerID: string;
@@ -29,7 +29,7 @@ export const PlayerHints = (props: Props) => {
           title={`This hint was used by ${playerName}.`}
           PopperProps={{ disablePortal: true }}
         >
-          <Hint src={UsedHint} alt="Used hint" />
+          <UsedHint style={HINT_STYLES} />
         </Tooltip>
       ))}
       {_.range(hintsUnused).map((_, i) => (
@@ -38,7 +38,7 @@ export const PlayerHints = (props: Props) => {
           title={`This hint is available only to ${playerName}.`}
           PopperProps={{ disablePortal: true }}
         >
-          <Hint src={UnusedHint} alt="Unused hint" />
+          <UnusedHint style={HINT_STYLES} />
         </Tooltip>
       ))}
       {hintsUnused === 0 && teamHintsAvailable > 0 && (
@@ -46,7 +46,7 @@ export const PlayerHints = (props: Props) => {
           title={`${playerName} can still give a clue by using one of the team's shared hints.`}
           PopperProps={{ disablePortal: true }}
         >
-          <Hint src={AvailableHint} alt="Available hint" />
+          <AvailableHint style={HINT_STYLES} />
         </Tooltip>
       )}
     </Hints>
