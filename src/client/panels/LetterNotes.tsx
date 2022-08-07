@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import _ from "lodash";
 import {
   styled,
@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import theme from "../theme";
-import { Letter } from "../../game/types";
+import { Letter, CardStack, OwnerCardLocation } from "../../game/types";
 import { getOrdinalSuffix } from "../../game/utils";
 
 const LetterNotesFooter = styled("div")({
@@ -36,6 +36,7 @@ const ALPHABET = _.range("A".charCodeAt(0), "Z".charCodeAt(0) + 1).map(
 );
 
 interface Props {
+  activeLetter: OwnerCardLocation;
   notes: Record<Letter, boolean>[];
   onUpdateNote: (
     letterIndex: number,
@@ -73,7 +74,16 @@ export const LetterNotes = (props: Props) => {
     [props.onUpdateNote, letterIndex, activeNotes]
   );
 
-  return props.notes.length > 0 ? (
+  // Update tab when the player's letter index changes
+  const activeLetterIndex =
+    props.activeLetter.stack === CardStack.ARRAY
+      ? props.activeLetter.letterIndex
+      : props.notes.length - 1;
+  useEffect(() => {
+    setLetterIndex(activeLetterIndex);
+  }, [activeLetterIndex, setLetterIndex]);
+
+  return (
     <LetterNotesFooter>
       <LetterNotesTabs>
         <Header>Notes</Header>
@@ -104,5 +114,5 @@ export const LetterNotes = (props: Props) => {
         })}
       </LetterButtons>
     </LetterNotesFooter>
-  ) : null;
+  );
 };

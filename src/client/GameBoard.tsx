@@ -45,8 +45,9 @@ export const GameBoard = (props: BoardProps) => {
     <PanelWrapper>
       <PanelContainer>
         <Board {...props} />
-        {phase !== Phase.CHOOSE_SECRET_WORD && (
+        {props.playerID != null && phase !== Phase.CHOOSE_SECRET_WORD && (
           <LetterNotes
+            activeLetter={props.G.players[+props.playerID].activeLetter}
             notes={props.G.letterNotes}
             onUpdateNote={props.moves.updateNote}
           />
