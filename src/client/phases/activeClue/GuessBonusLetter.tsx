@@ -28,7 +28,7 @@ export const GuessBonusLetter = (props: Props) => {
 
   return (
     <div style={{ margin: "32px 0" }}>
-      <div style={{ fontSize: "16pt" }}>What&apos;s your bonus letter?</div>
+      <div style={{ fontSize: "16pt" }}>You may guess your bonus letter.</div>
       <TextField
         id="bonus-letter"
         variant="filled"
