@@ -37,9 +37,9 @@ export type OwnerCardLocation =
   | { stack: CardStack.ARRAY; letterIndex: number };
 
 export interface PlayerOutcome {
+  spelling: Spelling; // note: the spelling letter indices becomes unreliable after multiple players use bonus letters
   spelledWord: string;
   expectedWord: string;
-  teamLettersUsed: OwnerCardLocation[];
   isWord?: boolean;
 }
 

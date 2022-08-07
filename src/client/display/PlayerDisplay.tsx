@@ -74,7 +74,9 @@ export const PlayerDisplay = (props: Props) => {
             <PresentedCard
               key={`${playerID}-${i}`}
               letter={letterDisplayed}
-              destinedOwner={OwnerType.PLAYER}
+              destinedOwner={
+                playerOutcome?.spelling[i].owner.ownerType ?? OwnerType.PLAYER
+              }
               active={active}
               containsTokens={active ? containsTokens : undefined}
               onClick={letterDisplayed == null ? undefined : onAddToSpelling}

@@ -7,14 +7,7 @@ import { createDeck, shuffleCards, dealCardsEvenly } from "./deck";
 import { playerHasHintAvailable } from "./hints";
 import { ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
-import {
-  Letter,
-  OwnerType,
-  CardStack,
-  OwnerCardLocation,
-  Spelling,
-  G,
-} from "./types";
+import { Letter, OwnerType, CardStack, Spelling, G } from "./types";
 import { isWordEqual } from "./word";
 
 export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
@@ -213,7 +206,17 @@ export const advanceLetter = (g: G, ctx: Ctx, letterGuess?: Letter) => {
   return;
 };
 
-const removeTeamLettersUsed = (g: G, teamLettersUsed: OwnerCardLocation[]) => {
+const removeTeamLettersUsed = (g: G, spelling: Spelling) => {
+  // Determine team letters used
+  const teamLettersUsed = spelling
+    .filter((cardLocation) => cardLocation.owner.ownerType === OwnerType.TEAM)
+    .map((cardLocation) => ({
+      stack: cardLocation.stack,
+      ...(cardLocation.stack === CardStack.ARRAY
+        ? { letterIndex: cardLocation.letterIndex }
+        : {}),
+    }));
+
   // Remove bonus letters
   const bonusLetters = teamLettersUsed.filter(
     (cardLocation) => cardLocation.stack === CardStack.ARRAY
@@ -257,21 +260,13 @@ export const rearrangeLetters = (
     .join("");
 
   // Assign the player outcome
-  const teamLettersUsed = spelling
-    .filter((cardLocation) => cardLocation.owner.ownerType === OwnerType.TEAM)
-    .map((cardLocation) => ({
-      stack: cardLocation.stack,
-      ...(cardLocation.stack === CardStack.ARRAY
-        ? { letterIndex: cardLocation.letterIndex }
-        : {}),
-    })) as OwnerCardLocation[];
   const isSpelledWordExpected = isWordEqual(expectedWord, spelledWord);
   g.players[+ctx.currentPlayer] = {
     ...playerState,
     playerOutcome: {
+      spelling,
       spelledWord,
       expectedWord,
-      teamLettersUsed,
       // If the user didn't spell the word they expected,
       // we don't yet know if it's a word
       isWord: isSpelledWordExpected || undefined,
@@ -282,7 +277,7 @@ export const rearrangeLetters = (
   // whether they spelled what they meant to or not
   if (isSpelledWordExpected) {
     // Remove any team letters that were used
-    removeTeamLettersUsed(g, teamLettersUsed);
+    removeTeamLettersUsed(g, spelling);
 
     // End turn and advance to scoring
     ctx.events?.setStage?.("scoring");
@@ -313,7 +308,7 @@ export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
   };
 
   // Remove any team letters that were used
-  removeTeamLettersUsed(g, playerState.playerOutcome.teamLettersUsed);
+  removeTeamLettersUsed(g, playerState.playerOutcome.spelling);
 
   // Move the active player into the scoring stage and end the turn
   ctx.events?.endStage?.();
