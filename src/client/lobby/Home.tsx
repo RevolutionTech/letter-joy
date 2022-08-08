@@ -20,5 +20,8 @@ export const Home = () => (
     <MenuButton to="/help" variant="outlined">
       How to play
     </MenuButton>
+    <MenuButton to="/credits" variant="outlined">
+      Credits
+    </MenuButton>
   </LobbyPage>
 );

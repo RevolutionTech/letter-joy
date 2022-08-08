@@ -8,6 +8,7 @@ import {
 
 import { Home } from "./lobby/Home";
 import { CreateRoom } from "./lobby/CreateRoom";
+import { Credits } from "./lobby/Credits";
 import { LobbyPage } from "./lobby/LobbyPage";
 import { NotFound } from "./lobby/NotFound";
 import { HelpContent } from "./lobby/help/HelpContent";
@@ -30,6 +31,7 @@ const App = () => (
                 </LobbyPage>
               }
             />
+            <Route path="/credits" element={<Credits />} />
             <Route path="room/new" element={<CreateRoom />} />
             <Route path="room/:matchID" element={<Room />} />
             <Route path="*" element={<NotFound />} />

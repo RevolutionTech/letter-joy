@@ -13,8 +13,8 @@ import Example10 from "../../assets/lobby/help/example10.png";
 import Example11 from "../../assets/lobby/help/example11.png";
 import Example12 from "../../assets/lobby/help/example12.png";
 import theme from "../../theme";
+import { LobbyBody } from "../lobbyBody";
 
-const HelpBody = styled("div")({ textAlign: "left", fontSize: "14pt" });
 const Example = styled("div")({
   display: "flex",
   flexDirection: "column",
@@ -39,7 +39,7 @@ const Clue = styled("span")({ whiteSpace: "nowrap" });
 export const HelpContent = () => (
   <>
     <h1>How to play</h1>
-    <HelpBody>
+    <LobbyBody>
       <h2>Summary</h2>
       <p>
         Letter Joy is a cooperative word deduction game for 2-6 players. Players
@@ -282,14 +282,6 @@ export const HelpContent = () => (
         spelling out final words, but just like the wildcard, each bonus letter
         may only be used by one player.
       </p>
-    </HelpBody>
-    <a
-      href="https://www.flaticon.com/free-icons/cursor"
-      title="cursor icons"
-      target="_blank"
-      rel="noreferrer"
-    >
-      <small>Cursor icons created by Freepik - Flaticon</small>
-    </a>
+    </LobbyBody>
   </>
 );
