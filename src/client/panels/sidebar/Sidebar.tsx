@@ -2,6 +2,7 @@ import { styled } from "@mui/material";
 
 import { PlayerViewG } from "../../../game/types";
 import { ClueDisplay } from "../../cards/ClueDisplay";
+import { FloatingHelpButton } from "../../lobby/help/FloatingHelpButton";
 import theme from "../../theme";
 import { SidebarList } from "./SidebarList";
 
@@ -20,6 +21,7 @@ interface Props {
 
 export const Sidebar = (props: React.PropsWithChildren<Props>) => (
   <FixedSidebar>
+    <FloatingHelpButton />
     {props.children}
     {props.g.previousClues.length > 0 && (
       <>

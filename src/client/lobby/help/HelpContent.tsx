@@ -31,7 +31,7 @@ const ExampleImage = styled("img")({
     maxWidth: "60%",
   },
   maxHeight: "300px",
-  border: `solid ${theme.black}`,
+  border: `thin solid ${theme.black}`,
 });
 const ExampleText = styled("small")({ color: theme.grey });
 const Clue = styled("span")({ whiteSpace: "nowrap" });
