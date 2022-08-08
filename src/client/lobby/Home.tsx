@@ -17,5 +17,8 @@ export const Home = () => (
     <MenuButton to="/room/new" variant="contained" color="primary">
       New game
     </MenuButton>
+    <MenuButton to="/help" variant="outlined">
+      How to play
+    </MenuButton>
   </LobbyPage>
 );
