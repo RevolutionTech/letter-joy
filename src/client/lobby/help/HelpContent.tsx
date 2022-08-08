@@ -62,10 +62,11 @@ export const HelpContent = () => (
           <ExampleImage src={Example01} alt="Typical clue" />
         </ExampleImageLink>
         <ExampleText>
-          Example: Katrina uses JMac&apos;s O first, then your letter, then
-          Aaron&apos;s I, followed by JMac&apos;s O again, and finally your
-          letter again. Your first letter is represented by ?<sub>1</sub>, so
-          from your perspective this clue spells out{" "}
+          Example: Katrina uses JMac&apos;s &quot;O&quot; first, then your
+          letter, then Aaron&apos;s &quot;I&quot;, followed by JMac&apos;s
+          &quot;O&quot; again, and finally your letter again. Your first letter
+          is represented by ?<sub>1</sub>, so from your perspective this clue
+          spells out{" "}
           <Clue>
             O ?<sub>1</sub> I O ?<sub>1</sub>.
           </Clue>{" "}
@@ -84,7 +85,7 @@ export const HelpContent = () => (
         <ExampleText>
           Example: The word in this case could be <Clue>R E M E M B E R</Clue>.
           It could not be <Clue>D E C E M B E R</Clue> because that would mean
-          the wildcard represents both C and M.
+          the wildcard represents both &quot;C&quot; and &quot;M.&quot;
         </ExampleText>
       </Example>
       <p>
@@ -148,8 +149,8 @@ export const HelpContent = () => (
         <ExampleText>
           Example: The word in this case could either be{" "}
           <Clue>T H E R E F O R E</Clue> or <Clue>W H E R E F O R E</Clue>.
-          Since it&apos;s unclear whether you have a T or a W you decide to keep
-          your letter for another round.
+          Since it&apos;s unclear whether you have a &quot;T&quot; or a
+          &quot;W&quot; you decide to keep your letter for another round.
         </ExampleText>
       </Example>
       <h2>Game end</h2>
@@ -180,9 +181,10 @@ export const HelpContent = () => (
           <ExampleImage src={Example07} alt="Mistake when rearranging" />
         </ExampleImageLink>
         <ExampleText>
-          Example: JMac made a mistake and thought his third letter was an S
-          when it was actually a K. <Clue>K O B E R</Clue> isn&apos;t a word but
-          he will be awarded partial points for knowing his other 4 letters.
+          Example: JMac made a mistake and thought his third letter was an
+          &quot;S&quot; when it was actually a &quot;K&quot;.{" "}
+          <Clue>K O B E R</Clue> isn&apos;t a word but he will be awarded
+          partial points for knowing his other 4 letters.
         </ExampleText>
       </Example>
       <p>
@@ -215,9 +217,9 @@ export const HelpContent = () => (
           <ExampleImage src={Example09} alt="Clue using some non-players" />
         </ExampleImageLink>
         <ExampleText>
-          Example: On this round the O non-player letter was used. In the next
-          round, this letter will be replaced with a new letter but the Y will
-          remain.
+          Example: On this round the &quot;O&quot; non-player letter was used.
+          In the next round, this letter will be replaced with a new letter but
+          the &quot;Y&quot; will remain.
         </ExampleText>
       </Example>
       <p>
@@ -255,9 +257,9 @@ export const HelpContent = () => (
           <ExampleImage src={Example11} alt="Guessing a bonus letter" />
         </ExampleImageLink>
         <ExampleText>
-          Example: It seems like your bonus letter could be an I. If your guess
-          is correct, the team will have access to a one-time I in a future
-          round.
+          Example: It seems like your bonus letter could be an &quot;I&quot;. If
+          your guess is correct, the team will have access to a one-time
+          &quot;I&quot; in a future round.
         </ExampleText>
       </Example>
       <p>
