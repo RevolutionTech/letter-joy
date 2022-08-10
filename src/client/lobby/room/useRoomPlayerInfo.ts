@@ -3,6 +3,7 @@ import _ from "lodash";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import { LobbyClient } from "boardgame.io/client";
+import * as FullStory from "@fullstory/browser";
 
 import { LETTER_JOY } from "../../../game/constants";
 import { SERVER_HOST } from "../../host";
@@ -65,6 +66,9 @@ export const useRoomPlayerInfo = () => {
             credentials: playerInfo.playerCredentials,
             newName,
           });
+        }
+        if (process.env.NODE_ENV === "production") {
+          FullStory.setUserVars({ displayName: newName });
         }
       }
       setIsEditingName(false);
