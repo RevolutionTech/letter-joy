@@ -39,8 +39,8 @@ export const Credits = () => (
       </p>
       <p>
         Letter Joy playtested by Katrina Kokta, JMac, Aaron Moser, Nick Watson,
-        Alison Firth, Michael &quot;MMF&quot; Feldman, Nolan Leung, Michelle
-        Zheng, Olena, SK, and DT.
+        Alison Firth, Andrew Antczak, Michael &quot;MMF&quot; Feldman, Nolan
+        Leung, Olumide Savage, Michelle Zheng, Olena, SK, and DT.
       </p>
       <a
         href="https://www.flaticon.com/free-icons/cursor"
