@@ -20,7 +20,7 @@
     "@babel/core": "^7.18.10",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
-    "@fullstory/browser": "^1.6.1",
+    "@fullstory/browser": "^1.6.2",
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.0",
     "@react-forked/dnd": "^14.0.2",
