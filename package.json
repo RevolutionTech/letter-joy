@@ -23,7 +23,7 @@
     "@fullstory/browser": "^1.6.2",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
-    "@react-forked/dnd": "^14.0.2",
+    "@react-forked/dnd": "^15.0.0",
     "@sentry/node": "^7.14.0",
     "@sentry/react": "^7.5.1",
     "@sentry/tracing": "^7.5.1",
