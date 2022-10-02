@@ -1,4 +1,4 @@
-import { Draggable } from "@react-forked/dnd";
+import { Draggable } from "@hello-pangea/dnd";
 
 import { Letter, OwnerType } from "../../../game/types";
 import { Card } from "../../cards/Card";

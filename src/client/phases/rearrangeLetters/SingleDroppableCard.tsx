@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { Droppable } from "@react-forked/dnd";
+import { Droppable } from "@hello-pangea/dnd";
 
 import {
   Letter,
