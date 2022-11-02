@@ -1661,12 +1661,12 @@
     "@babel/plugin-transform-react-jsx-development" "^7.18.6"
     "@babel/plugin-transform-react-pure-annotations" "^7.18.6"
 
-"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.18.9", "@babel/runtime@^7.19.0", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
-  version "7.19.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.19.0.tgz#22b11c037b094d27a8a2504ea4dcff00f50e2259"
-  integrity sha512-eR8Lo9hnDS7tqkO7NsV+mKvCmv5boaXFSZ70DnfhcgiEne8hv9oCEd36Klw74EtizEqLsy4YnW8UWwpBVolHZA==
+"@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.19.0", "@babel/runtime@^7.19.4", "@babel/runtime@^7.4.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+  version "7.20.1"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.1.tgz#1148bb33ab252b165a06698fde7576092a78b4a9"
+  integrity sha512-mrzLkl6U9YLF8qpqI7TB82PESyEGjm/0Ly91jG575eVxMMlb8fYfOXFZIJ8XfLrJZQbm7dlKry2bJmXBUEkdFg==
   dependencies:
-    regenerator-runtime "^0.13.4"
+    regenerator-runtime "^0.13.10"
 
 "@babel/template@^7.15.4", "@babel/template@^7.18.10", "@babel/template@^7.18.6", "@babel/template@^7.4.4":
   version "7.18.10"
@@ -1837,18 +1837,18 @@
   resolved "https://registry.yarnpkg.com/@fullstory/browser/-/browser-1.6.2.tgz#fa636a4579779fe23fa87a11dd175be25c67185c"
   integrity sha512-r3kPrTKijI/LkdSW7t1GlXPn4jPuZL4AFGDJBWMj4E4HLeF2lCvZtSOZ1YTwZtJFciLp/+KOIW3qBDkqqXC2qw==
 
-"@hello-pangea/dnd@^16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@hello-pangea/dnd/-/dnd-16.0.0.tgz#b97791286395924ffbdb4cd0f27f06f2985766d5"
-  integrity sha512-FprEzwrGMvyclVf8pWTrPbUV7/ZFt6NmL76ePj1mMyZG195htDUkmvET6CBwKJTXmV+AE/GyK4Lv3wpCqrlY/g==
+"@hello-pangea/dnd@^16.0.1":
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/@hello-pangea/dnd/-/dnd-16.0.1.tgz#3355add5fd1e0ccd2bfb502f88ab361a47e21ca1"
+  integrity sha512-mRWQxRHelK1WAoEYpMfCTOVBIVdmnGXNYmpQUw1LKN/QY6YCNOsUDC4pg3QOtNYRmrxfjCm4HkSgVq5LuD/5ag==
   dependencies:
-    "@babel/runtime" "^7.18.9"
+    "@babel/runtime" "^7.19.4"
     css-box-model "^1.2.1"
     memoize-one "^6.0.0"
     raf-schd "^4.0.3"
-    react-redux "^8.0.2"
+    react-redux "^8.0.4"
     redux "^4.2.0"
-    use-memo-one "^1.1.2"
+    use-memo-one "^1.1.3"
 
 "@humanwhocodes/config-array@^0.10.5":
   version "0.10.7"
@@ -7629,7 +7629,7 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-redux@^8.0.2:
+react-redux@^8.0.4:
   version "8.0.4"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-8.0.4.tgz#80c31dffa8af9526967c4267022ae1525ff0e36a"
   integrity sha512-yMfQ7mX6bWuicz2fids6cR1YT59VTuT8MKyyE310wJQlINKENCeT1UcPdEiX6znI5tF8zXyJ/VYvDgeGuaaNwQ==
@@ -7720,14 +7720,7 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-redux@^4.1.0:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.2.tgz#140f35426d99bb4729af760afcf79eaaac407104"
-  integrity sha512-SH8PglcebESbd/shgf6mii6EIoRM0zrQyjcuQ+ojmfxjTtE0z9Y8pa62iA/OJ58qjP6j27uyW4kUF4jl/jd6sw==
-  dependencies:
-    "@babel/runtime" "^7.9.2"
-
-redux@^4.2.0:
+redux@^4.1.0, redux@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.2.0.tgz#46f10d6e29b6666df758780437651eeb2b969f13"
   integrity sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==
@@ -7758,10 +7751,10 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.4:
-  version "0.13.9"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
-  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
+regenerator-runtime@^0.13.10:
+  version "0.13.10"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.10.tgz#ed07b19616bcbec5da6274ebc75ae95634bfc2ee"
+  integrity sha512-KepLsg4dU12hryUO7bp/axHAKvwGOCV0sGloQtpagJ12ai+ojVDqkeGSiRX1zlq+kjIMZ1t7gpze+26QqtdGqw==
 
 regenerator-transform@^0.14.2:
   version "0.14.5"
@@ -9028,7 +9021,7 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-memo-one@^1.1.2:
+use-memo-one@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/use-memo-one/-/use-memo-one-1.1.3.tgz#2fd2e43a2169eabc7496960ace8c79efef975e99"
   integrity sha512-g66/K7ZQGYrI6dy8GLpVcMsBp4s17xNkYJVSMvTEevGy3nDxHOfE6z8BVE22+5G5x7t3+bhzrlTDB7ObrEE0cQ==
