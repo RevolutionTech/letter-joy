@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.19.6",
-    "@emotion/react": "^11.10.4",
+    "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.4",
     "@fullstory/browser": "^1.6.2",
     "@hello-pangea/dnd": "^16.0.0",
