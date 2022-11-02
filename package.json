@@ -21,7 +21,7 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.4",
     "@fullstory/browser": "^1.6.2",
-    "@hello-pangea/dnd": "^16.0.0",
+    "@hello-pangea/dnd": "^16.0.1",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.7",
     "@sentry/node": "^7.14.0",
