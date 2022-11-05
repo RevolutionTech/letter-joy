@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Ctx } from "boardgame.io";
+import { DefaultPluginAPIs } from "boardgame.io";
 
 import { MAX_NUM_PLAYERS, MIN_NUM_LETTERS_NON_PLAYER } from "./constants";
 import { G, Letter } from "./types";
@@ -13,9 +13,6 @@ export const createDeck = (distribution: Record<Letter, number>): Letter[] =>
     ],
     []
   ) as Letter[];
-
-export const shuffleCards = (ctx: Ctx, deck: Letter[]) =>
-  ctx.random!.Shuffle(deck);
 
 export const drawCard = (deck: Letter[]) => {
   const card = deck[0];
@@ -71,12 +68,12 @@ export const dealCardsEvenly = (deck: Letter[], numPlayers: number) => {
   ];
 };
 
-export const drawFromDeck = (g: G, ctx: Ctx) => {
+export const drawFromDeck = (g: G, random: DefaultPluginAPIs["random"]) => {
   let drawPile = g.drawPile;
 
   // Reshuffle the discard if the draw pile is empty
   if (drawPile.length === 0) {
-    drawPile = shuffleCards(ctx, g.discardPile);
+    drawPile = random.Shuffle(g.discardPile);
     g.discardPile = [];
   }
 

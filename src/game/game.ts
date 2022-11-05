@@ -9,12 +9,7 @@ import {
   NUM_HINTS_LOCKED,
   NUM_HINTS_STARTING_AVAILABLE,
 } from "./constants";
-import {
-  createDeck,
-  shuffleCards,
-  dealNonPlayerCards,
-  dealCardsEvenly,
-} from "./deck";
+import { createDeck, dealNonPlayerCards, dealCardsEvenly } from "./deck";
 import { LETTER_DISTRIBUTION, countLetters } from "./letters";
 import { PHASES } from "./phases";
 import { isEveryPlayerWaiting } from "./players";
@@ -23,9 +18,9 @@ import { Letter, CardStack, G } from "./types";
 
 export const LetterJoy: Game<G> = {
   name: LETTER_JOY,
-  setup: (ctx) => {
+  setup: ({ ctx, random }) => {
     const unshuffledDeck = createDeck(LETTER_DISTRIBUTION);
-    const deck = shuffleCards(ctx, unshuffledDeck);
+    const deck = random.Shuffle(unshuffledDeck);
     const [nonPlayers, remainingDeck] = dealNonPlayerCards(
       deck,
       ctx.numPlayers
@@ -64,7 +59,7 @@ export const LetterJoy: Game<G> = {
       endGameVotes: [],
     };
   },
-  endIf: (g, ctx) =>
+  endIf: ({ G: g, ctx }) =>
     _.every(
       g.players,
       (playerState) => playerState.playerOutcome?.isWord != null

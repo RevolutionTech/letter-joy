@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Ctx } from "boardgame.io";
+import { Game } from "boardgame.io";
 
 import { ZERO_LETTERS } from "./letters";
 import {
@@ -45,11 +45,10 @@ const playerStatePlayerView = (
   };
 };
 
-export const playerView = (
-  g: G,
-  _ctx: Ctx,
-  playerID: string | null
-): PlayerViewG => {
+export const playerView: Game<G>["playerView"] = ({
+  G: g,
+  playerID,
+}): PlayerViewG => {
   const { players, nonPlayers, proposedClues } = g;
   return {
     ..._.omit(g, "drawPile"),
