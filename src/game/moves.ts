@@ -1,46 +1,48 @@
 import _ from "lodash";
-import { Ctx } from "boardgame.io";
+import { MoveFn } from "boardgame.io";
 import { INVALID_MOVE } from "boardgame.io/core";
 
 import { clueSummary } from "./clue";
-import { createDeck, shuffleCards, dealCardsEvenly } from "./deck";
+import { createDeck, dealCardsEvenly } from "./deck";
 import { playerHasHintAvailable } from "./hints";
 import { ZERO_LETTERS, countLetters } from "./letters";
 import { getLeftPlayerID, getPlayersActing } from "./players";
 import { Letter, OwnerType, CardStack, Spelling, G } from "./types";
 import { isWordEqual } from "./word";
 
-export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
+export const chooseSecretWord: MoveFn<G> = (
+  { G: g, ctx, playerID, events, random },
+  secretWord: Letter[]
+) => {
   // A player must be active to choose a secret word
-  const activePlayer = ctx.playerID;
-  if (activePlayer == null) {
+  if (playerID == null) {
     return INVALID_MOVE;
   }
 
   // Update the letters of the player to the left using the secret word
   // that the active player generated
-  const leftPlayerID = getLeftPlayerID(ctx.numPlayers, +activePlayer);
+  const leftPlayerID = getLeftPlayerID(ctx.numPlayers, +playerID);
   g.players[leftPlayerID] = {
     ...g.players[leftPlayerID],
-    letters: ctx.random!.Shuffle(secretWord),
+    letters: random.Shuffle(secretWord),
   };
 
   // Move the active player into the waiting stage
-  ctx.events?.endStage?.();
+  events.endStage();
 
   // Collect unused letters
   const unusedLetterCounts = countLetters(
     secretWord,
-    g.players[+activePlayer].wordConstructionLetters,
+    g.players[+playerID].wordConstructionLetters,
     -1
   );
   const unusedLetters = createDeck(unusedLetterCounts);
 
-  const otherActivePlayers = _.without(getPlayersActing(ctx), activePlayer);
+  const otherActivePlayers = _.without(getPlayersActing(ctx), playerID);
   if (otherActivePlayers.length > 0) {
     // Distribute unused letters to the remaining players
     const deckCuts = dealCardsEvenly(
-      shuffleCards(ctx, unusedLetters),
+      random.Shuffle(unusedLetters),
       otherActivePlayers.length
     );
     otherActivePlayers.forEach((playerID, i) => {
@@ -59,39 +61,40 @@ export const chooseSecretWord = (g: G, ctx: Ctx, secretWord: Letter[]) => {
   }
 
   // Reset the active player's letters available to create secret words
-  g.players[+activePlayer] = {
-    ...g.players[+activePlayer],
+  g.players[+playerID] = {
+    ...g.players[+playerID],
     wordConstructionLetters: { ...ZERO_LETTERS },
   };
   return;
 };
 
-export const updateNote = (
-  g: G,
-  ctx: Ctx,
+export const updateNote: MoveFn<G> = (
+  { G: g, playerID },
   letterIndex: number,
   letter: Letter,
   isCandidate: boolean
 ) => {
   // A player must be active to update a note
-  const activePlayer = ctx.playerID;
-  if (activePlayer == null) {
+  if (playerID == null) {
     return INVALID_MOVE;
   }
 
   // Update the note
-  g.players[+activePlayer].letterNotes[letterIndex][letter] = isCandidate;
+  g.players[+playerID].letterNotes[letterIndex][letter] = isCandidate;
   return;
 };
 
-export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
+export const proposeClue: MoveFn<G> = (
+  { G: g, playerID },
+  spelling: Spelling
+) => {
   // A player must be active and must have a hint available to propose the clue
-  if (ctx.playerID == null || !playerHasHintAvailable(g, ctx.playerID)) {
+  if (playerID == null || !playerHasHintAvailable(g, playerID)) {
     return INVALID_MOVE;
   }
 
   g.proposedClues.push({
-    authorID: ctx.playerID,
+    authorID: playerID,
     spelling,
     summary: clueSummary(spelling),
     active: true,
@@ -100,7 +103,10 @@ export const proposeClue = (g: G, ctx: Ctx, spelling: Spelling) => {
   return;
 };
 
-export const removeClue = (g: G, ctx: Ctx, clueIndex: number) => {
+export const removeClue: MoveFn<G> = (
+  { G: g, playerID },
+  clueIndex: number
+) => {
   // The clue must be one of the ones displayed to be removed
   if (clueIndex < 0 || clueIndex >= g.proposedClues.length) {
     return INVALID_MOVE;
@@ -108,7 +114,7 @@ export const removeClue = (g: G, ctx: Ctx, clueIndex: number) => {
 
   // A player must be active and the clue must belong to them
   const proposedClue = g.proposedClues[clueIndex];
-  if (ctx.playerID == null || proposedClue.authorID !== ctx.playerID) {
+  if (playerID == null || proposedClue.authorID !== playerID) {
     return INVALID_MOVE;
   }
 
@@ -117,15 +123,13 @@ export const removeClue = (g: G, ctx: Ctx, clueIndex: number) => {
   return;
 };
 
-export const resetSupport = (
-  g: G,
-  ctx: Ctx,
+export const resetSupport: MoveFn<G> = (
+  { G: g, playerID },
   resetEndSupport: boolean,
   activeClueIndex?: number
 ) => {
   // A player must be active to reset their support
-  const activePlayer = ctx.playerID;
-  if (activePlayer == null) {
+  if (playerID == null) {
     return INVALID_MOVE;
   }
 
@@ -135,24 +139,26 @@ export const resetSupport = (
     if (i !== activeClueIndex) {
       g.proposedClues[i] = {
         ...proposedClue,
-        votes: _.without(proposedClue.votes, activePlayer),
+        votes: _.without(proposedClue.votes, playerID),
       };
     }
   });
 
   // Possibly clear support for ending the game
   if (resetEndSupport) {
-    g.endGameVotes = _.without(g.endGameVotes, activePlayer);
+    g.endGameVotes = _.without(g.endGameVotes, playerID);
   }
   return;
 };
 
-export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
+export const supportClue: MoveFn<G> = (
+  { G: g, playerID, ...plugins },
+  clueIndex: number
+) => {
   // A player must be active to support a clue
   // and the clue being supported must be one of the ones displayed
-  const activePlayer = ctx.playerID;
   if (
-    activePlayer == null ||
+    playerID == null ||
     clueIndex < 0 ||
     clueIndex >= g.proposedClues.length
   ) {
@@ -166,41 +172,42 @@ export const supportClue = (g: G, ctx: Ctx, clueIndex: number) => {
   }
 
   // Clear the player's vote from all of the other proposed clues
-  resetSupport(g, ctx, true, clueIndex);
+  resetSupport({ G: g, playerID, ...plugins }, true, clueIndex);
 
   // Add the player's vote to the provided clue
   g.proposedClues[clueIndex] = {
     ...proposedClue,
-    votes: _.union(proposedClue.votes, [activePlayer]),
+    votes: _.union(proposedClue.votes, [playerID]),
   };
   return;
 };
 
-export const supportEnd = (g: G, ctx: Ctx) => {
+export const supportEnd: MoveFn<G> = ({ G: g, playerID, ...plugins }) => {
   // A player must be active to support ending the game
-  const activePlayer = ctx.playerID;
-  if (activePlayer == null) {
+  if (playerID == null) {
     return INVALID_MOVE;
   }
 
   // Clear the player's vote from any proposed clues
-  resetSupport(g, ctx, false);
+  resetSupport({ G: g, playerID, ...plugins }, false);
 
   // Add the player's vote to ending the game
-  g.endGameVotes = _.union(g.endGameVotes, [activePlayer]);
+  g.endGameVotes = _.union(g.endGameVotes, [playerID]);
   return;
 };
 
-export const advanceLetter = (g: G, ctx: Ctx, letterGuess?: Letter) => {
+export const advanceLetter: MoveFn<G> = (
+  { G: g, playerID },
+  letterGuess?: Letter
+) => {
   // A player must be active to advance
-  const activePlayer = ctx.playerID;
-  if (activePlayer == null) {
+  if (playerID == null) {
     return INVALID_MOVE;
   }
 
   // Add the player's request to advance next round
-  g.players[+activePlayer] = {
-    ...g.players[+activePlayer],
+  g.players[+playerID] = {
+    ...g.players[+playerID],
     requestAdvanceLetter: letterGuess ?? true,
   };
   return;
@@ -232,14 +239,13 @@ const removeTeamLettersUsed = (g: G, spelling: Spelling) => {
   }
 };
 
-export const rearrangeLetters = (
-  g: G,
-  ctx: Ctx,
+export const rearrangeLetters: MoveFn<G> = (
+  { G: g, ctx, playerID, events },
   spelling: Spelling,
   expectedWord: string
 ) => {
   // The player rearranging letters must be the active player
-  if (ctx.playerID !== ctx.currentPlayer) {
+  if (playerID !== ctx.currentPlayer) {
     return INVALID_MOVE;
   }
 
@@ -280,18 +286,21 @@ export const rearrangeLetters = (
     removeTeamLettersUsed(g, spelling);
 
     // End turn and advance to scoring
-    ctx.events?.setStage?.("scoring");
-    ctx.events?.endTurn?.();
+    events.setStage("scoring");
+    events.endTurn();
   } else {
     // Move to unexpected word stage
-    ctx.events?.setStage?.("unexpectedWord");
+    events.setStage("unexpectedWord");
   }
   return;
 };
 
-export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
+export const confirmUnexpectedWord: MoveFn<G> = (
+  { G: g, ctx, playerID, events },
+  isWord: boolean
+) => {
   // The player confirming must be the active player and they must already have a player outcome
-  if (ctx.playerID !== ctx.currentPlayer) {
+  if (playerID !== ctx.currentPlayer) {
     return INVALID_MOVE;
   }
 
@@ -311,7 +320,7 @@ export const confirmUnexpectedWord = (g: G, ctx: Ctx, isWord: boolean) => {
   removeTeamLettersUsed(g, playerState.playerOutcome.spelling);
 
   // Move the active player into the scoring stage and end the turn
-  ctx.events?.endStage?.();
-  ctx.events?.endTurn?.();
+  events.endStage();
+  events.endTurn();
   return;
 };

@@ -1,4 +1,4 @@
-import { Ctx } from "boardgame.io";
+import { DefaultPluginAPIs } from "boardgame.io";
 
 import { LETTERS_PER_PLAYER } from "./constants";
 import { drawFromDeck } from "./deck";
@@ -58,7 +58,7 @@ export const maybeAdvanceLetter = (playerState: PlayerState) => {
 
 export const maybeDrawNewBonusLetter = (
   g: G,
-  ctx: Ctx,
+  random: DefaultPluginAPIs["random"],
   playerState: PlayerState
 ) => {
   const { bonusLetter, requestAdvanceLetter } = playerState;
@@ -66,7 +66,7 @@ export const maybeDrawNewBonusLetter = (
     requestAdvanceLetter &&
     playerState.activeLetter.stack === CardStack.SINGLE
   ) {
-    const newBonusLetter = drawFromDeck(g, ctx);
+    const newBonusLetter = drawFromDeck(g, random);
     if (bonusLetter != null) {
       if (
         isLetter(requestAdvanceLetter) &&

@@ -47,7 +47,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         waiting: {},
       },
     },
-    endIf: (_, ctx) => isEveryPlayerWaiting(ctx),
+    endIf: ({ ctx }) => isEveryPlayerWaiting(ctx),
     next: Phase.CHOOSE_CLUE,
   },
   [Phase.CHOOSE_CLUE]: {
@@ -66,7 +66,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         },
       },
     },
-    onEnd: (g, ctx) => {
+    onEnd: ({ G: g, ctx }) => {
       const acceptedClue = _.find(
         g.proposedClues,
         (proposedClue) => proposedClue.votes.length === ctx.numPlayers
@@ -78,13 +78,13 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
       }
       g.proposedClues = [];
     },
-    endIf: (g, ctx) =>
+    endIf: ({ G: g, ctx }) =>
       g.endGameVotes.length === ctx.numPlayers ||
       _.some(
         g.proposedClues,
         (proposedClue) => proposedClue.votes.length === ctx.numPlayers
       ),
-    next: (g, ctx) =>
+    next: ({ G: g, ctx }) =>
       g.endGameVotes.length === ctx.numPlayers
         ? Phase.REARRANGE_LETTERS
         : Phase.ACTIVE_CLUE,
@@ -103,7 +103,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         waiting: { moves: { updateNote: { move: updateNote, client: false } } },
       },
     },
-    onEnd: (g, ctx) => {
+    onEnd: ({ G: g, random }) => {
       // Determine the bonus letters and non-players in the most recent clue
       const spelling = g.activeClue?.spelling ?? [];
       const bonusInClue = getUniqueBonus(spelling);
@@ -136,7 +136,7 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
 
           if (newLetters.length === 0) {
             // Pull a new letter for this non-player from the deck
-            const newLetter = drawFromDeck(g, ctx);
+            const newLetter = drawFromDeck(g, random);
             return [newLetter];
           } else if (newLetters.length === 1) {
             // Add hint when we've advanced to the last non-player letter
@@ -154,13 +154,13 @@ export const PHASES: Record<Phase, PhaseConfig<G>> = {
         const advancedPlayerState = maybeAdvanceLetter(playerState);
         const newBonusPlayerState = maybeDrawNewBonusLetter(
           g,
-          ctx,
+          random,
           advancedPlayerState
         );
         return { ...newBonusPlayerState, requestAdvanceLetter: false };
       });
     },
-    endIf: (_, ctx) => isEveryPlayerWaiting(ctx),
+    endIf: ({ ctx }) => isEveryPlayerWaiting(ctx),
     next: Phase.CHOOSE_CLUE,
   },
   [Phase.REARRANGE_LETTERS]: {
