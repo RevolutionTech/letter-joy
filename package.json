@@ -39,7 +39,7 @@
   "devDependencies": {
     "@svgr/parcel-plugin-svgr": "^5.5.0",
     "@types/koa-static": "^4.0.2",
-    "@types/lodash": "^4.14.187",
+    "@types/lodash": "^4.14.191",
     "@types/node": "^18.7.23",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.3",
