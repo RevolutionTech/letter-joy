@@ -4,6 +4,7 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-22.04
+    container: node:16-alpine
     steps:
       - uses: actions/checkout@v3
       - run: yarn install

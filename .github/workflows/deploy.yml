@@ -4,6 +4,7 @@ on: workflow_dispatch
 jobs:
   deploy:
     runs-on: ubuntu-22.04
+    container: node:16-alpine
     environment: prod
     steps:
       - uses: actions/checkout@v3
